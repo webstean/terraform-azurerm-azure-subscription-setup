@@ -1,5 +1,5 @@
 locals {
-  aaa_name          = "aaa-${var.prefix}"
+  aaa_name          = "aaa-global"
   aaa_name_location = lower("${local.aaa_name}-${lower(var.location)}")
   aaa_random_suffix = substr(md5(local.aaa_name_location), 0, 6)
   aaa_name_hostname = lower(substr(replace("l${local.aaa_random_suffix}${local.aaa_name_location}", "-", ""), 0, 24))
@@ -126,8 +126,8 @@ resource "azurerm_automation_hybrid_runbook_worker_group" "windows" {
 
 /*
 resource "azurerm_automation_hybrid_runbook_worker" "worker1" {
-  resource_group_name     = 
-  automation_account_name = 
+  resource_group_name     =
+  automation_account_name =
   worker_group_name       = azurerm_automation_hybrid_runbook_worker_group.worker_group.name
   vm_resource_id          = azurerm_linux_virtual_machine.example.id
   worker_id               = uuid() ## "00000000-0000-0000-0000-000000000000" #unique uuid
@@ -209,25 +209,6 @@ resource "azurerm_automation_variable_string" "fabric_capacity" {
   description             = "Microsoft Fabric - Capacity SKU"
 }
 */
-resource "azurerm_automation_variable_string" "app" {
-  name                    = "ENVIRONMENT_NAME"
-  resource_group_name     = module.environment_resource_group.resource.name
-  automation_account_name = azurerm_automation_account.this.name
-  encrypted               = (tobool(var.data_pii) == true || tobool(var.data_phi) == true) ? true : false
-
-  value       = var.prefix
-  description = "Environment Prefix"
-}
-
-resource "azurerm_automation_variable_string" "customer" {
-  name                    = "CUSTOMER_NAME"
-  resource_group_name     = module.environment_resource_group.resource.name
-  automation_account_name = azurerm_automation_account.this.name
-  encrypted               = (tobool(var.data_pii) == true || tobool(var.data_phi) == true) ? true : false
-
-  value       = var.customer
-  description = "Customer Name"
-}
 
 resource "azurerm_automation_variable_string" "admin_dns_0" {
   name                    = "USERDNSDOMAIN"
@@ -288,8 +269,8 @@ data "local_file" "demo_ps1" {
 resource "azurerm_automation_runbook" "demo_rb1" {
   name                    = "Example-Terraform-Runbook1-${local.regions[each.key].short_name}"
   location                = each.value.location
-  resource_group_name     = 
-  automation_account_name = 
+  resource_group_name     =
+  automation_account_name =
   log_verbose             = "true"
   log_progress            = "true"
   description             = "Example runbook -  maintained in Terraform"
@@ -727,11 +708,11 @@ function Get-AzResourceGroupInfo {
             ## Get the user-assigned identity principal ID from Automation Variable
             $principalIdVarName = "${lower(azurerm_automation_variable_string.user_assigned_identity.name)}"
             $principalId = Get-AutomationVariable -Name $principalIdVarName -ErrorAction SilentlyContinue
-            
+
             if ([string]::IsNullOrWhiteSpace($principalId)) {
                 throw "Automation Variable '$principalIdVarName' not found or empty. Please set the user-assigned identity principal ID."
             }
-            
+
             ## Authenticate using the user-assigned identity
             Connect-AzAccount -Identity -AccountId $principalId | Out-Null
             if (-not (Get-AzContext)) {
@@ -789,7 +770,7 @@ function Get-AzResourceGroupInfo {
             $result
       }
     }
-    
+
 }
 
 # Runbook entry point: called with zero arguments. Azure Automation only

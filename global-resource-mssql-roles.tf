@@ -1,7 +1,7 @@
 resource "azurerm_role_definition" "mssql-db-reader" {
   name        = "Database-MSSQL-Server-Reader"
   description = "Just enough SQL Database access to read a MS SQL Server and its Databases configuration (but not its data)"
-  scope       = data.azurerm_subscription.current.id
+  scope       = "/subscriptions/${var.subscription_id}"
 
   permissions {
     actions = [
@@ -26,7 +26,7 @@ resource "azurerm_role_definition" "mssql-db-reader" {
 resource "azurerm_role_definition" "mssql-db-restore" {
   name        = "Database-MSSQL-Server-Restore"
   description = "Just enough SQL Database access to overwrite (restore) a MS SQL Server and any of its Databases configuration (but not its data)"
-  scope       = data.azurerm_subscription.current.id
+  scope       = "/subscriptions/${var.subscription_id}"
 
   permissions {
     actions = [

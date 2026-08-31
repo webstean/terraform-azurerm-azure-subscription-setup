@@ -1,5 +1,5 @@
 locals {
-  acr_name          = "acr-${var.prefix}"
+  acr_name          = "acr-global"
   acr_name_location = lower("${local.acr_name}-${lower(var.location)}")
   acr_random_suffix = substr(md5(local.acr_name_location), 0, 6)
   acr_name_hostname = lower(substr(replace("c${local.acr_random_suffix}${local.acr_name_location}", "-", ""), 0, 24))

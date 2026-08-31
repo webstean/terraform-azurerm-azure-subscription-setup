@@ -1,10 +1,11 @@
+/*
 resource "azurerm_security_center_setting" "sentinel" {
   ## whole subscription level
 
   ## setting_name - (Required) The setting to manage.
   ## MCAS: Microsoft Cloud App Security
-  ## WDATP: Windows Defender ATP 
-  ## 
+  ## WDATP: Windows Defender ATP
+  ##
 
   ## Possible values are MCAS , WDATP, WDATP_EXCLUDE_LINUX_PUBLIC_PREVIEW, WDATP_UNIFIED_SOLUTION and Sentinel.
 
@@ -17,6 +18,7 @@ resource "azurerm_security_center_setting" "sentinel" {
   setting_name = "WDATP_UNIFIED_SOLUTION"
   enabled      = true
 }
+*/
 
 resource "azurerm_security_center_contact" "security" {
   name  = "ALERT"

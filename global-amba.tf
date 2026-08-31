@@ -1,15 +1,13 @@
 locals {
-  amba_version = "2026-03-06"
-
-  amba_base_url = "https://raw.githubusercontent.com/Azure/azure-monitor-baseline-alerts/${local.amba_version}/patterns/alz4Subs"
-
+  amba_version      = "2026-03-06"
+  amba_base_url     = "https://raw.githubusercontent.com/Azure/azure-monitor-baseline-alerts/${local.amba_version}/patterns/alz4Subs"
   amba_template_uri = "${local.amba_base_url}/alzArm4Subs.json"
 }
 
-resource "azapi_resource" "amba" {
+resource "azapi_resource" "amba_subscription" {
   type      = "Microsoft.Resources/deployments@2025-04-01"
   name      = "amba-main"
-  parent_id = "/subscriptions/${data.azurerm_client_config.current.subscription_id}"
+  parent_id = "/subscriptions/${var.subscription_id}"
 
   location = var.location
 
@@ -17,20 +15,15 @@ resource "azapi_resource" "amba" {
     properties = {
       mode = "Incremental"
 
-      template = jsondecode(
-        file("${path.module}/amba/alzArm4Subs.json")
-      )
-
-      parameters = jsondecode(
-        file("${path.module}/amba/alzArm4Subs.parameters.json")
-      )
+      template   = file("${path.module}/amba/alzArm4Subs.json")
+      parameters = file("${path.module}/amba/alzArm4Subs.parameters.json")
     }
   }
 }
 
 output "amba_deployment_id" {
   description = "AMBA ARM deployment resource ID."
-  value       = azapi_resource.amba.id
+  value       = azapi_resource.amba_subscription.id
 }
 
 output "amba_template_uri" {

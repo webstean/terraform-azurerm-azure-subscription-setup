@@ -23,7 +23,7 @@ resource "azurerm_monitor_action_group" "alertme" {
   name                = "azure-health-alert"
   resource_group_name = azurerm_resource_group.monitoring.name
   location            = azurerm_resource_group.monitoring.location
-  short_name          = substr("ALERT:", 0, 11) ## can only be 12 character long
+  short_name          = "AzureAlerts" ## can only be 12 character long
 
   email_receiver {
     name                    = var.alert_name
@@ -82,7 +82,7 @@ resource "azurerm_monitor_activity_log_alert" "service_health_maintenance" {
   }
 
   action {
-    action_group_id = azurerm_monitor_action_group.service_health.id
+    action_group_id = azurerm_monitor_action_group.alertme.id
   }
 }
 
@@ -133,7 +133,7 @@ resource "azurerm_monitor_activity_log_alert" "service_health_advisory" {
   }
 
   action {
-    action_group_id = azurerm_monitor_action_group.service_health.id
+    action_group_id = azurerm_monitor_action_group.alertme.id
   }
 }
 
@@ -143,7 +143,7 @@ resource "azurerm_monitor_activity_log_alert" "service_health" {
   name                = each.value.name
   resource_group_name = azurerm_resource_group.monitoring.name
   location            = azurerm_resource_group.monitoring.location
-  scopes              = [data.azurerm_subscription.current.id]
+  scopes              = ["/subscriptions/${var.subscription_id}"]
   description         = each.value.description
   enabled             = true
 
@@ -160,5 +160,3 @@ resource "azurerm_monitor_activity_log_alert" "service_health" {
     action_group_id = azurerm_monitor_action_group.service_health.id
   }
 }
-
-
