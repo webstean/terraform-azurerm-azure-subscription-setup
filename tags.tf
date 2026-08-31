@@ -1,0 +1,53 @@
+locals {
+  ## A maximum of 15 tags are allowed with keys no longer than 512 and 
+  ## values no longer than 256 characters.
+  tags = {
+    type        = "temporary"                 ## permanent, temporary
+    owner_email = "andrew.webster@unisys.com" ##data.azuread_group.cloud_owner.mail
+    ## Personal Identifiable Data
+    data_PII = "no"
+    ## Personal Health Information
+    data_PHI = "no"
+    #    env         = var.environment_name
+    #    criticality = var.environment_crticiality
+    createdby = "terraform"
+    ## 24-7         : 24x7 monitoring
+    ## 8-5          : business hours
+    ## not-monitored: not monitored
+    monitoring = "not monitored"
+    created    = formatdate("DD/MM/YYYY", timestamp())
+    //    terraform_version = data.local_file.terraform_version.content
+  }
+}
+
+locals {
+  ## DNS SOE Record tags
+  dns_tags_private = {
+    type = "private" ## private, public
+    use  = "private-eendpoints"
+  }
+}
+
+/*
+ tags = merge(
+    local.temporary_tags_default,
+    {
+      ## Monitoring
+      ## 24-7         : 24x7 monitoring
+      ## 8-5          : business hours
+      ## not-monitored: not monitored
+      monitoring = "not-monitored"
+
+      ## Data Goverance
+      ## Public Data
+      data_public = "no"
+      ## Personal Identifiable Data
+      data_PII = "yes"
+      ## Personal Health Information
+      data_PHI = "no"
+    },
+  )
+  lifecycle {
+    ignore_changes = [tags.created]
+  }
+*/

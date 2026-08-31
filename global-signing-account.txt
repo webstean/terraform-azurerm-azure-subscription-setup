@@ -1,0 +1,52 @@
+
+resource "azurerm_trusted_signing_account" "this" {
+  name                = "example-signing-account"
+  resource_group_name = azurerm_resource_group.billing.name
+  location            = azurerm_resource_group.billing.location
+  sku_name            = "Basic" ## "Basic" or "Premium"
+  tags                = azurerm_resource_group.billing.tags
+  lifecycle {
+    ignore_changes = [tags.created]
+  }
+}
+
+resource "azurerm_role_assignment" "artifact_signing_certificate_profile_signer" {
+  scope                = azurerm_trusted_signing_account.this.id
+  role_definition_name = "Artifact Signing Certificate Profile Signer"
+  principal_id         = var.owner_entra_object_id
+  description          = local.iac_message
+}
+
+## This resource does not create:
+## - Certificate Profiles
+## - Identity Validation
+## - Signing Profiles
+## - Certificate Authorities
+
+output "trusted_signing_account_uri" {
+  description = "The URI of the trusted signing account."
+  sensitive   = false
+  value       = azurerm_trusted_signing_account.this.account_uri
+}
+
+locals {
+  profile_type = ""PrivateTrust"
+}
+
+resource "azapi_resource" "signing_account_certificate_profile" {
+  type      = "Microsoft.CodeSigning/codeSigningAccounts/certificateProfiles@2026-05-15-preview"
+  name      = "profile1"
+  parent_id = azurerm_trusted_signing_account.this.id
+  body = {
+    properties = {
+      identityValidationId = "string" ## subject name of the identity validation resource
+      includeCity          = local.profile_type == "PrivateTrust" || local.profile_type == "PrivateTrustCIPolicy" ? true : null
+      includeCountry       = local.profile_type == "PrivateTrust" || local.profile_type == "PrivateTrustCIPolicy" ? true : null
+      includePostalCode    = local.profile_type == "PrivateTrust" || local.profile_type == "PrivateTrustCIPolicy" ? true : null
+      includeState         = local.profile_type == "PrivateTrust" || local.profile_type == "PrivateTrustCIPolicy" ? true : null
+      includeStreetAddress = local.profile_type == "PrivateTrust" || local.profile_type == "PrivateTrustCIPolicy" ? true : null
+      profileType          = "PrivateTrust" ## 	'PrivateTrust', 'PrivateTrustCIPolicy' , 'PublicTrust', 'PublicTrustTest', VNSEnclave'
+      programType          = "string"
+    }
+  }
+}
