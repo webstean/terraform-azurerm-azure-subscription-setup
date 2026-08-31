@@ -171,16 +171,21 @@ output "acr_name" {
   value       = module.containerregistry.name
 }
 
-/*
 output "acr_login_server" {
   description = "The login server of the Azure Container Registry."
   sensitive   = false
-  value       = module.containerregistry.login_server
+  value       = try(module.containerregistry.login_server, "")
 }
 
 output "acr_url" {
   description = "The URL of the Azure Container Registry."
   sensitive   = false
-  value       = format("https://%s", module.containerregistry.login_server)
+  value       = try(format("https://%s", module.containerregistry.login_server), "")
 }
-*/
+
+output "acr_id" {
+  description = "The ID of the Azure Container Registry."
+  sensitive   = false
+  value       = try(module.containerregistry.resource_id, "")
+}
+

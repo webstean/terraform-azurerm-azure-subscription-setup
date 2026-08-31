@@ -19,3 +19,23 @@ output "location" {
   sensitive = false
   value     = var.location
 }
+
+output "subscription_id" {
+  sensitive = false
+  value     = var.subscription_id
+}
+
+output "owner_email" {
+  sensitive = false
+  value     = var.owner_email
+}
+
+output "owner_entra_display_name" {
+  sensitive = false
+  value     = var.owner_entra_display_name
+}
+
+output "owner_entra_object_id" {
+  sensitive = false
+  value     = var.owner_entra_object_id
+}

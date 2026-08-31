@@ -789,3 +789,8 @@ EOF
   ]
 }
 
+output "automation_id" {
+  description = "The ID of the Automation Account."
+  sensitive   = false
+  value       = try(azurerm_automation_account.this.id, "")
+}
