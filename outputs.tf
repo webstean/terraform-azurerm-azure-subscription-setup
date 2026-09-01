@@ -39,3 +39,18 @@ output "owner_entra_object_id" {
   sensitive = false
   value     = var.owner_entra_object_id
 }
+
+output "containerregistry_id" {
+  sensitive = false
+  value     = try(module.containerregistry.resource_id, "")
+}
+
+output "automationaccount_id" {
+  sensitive = false
+  value     = try(azurerm_automation_account.this.id, "")
+}
+
+output "automationaccount_name" {
+  sensitive = false
+  value     = try(azurerm_automation_account.this.name, "")
+}
