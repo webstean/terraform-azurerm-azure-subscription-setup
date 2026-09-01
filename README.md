@@ -121,18 +121,19 @@ module "azure-subscription-setup" {
 | <a name="output_amba_deployment_id"></a> [amba\_deployment\_id](#output\_amba\_deployment\_id) | AMBA ARM deployment resource ID. |
 | <a name="output_amba_template_uri"></a> [amba\_template\_uri](#output\_amba\_template\_uri) | Pinned AMBA template used by the deployment. |
 | <a name="output_amba_version"></a> [amba\_version](#output\_amba\_version) | AMBA release deployed. |
+| <a name="output_automation_account_id"></a> [automation\_account\_id](#output\_automation\_account\_id) | The ID of the Azure Automation Account. |
+| <a name="output_automation_account_name"></a> [automation\_account\_name](#output\_automation\_account\_name) | The name of the Azure Automation Account. |
 | <a name="output_automation_id"></a> [automation\_id](#output\_automation\_id) | The ID of the Automation Account. |
-| <a name="output_automationaccount_id"></a> [automationaccount\_id](#output\_automationaccount\_id) | n/a |
-| <a name="output_automationaccount_name"></a> [automationaccount\_name](#output\_automationaccount\_name) | n/a |
-| <a name="output_containerregistry_id"></a> [containerregistry\_id](#output\_containerregistry\_id) | n/a |
-| <a name="output_data_phi"></a> [data\_phi](#output\_data\_phi) | n/a |
-| <a name="output_data_pii"></a> [data\_pii](#output\_data\_pii) | n/a |
-| <a name="output_deploy_private_endpoints"></a> [deploy\_private\_endpoints](#output\_deploy\_private\_endpoints) | n/a |
-| <a name="output_location"></a> [location](#output\_location) | n/a |
-| <a name="output_owner_email"></a> [owner\_email](#output\_owner\_email) | n/a |
-| <a name="output_owner_entra_display_name"></a> [owner\_entra\_display\_name](#output\_owner\_entra\_display\_name) | n/a |
-| <a name="output_owner_entra_object_id"></a> [owner\_entra\_object\_id](#output\_owner\_entra\_object\_id) | n/a |
-| <a name="output_subscription_id"></a> [subscription\_id](#output\_subscription\_id) | n/a |
+| <a name="output_container_registry_id"></a> [container\_registry\_id](#output\_container\_registry\_id) | The ID of the Azure Container Registry. |
+| <a name="output_container_registry_url"></a> [container\_registry\_url](#output\_container\_registry\_url) | The URL of the Azure Container Registry. |
+| <a name="output_data_phi"></a> [data\_phi](#output\_data\_phi) | Whether the data contains protected health information (PHI). |
+| <a name="output_data_pii"></a> [data\_pii](#output\_data\_pii) | Whether the data contains personally identifiable information (PII). |
+| <a name="output_deploy_private_endpoints"></a> [deploy\_private\_endpoints](#output\_deploy\_private\_endpoints) | Whether to deploy private endpoints. |
+| <a name="output_location"></a> [location](#output\_location) | The location of the resources. |
+| <a name="output_owner_email"></a> [owner\_email](#output\_owner\_email) | The email of the resource owner. |
+| <a name="output_owner_entra_display_name"></a> [owner\_entra\_display\_name](#output\_owner\_entra\_display\_name) | The display name of the owner's Entra account. |
+| <a name="output_owner_entra_object_id"></a> [owner\_entra\_object\_id](#output\_owner\_entra\_object\_id) | The object ID of the owner's Entra account. |
+| <a name="output_subscription_id"></a> [subscription\_id](#output\_subscription\_id) | The subscription ID of the Azure resources. |
 
 ## Modules
 
