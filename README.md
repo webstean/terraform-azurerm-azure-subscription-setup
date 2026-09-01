@@ -131,8 +131,8 @@ module "azure-subscription-setup" {
 | <a name="output_deploy_private_endpoints"></a> [deploy\_private\_endpoints](#output\_deploy\_private\_endpoints) | Whether to deploy private endpoints. |
 | <a name="output_location"></a> [location](#output\_location) | The location of the resources. |
 | <a name="output_owner_email"></a> [owner\_email](#output\_owner\_email) | The email of the resource owner. |
-| <a name="output_owner_entra_display_name"></a> [owner\_entra\_display\_name](#output\_owner\_entra\_display\_name) | The display name of the owner's Entra account. |
-| <a name="output_owner_entra_object_id"></a> [owner\_entra\_object\_id](#output\_owner\_entra\_object\_id) | The object ID of the owner's Entra account. |
+| <a name="output_owner_entra_display_name"></a> [owner\_entra\_display\_name](#output\_owner\_entra\_display\_name) | The display name of the owner's Entra ID account. |
+| <a name="output_owner_entra_object_id"></a> [owner\_entra\_object\_id](#output\_owner\_entra\_object\_id) | The object ID of the owner's Entra ID account. |
 | <a name="output_subscription_id"></a> [subscription\_id](#output\_subscription\_id) | The subscription ID of the Azure resources. |
 
 ## Modules
