@@ -122,6 +122,9 @@ module "azure-subscription-setup" {
 | <a name="output_amba_template_uri"></a> [amba\_template\_uri](#output\_amba\_template\_uri) | Pinned AMBA template used by the deployment. |
 | <a name="output_amba_version"></a> [amba\_version](#output\_amba\_version) | AMBA release deployed. |
 | <a name="output_automation_id"></a> [automation\_id](#output\_automation\_id) | The ID of the Automation Account. |
+| <a name="output_automationaccount_id"></a> [automationaccount\_id](#output\_automationaccount\_id) | n/a |
+| <a name="output_automationaccount_name"></a> [automationaccount\_name](#output\_automationaccount\_name) | n/a |
+| <a name="output_containerregistry_id"></a> [containerregistry\_id](#output\_containerregistry\_id) | n/a |
 | <a name="output_data_phi"></a> [data\_phi](#output\_data\_phi) | n/a |
 | <a name="output_data_pii"></a> [data\_pii](#output\_data\_pii) | n/a |
 | <a name="output_deploy_private_endpoints"></a> [deploy\_private\_endpoints](#output\_deploy\_private\_endpoints) | n/a |
