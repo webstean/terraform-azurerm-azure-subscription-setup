@@ -1,9 +1,9 @@
 locals {
-  ## A maximum of 15 tags are allowed with keys no longer than 512 and 
+  ## A maximum of 15 tags are allowed with keys no longer than 512 and
   ## values no longer than 256 characters.
   tags = {
-    type        = "temporary"                 ## permanent, temporary
-    owner_email = "andrew.webster@unisys.com" ##data.azuread_group.cloud_owner.mail
+    type        = "temporary" ## permanent, temporary
+    owner_email = var.owner_email
     ## Personal Identifiable Data
     data_PII = "no"
     ## Personal Health Information

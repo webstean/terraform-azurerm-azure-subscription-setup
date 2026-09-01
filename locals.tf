@@ -450,13 +450,9 @@ locals {
     "Microsoft.EventHub",
     "Microsoft.KeyVault",
     "Microsoft.ServiceBus",
-    //    "Microsoft.Storage", ## not supported when Microsoft.Storage.Global is in use
-    "Microsoft.Storage.Global",
+    "Microsoft.Storage", ## not supported when Microsoft.Storage.Global is in use
+    ##"Microsoft.Storage.Global",
     "Microsoft.Sql",
     "Microsoft.Web",
   ])
-
-  ## Should be change to: "Direct" "NAT-Gateway", "Firewall"
-  outbound_internet_access = "Direct"
-  ## var.data_pii == "yes" || var.data_phi == "yes" ? false : true
 }

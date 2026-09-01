@@ -79,22 +79,6 @@ variable "org_longname" {
 }
 */
 
-variable "alert_name" {
-  type        = string
-  description = "The name for alerts"
-  default     = "MSDN SubscriptionAlerts"
-}
-
-variable "alert_email" {
-  type        = string
-  description = "Email address for receiving operational alerts and notifications from deployed services"
-
-  validation {
-    condition     = can(regex("^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$", trimspace(var.alert_email)))
-    error_message = "The variable 'alert_email' must be a valid email address."
-  }
-}
-
 variable "data_pii" {
   type        = bool
   description = <<DESC
@@ -117,6 +101,12 @@ variable "deploy_private_endpoints" {
 If true, deploys private endpoints for secure access to Azure services. If false, does not deploy private endpoints.
 DESC
   default     = false
+}
+
+variable "alert_name" {
+  type        = string
+  description = "The name for alerts"
+  default     = "MSDN SubscriptionAlerts"
 }
 
 variable "alert_email" {

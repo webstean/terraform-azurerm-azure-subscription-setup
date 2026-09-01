@@ -3,7 +3,7 @@ resource "azurerm_resource_group" "billing" {
   name     = "rg-billing-${lower(var.location)}"
   location = var.location
 
-  tags = locals.tags
+  tags = local.tags
   lifecycle {
     ignore_changes = [tags.created]
   }
@@ -13,7 +13,7 @@ resource "azurerm_resource_group" "monitoring" {
   name     = "rg-monitoring-${lower(var.location)}"
   location = var.location
 
-  tags = locals.tags
+  tags = local.tags
   lifecycle {
     ignore_changes = [tags.created]
   }
@@ -30,17 +30,14 @@ resource "azurerm_monitor_action_group" "alertme" {
     email_address           = var.alert_email
     use_common_alert_schema = true
   }
-  tags = locals.tags
-  lifecycle {
-    ignore_changes = [tags.created]
-  }
+  tags = { for key, value in azurerm_resource_group.global.tags : key => value if lower(key) != "created" }
 }
 
 resource "azurerm_monitor_activity_log_alert" "service_health_incidents" {
   name                = "alrt-service-health-incidents"
   resource_group_name = azurerm_resource_group.monitoring.name
   location            = azurerm_resource_group.monitoring.location
-  scopes              = [data.azurerm_subscription.current.id]
+  scopes              = [var.subscription_id]
   description         = "** Azure Service Health incident **"
   enabled             = true
 
@@ -59,13 +56,14 @@ resource "azurerm_monitor_activity_log_alert" "service_health_incidents" {
   action {
     action_group_id = azurerm_monitor_action_group.alertme.id
   }
+  tags = { for key, value in azurerm_resource_group.global.tags : key => value if lower(key) != "created" }
 }
 
 resource "azurerm_monitor_activity_log_alert" "service_health_maintenance" {
   name                = "alrt-service-health-maintenance"
   resource_group_name = azurerm_resource_group.monitoring.name
   location            = azurerm_resource_group.monitoring.location
-  scopes              = [data.azurerm_subscription.current.id]
+  scopes              = [var.subscription_id]
   description         = "Azure planned maintenance affecting this subscription."
   enabled             = true
 
@@ -84,6 +82,7 @@ resource "azurerm_monitor_activity_log_alert" "service_health_maintenance" {
   action {
     action_group_id = azurerm_monitor_action_group.alertme.id
   }
+  tags = { for key, value in azurerm_resource_group.global.tags : key => value if lower(key) != "created" }
 }
 
 locals {
@@ -115,7 +114,7 @@ resource "azurerm_monitor_activity_log_alert" "service_health_advisory" {
   name                = "alrt-service-health-advisory"
   resource_group_name = azurerm_resource_group.monitoring.name
   location            = azurerm_resource_group.monitoring.location
-  scopes              = [data.azurerm_subscription.current.id]
+  scopes              = [var.subscription_id]
   description         = "Azure Service Health advisories and informational events."
   enabled             = true
 
@@ -135,6 +134,7 @@ resource "azurerm_monitor_activity_log_alert" "service_health_advisory" {
   action {
     action_group_id = azurerm_monitor_action_group.alertme.id
   }
+  tags = { for key, value in azurerm_resource_group.global.tags : key => value if lower(key) != "created" }
 }
 
 resource "azurerm_monitor_activity_log_alert" "service_health" {
@@ -157,6 +157,7 @@ resource "azurerm_monitor_activity_log_alert" "service_health" {
   }
 
   action {
-    action_group_id = azurerm_monitor_action_group.service_health.id
+    action_group_id = azurerm_monitor_action_group.alertme.id
   }
+  tags = { for key, value in azurerm_resource_group.global.tags : key => value if lower(key) != "created" }
 }

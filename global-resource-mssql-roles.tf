@@ -21,7 +21,6 @@ resource "azurerm_role_definition" "mssql-db-reader" {
     data_actions     = []
     not_data_actions = []
   }
-  depends_on = [time_sleep.resource_group_create_wait, azurerm_mssql_server.this, azurerm_mssql_server.this-failover]
 }
 resource "azurerm_role_definition" "mssql-db-restore" {
   name        = "Database-MSSQL-Server-Restore"
@@ -48,7 +47,6 @@ resource "azurerm_role_definition" "mssql-db-restore" {
     data_actions     = []
     not_data_actions = []
   }
-  ## depends_on = [time_sleep.resource_group_create_wait]
 }
 
 /*

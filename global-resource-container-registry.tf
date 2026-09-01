@@ -12,8 +12,8 @@ module "containerregistry" {
   enable_telemetry = var.enable_telemetry ## see variables.tf
 
   name                          = local.acr_name_hostname
-  resource_group_name           = module.environment_resource_group.resource.name
-  location                      = module.environment_resource_group.resource.location
+  resource_group_name           = azurerm_resource_group.global.name
+  location                      = azurerm_resource_group.global.location
   sku                           = local.acr_sku
   admin_enabled                 = (tobool(var.data_pii) || tobool(var.data_phi) || tobool(var.deploy_private_endpoints)) ? false : true
   public_network_access_enabled = (tobool(var.data_pii) || tobool(var.data_phi) || tobool(var.deploy_private_endpoints)) ? false : true
@@ -23,10 +23,7 @@ module "containerregistry" {
   zone_redundancy_enabled       = local.acr_sku == "Premium" ? true : false
 
   managed_identities = {
-    system_assigned = false
-    user_assigned_resource_ids = [
-      azurerm_user_assigned_identity.environment.id
-    ]
+    system_assigned = true
   }
 
   /*
@@ -44,19 +41,12 @@ module "containerregistry" {
   role_assignments = {
     role_assignment_1 = {
       role_definition_id_or_name       = "AcrPull"
-      principal_id                     = azurerm_user_assigned_identity.environment.principal_id
-      skip_service_principal_aad_check = true
-      principal_type                   = "ServicePrincipal"
-      description                      = local.iac_message
-    }
-    role_assignment_2 = {
-      role_definition_id_or_name       = "AcrPull"
       principal_id                     = data.azurerm_client_config.current.object_id
       skip_service_principal_aad_check = true
       principal_type                   = "ServicePrincipal"
       description                      = local.iac_message
     }
-    role_assignment_3 = {
+    role_assignment_2 = {
       role_definition_id_or_name       = "Owner"
       principal_id                     = data.azurerm_client_config.current.object_id
       skip_service_principal_aad_check = true
@@ -67,9 +57,9 @@ module "containerregistry" {
   lock = (tobool(var.data_pii) || tobool(var.data_phi) || tobool(var.deploy_private_endpoints)) ? {
     kind = "CanNotDelete"
   } : null
-  tags = { for key, value in module.environment_resource_group.resource.tags : key => value if lower(key) != "created" }
+  tags = { for key, value in azurerm_resource_group.global.tags : key => value if lower(key) != "created" }
   depends_on = [
-    module.environment_resource_group
+    azurerm_resource_group.global
   ]
 
 }
@@ -157,12 +147,6 @@ resource "azurerm_container_registry_cache_rule" "cache_rule8" {
   source_repo           = "mcr.microsoft.com/dotnet/*"
   target_repo           = "dotnet/*"
   ## credential_set_id     = ""
-}
-
-output "acr_id" {
-  description = "The ID of the Azure Container Registry."
-  sensitive   = false
-  value       = module.containerregistry.resource_id
 }
 
 output "acr_name" {

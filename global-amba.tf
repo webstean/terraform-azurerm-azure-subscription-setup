@@ -15,8 +15,15 @@ resource "azapi_resource" "amba_subscription" {
     properties = {
       mode = "Incremental"
 
-      template   = file("${path.module}/amba/alzArm4Subs.json")
-      parameters = file("${path.module}/amba/alzArm4Subs.parameters.json")
+      templateLink = {
+        uri = local.amba_template_uri
+      }
+
+      parameters = {
+        topLevelSubscriptionId = {
+          value = var.subscription_id
+        }
+      }
     }
   }
 }
