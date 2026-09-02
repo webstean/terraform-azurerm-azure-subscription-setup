@@ -112,22 +112,24 @@ variable "alert_name" {
 variable "alert_email" {
   type        = string
   description = "The email address for alerts"
+  default     = null
 
   validation {
-    condition     = can(regex("^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$", trimspace(var.alert_email)))
-    error_message = "The variable 'alert_email' must be a valid email address."
+    condition     = var.alert_email == null || can(regex("^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$", trimspace(var.alert_email)))
+    error_message = "The variable 'alert_email' must be null or a valid email address."
   }
 }
 
 variable "alert_sms_number" {
   type        = string
   description = "The phone number for SMS alerts"
+  default     = null
 }
 
 variable "alert_sms_country" {
   type        = string
   description = "The country code for SMS alerts"
-  default     = "+61"
+  default     = null
 }
 
 variable "locations_tomonitor" {

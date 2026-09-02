@@ -25,10 +25,23 @@ resource "azurerm_monitor_action_group" "alertme" {
   location            = module.global_resource_group.location
   short_name          = "AzureAlerts" ## can only be 12 character long
 
-  email_receiver {
-    name                    = var.alert_name
-    email_address           = var.alert_email
-    use_common_alert_schema = true
+  dynamic "email_receiver" {
+    for_each = var.alert_email == null ? [] : [var.alert_email]
+
+    content {
+      name                    = var.alert_name
+      email_address           = email_receiver.value
+      use_common_alert_schema = true
+    }
+  }
+  dynamic "sms_receiver" {
+    for_each = var.alert_sms_number != null && var.alert_sms_country != null ? [var.alert_sms_number] : []
+
+    content {
+      name         = var.alert_name
+      country_code = var.alert_sms_country
+      phone_number = sms_receiver.value
+    }
   }
   tags = { for key, value in module.global_resource_group.resource.tags : key => value if lower(key) != "created" }
 }
