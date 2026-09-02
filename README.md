@@ -85,6 +85,7 @@ module "azure-subscription-setup" {
 | [azurerm_role_definition.mssql-db-reader](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_definition) | resource |
 | [azurerm_role_definition.mssql-db-restore](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_definition) | resource |
 | [azurerm_security_center_contact.security](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/security_center_contact) | resource |
+| [azurerm_virtual_wan.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_wan) | resource |
 | [azapi_client_config.current](https://registry.terraform.io/providers/azure/azapi/latest/docs/data-sources/client_config) | data source |
 | [azuread_application_published_app_ids.well_known](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/data-sources/application_published_app_ids) | data source |
 | [azuread_client_config.current](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/data-sources/client_config) | data source |
@@ -111,6 +112,7 @@ module "azure-subscription-setup" {
 | <a name="input_enable_telemetry"></a> [enable\_telemetry](#input\_enable\_telemetry) | This variable controls whether or not the AVM (Azure Verified Modules) telemetry is enabled for the module.<br/>For more information see <https://aka.ms/avm/telemetryinfo>.<br/>If it is set to false, then no telemetry will be collected. | `bool` | `false` | no |
 | <a name="input_location"></a> [location](#input\_location) | The Azure region where resources will be deployed. | `string` | `"australiaeast"` | no |
 | <a name="input_locations_tomonitor"></a> [locations\_tomonitor](#input\_locations\_tomonitor) | The list of locations to monitor | `list(string)` | <pre>[<br/>  "australiaeast",<br/>  "australiasoutheast",<br/>  "australiacentral",<br/>  "australiacentral2"<br/>]</pre> | no |
+| <a name="input_vwan_id"></a> [vwan\_id](#input\_vwan\_id) | The ID of the existing Virtual WAN. If not provided, a new Virtual WAN will be created. | `string` | `null` | no |
 
 ## Outputs
 
