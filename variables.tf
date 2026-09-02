@@ -136,13 +136,13 @@ variable "locations_tomonitor" {
   default     = ["australiaeast", "australiasoutheast", "australiacentral", "australiacentral2"]
 }
 
-variable "vwan_id" {
+variable "virtual_wan_id" {
   type        = string
   description = "The ID of the existing Virtual WAN. If not provided, a new Virtual WAN will be created."
   default     = null
 }
 
-variable "vwan_sku" {
+variable "virtual_wan_sku" {
   type        = string
   description = "The SKU of the Virtual WAN to be created. Possible values include: Basic and Standard. Defaults to Basic."
   default     = "Basic"

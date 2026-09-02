@@ -1,10 +1,10 @@
 locals {
   vwan_name = "vwan-global" ## You only have one, then multiple hubs per locaton (region), per environment
-  vwan_sku  = var.vwan_sku
+  vwan_sku  = var.virtual_wan_sku
 }
 
 resource "azurerm_virtual_wan" "this" {
-  count = var.vwan_id == null ? 1 : 0
+  count = var.virtual_wan_id == null ? 1 : 0
 
   name                = local.vwan_name
   resource_group_name = azurerm_resource_group.global.name
