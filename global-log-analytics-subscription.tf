@@ -4,8 +4,8 @@ module "global_log_analytics_workspace" {
   enable_telemetry = var.enable_telemetry
 
   name                                      = "law-global"
-  resource_group_name                       = module.environment_resource_group.resource.name
-  location                                  = module.environment_resource_group.resource.location
+  resource_group_name                       = azurerm_resource_group.global.name
+  location                                  = azurerm_resource_group.global.location
   log_analytics_workspace_sku               = "PerGB2018"
   log_analytics_workspace_daily_quota_gb    = 5
   log_analytics_workspace_retention_in_days = 30 ## free
@@ -44,13 +44,12 @@ module "global_log_analytics_workspace" {
   lock = (tobool(var.data_pii) || tobool(var.data_phi) || tobool(var.deploy_private_endpoints)) ? {
     kind = "CanNotDelete"
   } : null
-  tags = { for key, value in module.environment_resource_group.resource.tags : key => value if lower(key) != "created" }
+  tags = { for key, value in azurerm_resource_group.global.tags : key => value if lower(key) != "created" }
   depends_on = [
-    module.environment_resource_group
+    azurerm_resource_group.global
   ]
 }
 
-/*
 resource "azurerm_monitor_diagnostic_setting" "subscription1" {
   name                       = "Log-Metrics-${data.azurerm_subscription.current.display_name}-to-Azure-Monitor"
   target_resource_id         = var.subscription_id
@@ -63,8 +62,7 @@ resource "azurerm_monitor_diagnostic_setting" "subscription1" {
     category = "AllMetrics"
   }
 }
-*/
-/*
+
 resource "azurerm_monitor_diagnostic_setting" "subscription2" {
   name                       = "Audit-${data.azurerm_subscription.current.display_name}-to-Azure-Monitor"
   target_resource_id         = var.subscription_id
@@ -74,4 +72,4 @@ resource "azurerm_monitor_diagnostic_setting" "subscription2" {
     category_group = "audit"
   }
 }
-*/
+
