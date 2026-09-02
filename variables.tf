@@ -135,3 +135,9 @@ variable "locations_tomonitor" {
   description = "The list of locations to monitor"
   default     = ["australiaeast", "australiasoutheast", "australiacentral", "australiacentral2"]
 }
+
+variable "vwan_id" {
+  type        = string
+  description = "The ID of the existing Virtual WAN. If not provided, a new Virtual WAN will be created."
+  default     = null
+}
