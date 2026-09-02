@@ -17,7 +17,7 @@ module "cosmos" {
   managed_identities = {
     system_assigned = true
     #    user_assigned_resource_ids = [
-    #      azurerm_user_assigned_identity.environment.id
+    #      module.global_user_managed_identity.resource_id
     #    ]
   }
   access_key_metadata_writes_enabled = true
@@ -62,9 +62,9 @@ module "cosmos" {
   /*
   role_assignments = {
     role_assignment_1 = {
-      name                             = uuidv5("url", "${module.environment_resource_group.resource.id}/Key Vault Secrets User/${azurerm_user_assigned_identity.environment.principal_id}")
+      name                             = uuidv5("url", "${module.environment_resource_group.resource.id}/Key Vault Secrets User/${module.global_user_managed_identity.principal_id}")
       role_definition_id_or_name       = "Cosmos DB Account Reader Role"
-      principal_id                     = azurerm_user_assigned_identity.environment.principal_id
+      principal_id                     = module.global_user_managed_identity.principal_id
       skip_service_principal_aad_check = true
       principal_type                   = "ServicePrincipal"
       description                      = local.iac_message
@@ -89,7 +89,7 @@ resource "azurerm_cosmosdb_sql_role_assignment" "this" {
 
   role_definition_id = "${module.cosmos.resource_id}/sqlRoleDefinitions/00000000-0000-0000-0000-000000000002"
 
-  principal_id = azurerm_user_assigned_identity.environment.principal_id
+  principal_id = module.global_user_managed_identity.principal_id
 
   scope = module.cosmos.resource_id
 }

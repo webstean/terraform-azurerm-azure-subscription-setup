@@ -12,24 +12,24 @@ module "global_log_analytics_workspace" {
 
   log_analytics_workspace_identity = {
     type = "SystemAssigned"
-    #identity_ids = [azurerm_user_assigned_identity.environment.id]
+    #identity_ids = [module.global_user_managed_identity.resource_id]
   }
 
   /*
   role_assignments = {
     role_assignment_1 = {
       role_definition_id_or_name = "Monitoring Metrics Publisher"
-      principal_id               = azurerm_user_assigned_identity.environment.principal_id
+      principal_id               = module.global_user_managed_identity.principal_id
       description                = local.iac_message
     }
     role_assignment_2 = {
       role_definition_id_or_name = "Log Analytics Reader"
-      principal_id               = azurerm_user_assigned_identity.environment.principal_id
+      principal_id               = module.global_user_managed_identity.principal_id
       description                = local.iac_message
     }
     role_assignment_3 = {
       role_definition_id_or_name = "Log Analytics Contributor"
-      principal_id               = azurerm_user_assigned_identity.environment.principal_id
+      principal_id               = module.global_user_managed_identity.principal_id
       description                = local.iac_message
     }
   }

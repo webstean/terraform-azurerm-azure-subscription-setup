@@ -46,12 +46,12 @@ module "search_keyvault" {
   role_assignments = {
     role_assignment_1 = {
       role_definition_id_or_name = "Key Vault Secrets User"
-      principal_id               = azurerm_user_assigned_identity.environment.principal_id
+      principal_id               = module.global_user_managed_identity.principal_id
       description                = local.iac_message
     }
     role_assignment_2 = {
       role_definition_id_or_name = "Key Vault Administrator"
-      principal_id               = azurerm_user_assigned_identity.environment.principal_id
+      principal_id               = module.global_user_managed_identity.principal_id
       description                = local.iac_message
     }
   }
@@ -61,7 +61,7 @@ module "search_keyvault" {
   } : null
   tags = { for key, value in module.global_resource_group.resource.tags : key => value if lower(key) != "created" }
   #depends_on = [
-  #  azurerm_user_assigned_identity.environment
+  #  module.global_user_managed_identity
   #]
 }
 
@@ -85,14 +85,14 @@ module "ai_search_service" {
   managed_identities = {
     system_assigned = true
     #    user_assigned_resource_ids = [
-    #      azurerm_user_assigned_identity.environment.id
+    #      module.global_user_managed_identity.resource_id
     #    ]
   }
 
   role_assignments = {
     #    role_assignment_1 = {
     #      role_definition_id_or_name = "Search Service Contributor"
-    #      principal_id               = azurerm_user_assigned_identity.environment.principal_id
+    #      principal_id               = module.global_user_managed_identity.principal_id
     #      description                = local.iac_message
     #    }
     role_assignment_2 = {
