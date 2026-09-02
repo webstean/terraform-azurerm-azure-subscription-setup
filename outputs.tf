@@ -71,3 +71,15 @@ output "automation_account_name" {
   sensitive   = false
   value       = try(azurerm_automation_account.this.name, "")
 }
+
+output "virtual_wan_id" {
+  description = "The ID of the Azure Virtual WAN."
+  sensitive   = false
+  value       = try(azurerm_virtual_wan.this.id, "")
+}
+
+output "virtual_wan_name" {
+  description = "The name of the Azure Virtual WAN."
+  sensitive   = false
+  value       = try(azurerm_virtual_wan.this.name, "")
+}

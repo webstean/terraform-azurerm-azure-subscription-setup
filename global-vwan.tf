@@ -1,6 +1,6 @@
 locals {
-  vwan_name = "vwan-${lower(var.location)}"
-  vwan_sku  = "Basic" ## Possible values include: Basic and Standard. Defaults to Standard.
+  vwan_name = "vwan-global" ## You only have one, then multiple hubs per locaton (region), per environment
+  vwan_sku  = var.vwan_sku
 }
 
 resource "azurerm_virtual_wan" "this" {
