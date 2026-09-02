@@ -12,8 +12,8 @@ module "containerregistry" {
   enable_telemetry = var.enable_telemetry ## see variables.tf
 
   name                          = local.acr_name_hostname
-  resource_group_name           = azurerm_resource_group.global.name
-  location                      = azurerm_resource_group.global.location
+  resource_group_name           = module.global_resource_group.name
+  location                      = module.global_resource_group.location
   sku                           = local.acr_sku
   admin_enabled                 = (tobool(var.data_pii) || tobool(var.data_phi) || tobool(var.deploy_private_endpoints)) ? false : true
   public_network_access_enabled = (tobool(var.data_pii) || tobool(var.data_phi) || tobool(var.deploy_private_endpoints)) ? false : true
@@ -57,11 +57,10 @@ module "containerregistry" {
   lock = (tobool(var.data_pii) || tobool(var.data_phi) || tobool(var.deploy_private_endpoints)) ? {
     kind = "CanNotDelete"
   } : null
-  tags = { for key, value in azurerm_resource_group.global.tags : key => value if lower(key) != "created" }
+  tags = { for key, value in module.global_resource_group.resource.tags : key => value if lower(key) != "created" }
   depends_on = [
-    azurerm_resource_group.global
+    module.global_log_analytics_workspace
   ]
-
 }
 
 // Cache will only occur after at least one image pull is complete on the available container image.

@@ -22,8 +22,8 @@ locals {
 ## certain number of job run times (currently 500 minutes) and watcher per month (currently 744 hours)
 resource "azurerm_automation_account" "this" {
   name                = local.aaa_name_location
-  resource_group_name = azurerm_resource_group.global.name
-  location            = azurerm_resource_group.global.location
+  resource_group_name = module.global_resource_group.name
+  location            = module.global_resource_group.location
 
   local_authentication_enabled  = false
   public_network_access_enabled = (tobool(var.data_pii) || tobool(var.data_phi) || tobool(var.deploy_private_endpoints)) ? false : true
@@ -33,16 +33,17 @@ resource "azurerm_automation_account" "this" {
   }
   sku_name = "Basic"
 
-  tags = { for key, value in azurerm_resource_group.global.tags : key => value if lower(key) != "created" }
+  tags = { for key, value in module.global_resource_group.resource.tags : key => value if lower(key) != "created" }
 }
 
 resource "azurerm_automation_runtime_environment" "pwsh76" {
   name                  = "PowerShell-7.6-custom"
   automation_account_id = azurerm_automation_account.this.id
-  location              = azurerm_resource_group.global.location
+  location              = module.global_resource_group.location
   description           = "PowerShell 7.6 runtime environment"
   runtime_language      = "PowerShell"
   runtime_version       = "7.6"
+  tags                  = { for key, value in module.global_resource_group.resource.tags : key => value if lower(key) != "created" }
   runtime_default_packages = {
     "Az"        = "15.4.0"
     "Azure CLI" = "2.77.0"
@@ -51,7 +52,7 @@ resource "azurerm_automation_runtime_environment" "pwsh76" {
 
 /*
 resource "azurerm_role_assignment" "automation_reader" {
-  scope                = module.environment_resource_group.resource_id
+  scope                = module.global_resource_group.resource_id
   role_definition_name = "Reader"
   principal_id         = azurerm_automation_account.this.identity[0].principal_id
   depends_on           = [azurerm_automation_account.this]
@@ -86,7 +87,7 @@ resource "azurerm_monitor_diagnostic_setting" "aaa2" {
 /*
 resource "azurerm_automation_connection" "automation-sp1" {
   name                    = "automation-contributor-sp"
-  resource_group_name     = module.environment_resource_group.resource.name
+  resource_group_name     = module.global_resource_group.name
   automation_account_name = azurerm_automation_account.this.name
   type                    = "AzureServicePrincipal"
   description             = azuread_application.automation.description
@@ -137,7 +138,7 @@ resource "azurerm_automation_hybrid_runbook_worker" "worker1" {
 resource "azurerm_automation_credential" "vcenter-create" {
 
   name                    = "VCENTER-CREDENTIAL"
-  resource_group_name     = azurerm_resource_group.global.name
+  resource_group_name     = module.global_resource_group.name
   automation_account_name = azurerm_automation_account.this.name
 
   username    = "example_user"
@@ -147,25 +148,25 @@ resource "azurerm_automation_credential" "vcenter-create" {
 
 resource "azurerm_automation_variable_string" "resource-group-id" {
   name                    = "RESOURCE_GROUP_ID"
-  resource_group_name     = azurerm_resource_group.global.name
+  resource_group_name     = module.global_resource_group.name
   automation_account_name = azurerm_automation_account.this.name
   encrypted               = (var.data_pii == "yes" || var.data_phi == "yes") ? true : false
 
-  value       = azurerm_resource_group.global.id
+  value       = module.global_resource_group.resource_id
   description = "Resource Group ID for this environment"
 }
 resource "azurerm_automation_variable_string" "resource-group-name" {
   name                    = "RESOURCE_GROUP_NAME"
-  resource_group_name     = azurerm_resource_group.global.name
+  resource_group_name     = module.global_resource_group.name
   automation_account_name = azurerm_automation_account.this.name
   encrypted               = (var.data_pii == "yes" || var.data_phi == "yes") ? true : false
 
-  value       = azurerm_resource_group.global.name
+  value       = module.global_resource_group.name
   description = "Resource Group Name for this environment"
 }
 resource "azurerm_automation_variable_string" "subscription-id" {
   name                    = "AZURE_SUBSCRIPTION_ID"
-  resource_group_name     = azurerm_resource_group.global.name
+  resource_group_name     = module.global_resource_group.name
   automation_account_name = azurerm_automation_account.this.name
   encrypted               = (var.data_pii == "yes" || var.data_phi == "yes") ? true : false
 
@@ -174,7 +175,7 @@ resource "azurerm_automation_variable_string" "subscription-id" {
 }
 resource "azurerm_automation_variable_string" "azure_tenant" {
   name                    = "AZURE_TENANT_ID"
-  resource_group_name     = azurerm_resource_group.global.name
+  resource_group_name     = module.global_resource_group.name
   automation_account_name = azurerm_automation_account.this.name
   encrypted               = (var.data_pii == "yes" || var.data_phi == "yes") ? true : false
   value                   = data.azurerm_client_config.current.tenant_id
@@ -182,7 +183,7 @@ resource "azurerm_automation_variable_string" "azure_tenant" {
 }
 resource "azurerm_automation_variable_string" "power_tenant" {
   name                    = "POWER_PLATFORM_TENANT_ID"
-  resource_group_name     = azurerm_resource_group.global.name
+  resource_group_name     = module.global_resource_group.name
   automation_account_name = azurerm_automation_account.this.name
   encrypted               = (var.data_pii == "yes" || var.data_phi == "yes") ? true : false
   value                   = data.azurerm_client_config.current.tenant_id
@@ -190,7 +191,7 @@ resource "azurerm_automation_variable_string" "power_tenant" {
 }
 resource "azurerm_automation_variable_string" "fabric_tenant" {
   name                    = "FABRIC_TENANT_ID"
-  resource_group_name     = azurerm_resource_group.global.name
+  resource_group_name     = module.global_resource_group.name
   automation_account_name = azurerm_automation_account.this.name
   encrypted               = (var.data_pii == "yes" || var.data_phi == "yes") ? true : false
   value                   = data.azurerm_client_config.current.tenant_id
@@ -198,11 +199,9 @@ resource "azurerm_automation_variable_string" "fabric_tenant" {
 }
 /*
 resource "azurerm_automation_variable_string" "fabric_capacity" {
-  for_each = azurerm_automation_account.automation
-
   name                    = "FABRIC_CAPACITY"
-  resource_group_name     = each.value.resource_group_name
-  automation_account_name = each.value.name
+  resource_group_name     = module.global_resource_group.name
+  automation_account_name = azurerm_automation_account.this.name
   encrypted               = (var.data_pii == "yes" || var.data_phi == "yes") ? true : false
   value                   = upper(local.fabric_capacity_name)
   description             = "Microsoft Fabric - Capacity SKU"
@@ -211,7 +210,7 @@ resource "azurerm_automation_variable_string" "fabric_capacity" {
 
 resource "azurerm_automation_variable_string" "admin_dns_0" {
   name                    = "USERDNSDOMAIN"
-  resource_group_name     = azurerm_resource_group.global.name
+  resource_group_name     = module.global_resource_group.name
   automation_account_name = azurerm_automation_account.this.name
   encrypted               = (tobool(var.data_pii) == true || tobool(var.data_phi) == true) ? true : false
 
@@ -221,7 +220,7 @@ resource "azurerm_automation_variable_string" "admin_dns_0" {
 
 resource "azurerm_automation_variable_string" "admin_dssc_domain" {
   name                    = "USERDOMAIN"
-  resource_group_name     = azurerm_resource_group.global.name
+  resource_group_name     = module.global_resource_group.name
   automation_account_name = azurerm_automation_account.this.name
   encrypted               = (tobool(var.data_pii) == true || tobool(var.data_phi) == true) ? true : false
 
@@ -231,7 +230,7 @@ resource "azurerm_automation_variable_string" "admin_dssc_domain" {
 
 resource "azurerm_automation_variable_bool" "data_pii" {
   name                    = "CONTAINS_PERSONAL_IDENTIFIABLE_INFORMATION"
-  resource_group_name     = azurerm_resource_group.global.name
+  resource_group_name     = module.global_resource_group.name
   automation_account_name = azurerm_automation_account.this.name
   encrypted               = (tobool(var.data_pii) == true || tobool(var.data_phi) == true) ? true : false
 
@@ -241,7 +240,7 @@ resource "azurerm_automation_variable_bool" "data_pii" {
 
 resource "azurerm_automation_variable_bool" "data_phi" {
   name                    = "CONTAINS_PROTECTED_HEALTH_INFORMATION"
-  resource_group_name     = azurerm_resource_group.global.name
+  resource_group_name     = module.global_resource_group.name
   automation_account_name = azurerm_automation_account.this.name
   encrypted               = (tobool(var.data_pii) == true || tobool(var.data_phi) == true) ? true : false
 
@@ -272,7 +271,7 @@ resource "azurerm_automation_runbook" "demo_rb1" {
 resource "azurerm_automation_runbook" "demo_rb2" {
   name = "Get-AzureVMTutorial"
 
-  resource_group_name     = azurerm_resource_group.global.name
+  resource_group_name     = module.global_resource_group.name
   automation_account_name = azurerm_automation_account.this.name
   location                = azurerm_automation_account.this.location
 
@@ -284,8 +283,7 @@ resource "azurerm_automation_runbook" "demo_rb2" {
   publish_content_link {
     uri = "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/c4935ffb69246a6058eb24f54640f53f69d3ac9f/101-automation-runbook-getvms/Runbooks/Get-AzureVMTutorial.ps1"
   }
-
-  tags = { for key, value in azurerm_resource_group.global.tags : key => value if lower(key) != "created" }
+  tags = { for key, value in module.global_resource_group.resource.tags : key => value if lower(key) != "created" }
 }
 
 /*
@@ -358,7 +356,7 @@ resource "azurerm_automation_watcher" "watcher" {
 
 resource "azurerm_automation_module" "packagemanagement" {
   name                    = "PackageManagement"
-  resource_group_name     = azurerm_resource_group.global.name
+  resource_group_name     = module.global_resource_group.name
   automation_account_name = azurerm_automation_account.this.name
 
   module_link {
@@ -369,7 +367,7 @@ resource "azurerm_automation_module" "packagemanagement" {
 resource "azurerm_automation_module" "powershellget" {
 
   name                    = "PowerShellGet"
-  resource_group_name     = azurerm_resource_group.global.name
+  resource_group_name     = module.global_resource_group.name
   automation_account_name = azurerm_automation_account.this.name
 
   module_link {
@@ -382,7 +380,7 @@ resource "azurerm_automation_module" "powershellget" {
 
 resource "azurerm_automation_module" "vmware_powercli" {
   name                    = "VMware.PowerCLI"
-  resource_group_name     = azurerm_resource_group.global.name
+  resource_group_name     = module.global_resource_group.name
   automation_account_name = azurerm_automation_account.this.name
 
   module_link {
@@ -392,7 +390,7 @@ resource "azurerm_automation_module" "vmware_powercli" {
 
 resource "azurerm_automation_module" "pswindowsupdate" {
   name                    = "PSWindowsUpdate"
-  resource_group_name     = azurerm_resource_group.global.name
+  resource_group_name     = module.global_resource_group.name
   automation_account_name = azurerm_automation_account.this.name
 
   module_link {
@@ -402,7 +400,7 @@ resource "azurerm_automation_module" "pswindowsupdate" {
 
 resource "azurerm_automation_module" "sharepoint" {
   name                    = "Microsoft.Online.SharePoint.PowerShell"
-  resource_group_name     = azurerm_resource_group.global.name
+  resource_group_name     = module.global_resource_group.name
   automation_account_name = azurerm_automation_account.this.name
 
   module_link {
@@ -412,7 +410,7 @@ resource "azurerm_automation_module" "sharepoint" {
 
 resource "azurerm_automation_module" "pnp_powershell" {
   name                    = "PnP.PowerShell"
-  resource_group_name     = azurerm_resource_group.global.name
+  resource_group_name     = module.global_resource_group.name
   automation_account_name = azurerm_automation_account.this.name
 
   module_link {
@@ -453,7 +451,7 @@ resource "azurerm_automation_runtime_environment_package" "vmware_powercli" {
 
 resource "azurerm_automation_schedule" "sunday" {
   name                    = "Every-Sunday-2AM"
-  resource_group_name     = azurerm_resource_group.global.name
+  resource_group_name     = module.global_resource_group.name
   automation_account_name = azurerm_automation_account.this.name
 
   frequency = "Week"
@@ -470,7 +468,7 @@ resource "azurerm_automation_schedule" "sunday" {
 
 resource "azurerm_automation_schedule" "monday" {
   name                    = "Every-Monday-2AM"
-  resource_group_name     = azurerm_resource_group.global.name
+  resource_group_name     = module.global_resource_group.name
   automation_account_name = azurerm_automation_account.this.name
 
   frequency = "Week"
@@ -488,7 +486,7 @@ resource "azurerm_automation_schedule" "monday" {
 resource "azurerm_automation_schedule" "tuesday" {
 
   name                    = "Every-Tuesday-2AM"
-  resource_group_name     = azurerm_resource_group.global.name
+  resource_group_name     = module.global_resource_group.name
   automation_account_name = azurerm_automation_account.this.name
 
   frequency = "Week"
@@ -505,7 +503,7 @@ resource "azurerm_automation_schedule" "tuesday" {
 
 resource "azurerm_automation_schedule" "wednesday" {
   name                    = "Every-Wednesday-2AM"
-  resource_group_name     = azurerm_resource_group.global.name
+  resource_group_name     = module.global_resource_group.name
   automation_account_name = azurerm_automation_account.this.name
 
   frequency = "Week"
@@ -522,7 +520,7 @@ resource "azurerm_automation_schedule" "wednesday" {
 
 resource "azurerm_automation_schedule" "thursday" {
   name                    = "Every-Thursday-2AM"
-  resource_group_name     = azurerm_resource_group.global.name
+  resource_group_name     = module.global_resource_group.name
   automation_account_name = azurerm_automation_account.this.name
 
   frequency = "Week"
@@ -539,7 +537,7 @@ resource "azurerm_automation_schedule" "thursday" {
 
 resource "azurerm_automation_schedule" "friday" {
   name                    = "Every-Friday-2AM"
-  resource_group_name     = azurerm_resource_group.global.name
+  resource_group_name     = module.global_resource_group.name
   automation_account_name = azurerm_automation_account.this.name
 
   frequency = "Week"
@@ -556,7 +554,7 @@ resource "azurerm_automation_schedule" "friday" {
 
 resource "azurerm_automation_schedule" "saturday" {
   name                    = "Every-Saturday-2AM"
-  resource_group_name     = azurerm_resource_group.global.name
+  resource_group_name     = module.global_resource_group.name
   automation_account_name = azurerm_automation_account.this.name
 
   frequency = "Week"
@@ -573,7 +571,7 @@ resource "azurerm_automation_schedule" "saturday" {
 
 resource "azurerm_automation_schedule" "monthly" {
   name                    = "Every-Month-Last-Friday-2AM"
-  resource_group_name     = azurerm_resource_group.global.name
+  resource_group_name     = module.global_resource_group.name
   automation_account_name = azurerm_automation_account.this.name
 
   frequency = "Month"
@@ -593,8 +591,3 @@ resource "azurerm_automation_schedule" "monthly" {
   }
 }
 
-output "automation_id" {
-  description = "The ID of the Automation Account."
-  sensitive   = false
-  value       = try(azurerm_automation_account.this.id, "")
-}

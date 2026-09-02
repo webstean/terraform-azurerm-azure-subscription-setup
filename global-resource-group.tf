@@ -1,11 +1,26 @@
 
-resource "azurerm_resource_group" "global" {
+module "global_resource_group" {
+  source           = "Azure/avm-res-resources-resourcegroup/azurerm"
+  version          = "~>0.0, < 1.0"
+  enable_telemetry = var.enable_telemetry
+
   name     = "rg-global-${lower(var.location)}"
   location = var.location
-
-  tags = local.tags
-  lifecycle {
-    ignore_changes = [tags.created]
+  /*
+  role_assignments = {
+    "sp_roleassignment1" = {
+      role_definition_id_or_name       = "Contributor"
+      principal_id                     = azurerm_user_assigned_identity.environment.principal_id
+      skip_service_principal_aad_check = true
+      principal_type                   = "ServicePrincipal"
+      description                      = local.iac_message
+    }
   }
+  */
+  lock = (tobool(var.data_pii) || tobool(var.data_phi) || tobool(var.deploy_private_endpoints)) ? {
+    kind = "CanNotDelete"
+  } : null
+  tags = merge(local.temporary_tags, {
+    type = "permanent"
+  })
 }
-

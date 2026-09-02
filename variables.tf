@@ -147,3 +147,34 @@ variable "virtual_wan_sku" {
   description = "The SKU of the Virtual WAN to be created. Possible values include: Basic and Standard. Defaults to Basic."
   default     = "Basic"
 }
+
+variable "certificate_country" {
+  type        = string
+  description = "The default country for any certificate"
+  default     = "Australia"
+}
+
+variable "certificate_state" {
+  type        = string
+  description = "The default state for any certificate"
+  default     = "Victoria"
+}
+
+variable "certificate_city" {
+  type        = string
+  description = "The default city for any certificate"
+  default     = "Melbourne"
+}
+
+variable "certificate_street_address" {
+  type        = string
+  description = "The default street address for any certificate"
+  default     = null
+}
+
+variable "certificate_postal_code" {
+  type        = string
+  description = "The default postal code for any certificate"
+  default     = "3000"
+}
+

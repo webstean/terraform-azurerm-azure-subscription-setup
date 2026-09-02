@@ -1,11 +1,11 @@
 locals {
-  profile_type = ""PrivateTrust"
+  profile_type = "PrivateTrust"
 }
 
 resource "azurerm_trusted_signing_account" "this" {
   name                = "example-signing-account"
-  resource_group_name = azurerm_resource_group.billing.name
-  location            = azurerm_resource_group.billing.location
+  resource_group_name = module.global_resource_group.name
+  location            = module.global_resource_group.location
   sku_name            = "Basic" ## "Basic" or "Premium"
   tags                = azurerm_resource_group.billing.tags
   lifecycle {
@@ -32,7 +32,6 @@ output "trusted_signing_account_uri" {
   value       = azurerm_trusted_signing_account.this.account_uri
 }
 
-
 resource "azapi_resource" "signing_account_certificate_profile" {
   type      = "Microsoft.CodeSigning/codeSigningAccounts/certificateProfiles@2026-05-15-preview"
   name      = "profile1"
@@ -40,11 +39,11 @@ resource "azapi_resource" "signing_account_certificate_profile" {
   body = {
     properties = {
       identityValidationId = "string" ## subject name of the identity validation resource
-      includeCity          = local.profile_type == "PrivateTrust" || local.profile_type == "PrivateTrustCIPolicy" ? true : null
-      includeCountry       = local.profile_type == "PrivateTrust" || local.profile_type == "PrivateTrustCIPolicy" ? true : null
-      includePostalCode    = local.profile_type == "PrivateTrust" || local.profile_type == "PrivateTrustCIPolicy" ? true : null
-      includeState         = local.profile_type == "PrivateTrust" || local.profile_type == "PrivateTrustCIPolicy" ? true : null
-      includeStreetAddress = local.profile_type == "PrivateTrust" || local.profile_type == "PrivateTrustCIPolicy" ? true : null
+      includeCity          = local.profile_type == "PrivateTrust" || local.profile_type == "PrivateTrustCIPolicy" ? var.certificate_city : null
+      includeCountry       = local.profile_type == "PrivateTrust" || local.profile_type == "PrivateTrustCIPolicy" ? var.certificate_country : null
+      includePostalCode    = local.profile_type == "PrivateTrust" || local.profile_type == "PrivateTrustCIPolicy" ? var.certificate_postal_code : null
+      includeState         = local.profile_type == "PrivateTrust" || local.profile_type == "PrivateTrustCIPolicy" ? var.certificate_state : null
+      includeStreetAddress = local.profile_type == "PrivateTrust" || local.profile_type == "PrivateTrustCIPolicy" ? var.certificate_street_address : null
       profileType          = "PrivateTrust" ## 	'PrivateTrust', 'PrivateTrustCIPolicy' , 'PublicTrust', 'PublicTrustTest', VNSEnclave'
       programType          = "string"
     }
