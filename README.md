@@ -140,6 +140,7 @@ module "azure-subscription-setup" {
 | Name | Source | Version |
 |------|--------|---------|
 | <a name="module_containerregistry"></a> [containerregistry](#module\_containerregistry) | Azure/avm-res-containerregistry-registry/azurerm | ~>0.0, < 1.0 |
+| <a name="module_global_log_analytics_workspace"></a> [global\_log\_analytics\_workspace](#module\_global\_log\_analytics\_workspace) | Azure/avm-res-operationalinsights-workspace/azurerm | ~>0.0, < 1.0 |
 
 - (c) Andrew Webster <webstean@gmail.com>
 <!-- END_TF_DOCS -->
