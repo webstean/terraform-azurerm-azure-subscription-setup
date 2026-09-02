@@ -113,6 +113,7 @@ module "azure-subscription-setup" {
 | <a name="input_location"></a> [location](#input\_location) | The Azure region where resources will be deployed. | `string` | `"australiaeast"` | no |
 | <a name="input_locations_tomonitor"></a> [locations\_tomonitor](#input\_locations\_tomonitor) | The list of locations to monitor | `list(string)` | <pre>[<br/>  "australiaeast",<br/>  "australiasoutheast",<br/>  "australiacentral",<br/>  "australiacentral2"<br/>]</pre> | no |
 | <a name="input_vwan_id"></a> [vwan\_id](#input\_vwan\_id) | The ID of the existing Virtual WAN. If not provided, a new Virtual WAN will be created. | `string` | `null` | no |
+| <a name="input_vwan_sku"></a> [vwan\_sku](#input\_vwan\_sku) | The SKU of the Virtual WAN to be created. Possible values include: Basic and Standard. Defaults to Basic. | `string` | `"Basic"` | no |
 
 ## Outputs
 
@@ -138,6 +139,8 @@ module "azure-subscription-setup" {
 | <a name="output_owner_entra_display_name"></a> [owner\_entra\_display\_name](#output\_owner\_entra\_display\_name) | The display name of the owner's Entra ID account. |
 | <a name="output_owner_entra_object_id"></a> [owner\_entra\_object\_id](#output\_owner\_entra\_object\_id) | The object ID of the owner's Entra ID account. |
 | <a name="output_subscription_id"></a> [subscription\_id](#output\_subscription\_id) | The subscription ID of the Azure resources. |
+| <a name="output_virtual_wan_id"></a> [virtual\_wan\_id](#output\_virtual\_wan\_id) | The ID of the Azure Virtual WAN. |
+| <a name="output_virtual_wan_name"></a> [virtual\_wan\_name](#output\_virtual\_wan\_name) | The name of the Azure Virtual WAN. |
 
 ## Modules
 
