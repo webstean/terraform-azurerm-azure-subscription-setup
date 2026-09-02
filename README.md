@@ -160,6 +160,7 @@ module "azure-subscription-setup" {
 | <a name="module_cosmos"></a> [cosmos](#module\_cosmos) | Azure/avm-res-documentdb-databaseaccount/azurerm | ~>0.0, < 1.0 |
 | <a name="module_global_log_analytics_workspace"></a> [global\_log\_analytics\_workspace](#module\_global\_log\_analytics\_workspace) | Azure/avm-res-operationalinsights-workspace/azurerm | ~>0.0, < 1.0 |
 | <a name="module_global_resource_group"></a> [global\_resource\_group](#module\_global\_resource\_group) | Azure/avm-res-resources-resourcegroup/azurerm | ~>0.0, < 1.0 |
+| <a name="module_global_user_managed_identity"></a> [global\_user\_managed\_identity](#module\_global\_user\_managed\_identity) | Azure/avm-res-managedidentity-userassignedidentity/azurerm | ~>0.0, < 1.0 |
 | <a name="module_search_keyvault"></a> [search\_keyvault](#module\_search\_keyvault) | Azure/avm-res-keyvault-vault/azurerm | ~>0.7, < 1.0 |
 
 - (c) Andrew Webster <webstean@gmail.com>
