@@ -95,3 +95,14 @@ resource "azurerm_cosmosdb_sql_role_assignment" "this" {
 }
 */
 
+output "cosmos_db_free_account_resource_id" {
+  description = "The ID of the Cosmos DB account"
+  sensitive   = false
+  value       = module.cosmos.resource_id
+}
+
+output "cosmos_db_free_account_name" {
+  description = "The name of the Cosmos DB account"
+  sensitive   = false
+  value       = module.cosmos.name
+}
