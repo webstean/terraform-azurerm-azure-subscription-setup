@@ -139,6 +139,8 @@ module "azure-subscription-setup" {
 | <a name="output_automation_account_name"></a> [automation\_account\_name](#output\_automation\_account\_name) | The name of the Azure Automation Account. |
 | <a name="output_container_registry_id"></a> [container\_registry\_id](#output\_container\_registry\_id) | The ID of the Azure Container Registry. |
 | <a name="output_container_registry_url"></a> [container\_registry\_url](#output\_container\_registry\_url) | The URL of the Azure Container Registry. |
+| <a name="output_cosmos_db_free_account_name"></a> [cosmos\_db\_free\_account\_name](#output\_cosmos\_db\_free\_account\_name) | The name of the Cosmos DB account |
+| <a name="output_cosmos_db_free_account_resource_id"></a> [cosmos\_db\_free\_account\_resource\_id](#output\_cosmos\_db\_free\_account\_resource\_id) | The ID of the Cosmos DB account |
 | <a name="output_data_phi"></a> [data\_phi](#output\_data\_phi) | Whether the data contains protected health information (PHI). |
 | <a name="output_data_pii"></a> [data\_pii](#output\_data\_pii) | Whether the data contains personally identifiable information (PII). |
 | <a name="output_deploy_private_endpoints"></a> [deploy\_private\_endpoints](#output\_deploy\_private\_endpoints) | Whether to deploy private endpoints. |
