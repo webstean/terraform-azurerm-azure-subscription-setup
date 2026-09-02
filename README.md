@@ -76,7 +76,6 @@ module "azure-subscription-setup" {
 | [azurerm_monitor_diagnostic_setting.subscription1](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/monitor_diagnostic_setting) | resource |
 | [azurerm_monitor_diagnostic_setting.subscription2](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/monitor_diagnostic_setting) | resource |
 | [azurerm_resource_group.billing](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group) | resource |
-| [azurerm_resource_group.global](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group) | resource |
 | [azurerm_resource_group.monitoring](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group) | resource |
 | [azurerm_resource_provider_feature_registration.encryption_at_host](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_provider_feature_registration) | resource |
 | [azurerm_role_assignment.essential_machine_management_administrator](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment) | resource |
@@ -106,6 +105,11 @@ module "azure-subscription-setup" {
 | <a name="input_subscription_id"></a> [subscription\_id](#input\_subscription\_id) | The Azure subscription ID in which the resources will be deployed. | `string` | n/a | yes |
 | <a name="input_alert_name"></a> [alert\_name](#input\_alert\_name) | The name for alerts | `string` | `"MSDN SubscriptionAlerts"` | no |
 | <a name="input_alert_sms_country"></a> [alert\_sms\_country](#input\_alert\_sms\_country) | The country code for SMS alerts | `string` | `"+61"` | no |
+| <a name="input_certificate_city"></a> [certificate\_city](#input\_certificate\_city) | The default city for any certificate | `string` | `"Melbourne"` | no |
+| <a name="input_certificate_country"></a> [certificate\_country](#input\_certificate\_country) | The default country for any certificate | `string` | `"Australia"` | no |
+| <a name="input_certificate_postal_code"></a> [certificate\_postal\_code](#input\_certificate\_postal\_code) | The default postal code for any certificate | `string` | `"3000"` | no |
+| <a name="input_certificate_state"></a> [certificate\_state](#input\_certificate\_state) | The default state for any certificate | `string` | `"Victoria"` | no |
+| <a name="input_certificate_street_address"></a> [certificate\_street\_address](#input\_certificate\_street\_address) | The default street address for any certificate | `string` | `null` | no |
 | <a name="input_data_phi"></a> [data\_phi](#input\_data\_phi) | If true, this environment contains PHI (Protected Health Information) so deploy additional security controls. If false, deploys a non-PHI environment. | `bool` | `false` | no |
 | <a name="input_data_pii"></a> [data\_pii](#input\_data\_pii) | If true, this environment contains PII (Personally Identifiable Information) so deploy additional security controls. If false, deploys a non-PII environment. | `bool` | `false` | no |
 | <a name="input_deploy_private_endpoints"></a> [deploy\_private\_endpoints](#input\_deploy\_private\_endpoints) | If true, deploys private endpoints for secure access to Azure services. If false, does not deploy private endpoints. | `bool` | `false` | no |
@@ -128,7 +132,6 @@ module "azure-subscription-setup" {
 | <a name="output_amba_version"></a> [amba\_version](#output\_amba\_version) | AMBA release deployed. |
 | <a name="output_automation_account_id"></a> [automation\_account\_id](#output\_automation\_account\_id) | The ID of the Azure Automation Account. |
 | <a name="output_automation_account_name"></a> [automation\_account\_name](#output\_automation\_account\_name) | The name of the Azure Automation Account. |
-| <a name="output_automation_id"></a> [automation\_id](#output\_automation\_id) | The ID of the Automation Account. |
 | <a name="output_container_registry_id"></a> [container\_registry\_id](#output\_container\_registry\_id) | The ID of the Azure Container Registry. |
 | <a name="output_container_registry_url"></a> [container\_registry\_url](#output\_container\_registry\_url) | The URL of the Azure Container Registry. |
 | <a name="output_data_phi"></a> [data\_phi](#output\_data\_phi) | Whether the data contains protected health information (PHI). |
@@ -147,6 +150,7 @@ module "azure-subscription-setup" {
 |------|--------|---------|
 | <a name="module_containerregistry"></a> [containerregistry](#module\_containerregistry) | Azure/avm-res-containerregistry-registry/azurerm | ~>0.0, < 1.0 |
 | <a name="module_global_log_analytics_workspace"></a> [global\_log\_analytics\_workspace](#module\_global\_log\_analytics\_workspace) | Azure/avm-res-operationalinsights-workspace/azurerm | ~>0.0, < 1.0 |
+| <a name="module_global_resource_group"></a> [global\_resource\_group](#module\_global\_resource\_group) | Azure/avm-res-resources-resourcegroup/azurerm | ~>0.0, < 1.0 |
 
 - (c) Andrew Webster <webstean@gmail.com>
 <!-- END_TF_DOCS -->
