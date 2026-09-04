@@ -126,7 +126,7 @@ resource "azurerm_monitor_activity_log_alert" "service_health_maintenance" {
 resource "azurerm_monitor_activity_log_alert" "service_health_advisory" {
   name                = "alrt-service-health-advisory"
   resource_group_name = module.global_resource_group.name
-  location            = module.global_resource_group.location
+  location            = "global"
   scopes              = [data.azurerm_subscription.current.id]
   description         = "Azure Service Health advisories and informational events."
   enabled             = true
@@ -155,7 +155,7 @@ resource "azurerm_monitor_activity_log_alert" "service_health" {
 
   name                = each.value.name
   resource_group_name = module.global_resource_group.name
-  location            = module.global_resource_group.location
+  location            = "global"
   scopes              = [data.azurerm_subscription.current.id]
   description         = each.value.description
   enabled             = true
