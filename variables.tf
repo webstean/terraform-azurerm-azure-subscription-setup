@@ -124,12 +124,17 @@ variable "alert_sms_number" {
   type        = string
   description = "The phone number for SMS alerts"
   default     = null
+
+  validation {
+    condition     = var.alert_sms_number == null || can(regex("^[0-9]+$", trimspace(var.alert_sms_number)))
+    error_message = "alert_sms_number must be null or contain only digits."
+  }
 }
 
 variable "alert_sms_country" {
   type        = string
   description = "The country code for SMS alerts"
-  default     = null
+  default     = "+61"
 }
 
 variable "locations_tomonitor" {
