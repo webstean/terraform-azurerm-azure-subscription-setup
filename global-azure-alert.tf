@@ -46,11 +46,12 @@ resource "azurerm_monitor_action_group" "alertme" {
   tags = { for key, value in module.global_resource_group.resource.tags : key => value if lower(key) != "created" }
 }
 
+/*
 resource "azurerm_monitor_activity_log_alert" "service_health_incidents" {
   name                = "alrt-service-health-incidents"
   resource_group_name = module.global_resource_group.name
-  location            = module.global_resource_group.location
-  scopes              = [var.subscription_id]
+  location            = "global"
+  scopes              = [var.subscription_id] ## must be a management group!
   description         = "** Azure Service Health incident **"
   enabled             = true
 
@@ -71,12 +72,14 @@ resource "azurerm_monitor_activity_log_alert" "service_health_incidents" {
   }
   tags = { for key, value in module.global_resource_group.resource.tags : key => value if lower(key) != "created" }
 }
+*/
 
+/*
 resource "azurerm_monitor_activity_log_alert" "service_health_maintenance" {
   name                = "alrt-service-health-maintenance"
   resource_group_name = module.global_resource_group.name
-  location            = module.global_resource_group.location
-  scopes              = [var.subscription_id]
+  location            = "global"
+  scopes              = [var.subscription_id] ## must be a management group!
   description         = "Azure planned maintenance affecting this subscription."
   enabled             = true
 
@@ -97,6 +100,7 @@ resource "azurerm_monitor_activity_log_alert" "service_health_maintenance" {
   }
   tags = { for key, value in module.global_resource_group.resource.tags : key => value if lower(key) != "created" }
 }
+*/
 
 locals {
   service_health_alerts = {
