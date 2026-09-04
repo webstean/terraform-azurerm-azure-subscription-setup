@@ -75,7 +75,7 @@ resource "azurerm_monitor_activity_log_alert" "service_health_incidents" {
   name                = "alrt-service-health-incidents"
   resource_group_name = module.global_resource_group.name
   location            = "global"
-  scopes              = ["/subscriptions/${var.subscription_id}"]
+  scopes              = [data.azurerm_subscription.current.id]
   description         = "** Azure Service Health incident **"
   enabled             = true
 
@@ -101,7 +101,7 @@ resource "azurerm_monitor_activity_log_alert" "service_health_maintenance" {
   name                = "alrt-service-health-maintenance"
   resource_group_name = module.global_resource_group.name
   location            = "global"
-  scopes              = ["/subscriptions/${var.subscription_id}"]
+  scopes              = [data.azurerm_subscription.current.id]
   description         = "Azure planned maintenance affecting this subscription."
   enabled             = true
 
@@ -127,7 +127,7 @@ resource "azurerm_monitor_activity_log_alert" "service_health_advisory" {
   name                = "alrt-service-health-advisory"
   resource_group_name = module.global_resource_group.name
   location            = module.global_resource_group.location
-  scopes              = ["/subscriptions/${var.subscription_id}"]
+  scopes              = [data.azurerm_subscription.current.id]
   description         = "Azure Service Health advisories and informational events."
   enabled             = true
 
@@ -156,7 +156,7 @@ resource "azurerm_monitor_activity_log_alert" "service_health" {
   name                = each.value.name
   resource_group_name = module.global_resource_group.name
   location            = module.global_resource_group.location
-  scopes              = ["/subscriptions/${var.subscription_id}"]
+  scopes              = [data.azurerm_subscription.current.id]
   description         = each.value.description
   enabled             = true
 
