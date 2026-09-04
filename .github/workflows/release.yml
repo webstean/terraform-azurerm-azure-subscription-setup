@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: "Release version (e.g. v1.2.3)"
+        description: "Release version (e.g. v0.2.0)"
         required: true
         type: string
       prerelease:
@@ -45,7 +45,7 @@ jobs:
             exit 1
           fi
 
-      - name: Create Module Release
+      - name: Create release
         run: |
           gh release create "${{ inputs.version }}" \
             --title "${{ inputs.version }}" \
@@ -55,3 +55,24 @@ jobs:
             ${{ inputs.draft && '--draft' || '' }}
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Write release summary
+        run: |
+          release_url="$(gh release view "${{ inputs.version }}" --json url --jq '.url')"
+
+          {
+            echo "## Module release created"
+            echo
+            echo "| Detail | Value |"
+            echo "| --- | --- |"
+            echo "| Version | [${{ inputs.version }}](${release_url}) |"
+            echo "| Target branch | \`${{ github.ref_name }}\` |"
+            echo "| Commit | \`${{ github.sha }}\` |"
+            echo "| Pre-release | \`${{ inputs.prerelease }}\` |"
+            echo "| Draft | \`${{ inputs.draft }}\` |"
+            echo "| Triggered by | @${{ github.actor }} |"
+          } >> "$GITHUB_STEP_SUMMARY"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+          
