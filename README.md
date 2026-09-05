@@ -41,9 +41,6 @@ module "azure-subscription-setup" {
 | [azurerm_automation_module.sharepoint](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/automation_module) | resource |
 | [azurerm_automation_module.vmware_powercli](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/automation_module) | resource |
 | [azurerm_automation_runbook.demo_rb2](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/automation_runbook) | resource |
-| [azurerm_automation_runtime_environment_package.msgraph](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/automation_runtime_environment_package) | resource |
-| [azurerm_automation_runtime_environment_package.pswindowsupdate](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/automation_runtime_environment_package) | resource |
-| [azurerm_automation_runtime_environment_package.vmware_powercli](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/automation_runtime_environment_package) | resource |
 | [azurerm_automation_schedule.friday](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/automation_schedule) | resource |
 | [azurerm_automation_schedule.monday](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/automation_schedule) | resource |
 | [azurerm_automation_schedule.monthly](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/automation_schedule) | resource |
