@@ -1,23 +1,5 @@
 # Outputs
 
-output "data_pii" {
-  description = "Whether the data contains personally identifiable information (PII)."
-  sensitive   = false
-  value       = var.data_pii
-}
-
-output "data_phi" {
-  description = "Whether the data contains protected health information (PHI)."
-  sensitive   = false
-  value       = var.data_phi
-}
-
-output "deploy_private_endpoints" {
-  description = "Whether to deploy private endpoints."
-  sensitive   = false
-  value       = var.deploy_private_endpoints
-}
-
 output "location" {
   description = "The location of the resources."
   sensitive   = false

@@ -15,8 +15,8 @@ module "containerregistry" {
   resource_group_name           = module.global_resource_group.name
   location                      = module.global_resource_group.location
   sku                           = local.acr_sku
-  admin_enabled                 = (tobool(var.data_pii) || tobool(var.data_phi) || tobool(var.deploy_private_endpoints)) ? false : true
-  public_network_access_enabled = (tobool(var.data_pii) || tobool(var.data_phi) || tobool(var.deploy_private_endpoints)) ? false : true
+  admin_enabled                 = false
+  public_network_access_enabled = true
   quarantine_policy_enabled     = local.acr_sku == "Premium" ? true : false
   retention_policy_in_days      = local.acr_sku == "Premium" ? 7 : null
   anonymous_pull_enabled        = local.acr_sku == "Basic" ? false : true
@@ -54,9 +54,6 @@ module "containerregistry" {
       description                      = local.iac_message
     }
   }
-  lock = (tobool(var.data_pii) || tobool(var.data_phi) || tobool(var.deploy_private_endpoints)) ? {
-    kind = "CanNotDelete"
-  } : null
   tags = { for key, value in module.global_resource_group.resource.tags : key => value if lower(key) != "created" }
   depends_on = [
     module.global_log_analytics_workspace

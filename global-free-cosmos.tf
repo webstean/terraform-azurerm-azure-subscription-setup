@@ -5,7 +5,7 @@ locals {
   cosmos_name_hostname = lower(substr(replace("cc${local.cosmos_random_suffix}${local.cosmos_name_location}", "-", ""), 0, 24))
 }
 
-module "cosmos" {
+module "free_cosmos" {
   source           = "Azure/avm-res-documentdb-databaseaccount/azurerm"
   version          = "~>0.0, < 1.0"
   enable_telemetry = var.enable_telemetry
@@ -41,8 +41,8 @@ module "cosmos" {
 */
 
   free_tier_enabled                     = true
-  public_network_access_enabled         = (tobool(var.data_pii) || tobool(var.data_phi) || tobool(var.deploy_private_endpoints)) ? false : false # must be false at Unisys, due to policy
-  local_authentication_disabled         = (tobool(var.data_pii) || tobool(var.data_phi) || tobool(var.deploy_private_endpoints)) ? false : true  # must be false at Unisys, due to policy
+  public_network_access_enabled         = true
+  local_authentication_disabled         = false
   network_acl_bypass_for_azure_services = true
   multiple_write_locations_enabled      = false
   partition_merge_enabled               = false
@@ -72,9 +72,6 @@ module "cosmos" {
   }
 */
 
-  lock = (tobool(var.data_pii) || tobool(var.data_phi) || tobool(var.deploy_private_endpoints)) ? {
-    kind = "CanNotDelete"
-  } : null
   tags = { for key, value in module.global_resource_group.resource.tags : key => value if lower(key) != "created" }
   depends_on = [
     module.global_resource_group
@@ -98,11 +95,11 @@ resource "azurerm_cosmosdb_sql_role_assignment" "this" {
 output "cosmos_db_free_account_resource_id" {
   description = "The ID of the Cosmos DB account"
   sensitive   = false
-  value       = module.cosmos.resource_id
+  value       = module.free_cosmos.resource_id
 }
 
 output "cosmos_db_free_account_name" {
   description = "The name of the Cosmos DB account"
   sensitive   = false
-  value       = module.cosmos.name
+  value       = module.free_cosmos.name
 }

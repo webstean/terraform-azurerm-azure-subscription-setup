@@ -22,7 +22,7 @@ resource "azurerm_resource_group" "monitoring" {
 resource "azurerm_monitor_action_group" "alertme" {
   name                = "azure-health-alert"
   resource_group_name = module.global_resource_group.name
-  location            = module.global_resource_group.location
+  location            = "global"
   short_name          = "AzureAlerts" ## can only be 12 character long
 
   dynamic "email_receiver" {

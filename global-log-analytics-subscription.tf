@@ -41,9 +41,6 @@ module "global_log_analytics_workspace" {
   #  }
   #}
 
-  lock = (tobool(var.data_pii) || tobool(var.data_phi) || tobool(var.deploy_private_endpoints)) ? {
-    kind = "CanNotDelete"
-  } : null
   tags = { for key, value in module.global_resource_group.resource.tags : key => value if lower(key) != "created" }
   depends_on = [
     module.global_resource_group
@@ -60,15 +57,5 @@ resource "azurerm_monitor_diagnostic_setting" "subscription1" {
   }
   enabled_metric {
     category = "AllMetrics"
-  }
-}
-
-resource "azurerm_monitor_diagnostic_setting" "subscription2" {
-  name                       = "Audit-${data.azurerm_subscription.current.display_name}-to-Azure-Monitor"
-  target_resource_id         = data.azurerm_subscription.current.id
-  log_analytics_workspace_id = module.global_log_analytics_workspace.resource_id
-
-  enabled_log {
-    category_group = "audit"
   }
 }

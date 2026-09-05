@@ -18,9 +18,6 @@ module "global_resource_group" {
     }
   }
 */
-  lock = (tobool(var.data_pii) || tobool(var.data_phi) || tobool(var.deploy_private_endpoints)) ? {
-    kind = "CanNotDelete"
-  } : null
   tags = merge(local.temporary_tags, {
     type = "permanent"
   })

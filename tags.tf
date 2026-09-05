@@ -4,13 +4,7 @@ locals {
   permanent_tags = {
     type        = "permanent" ## permanent, temporary (can be safely deleted and recreated, to save cost)
     owner_email = var.owner_email
-    ## Personal Identifiable Data
-    data_PII = var.data_pii
-    ## Personal Health Information
-    data_PHI = var.data_phi
-    #    env         = var.environment_name
-    #    criticality = var.environment_crticiality
-    createdby = "terraform"
+    createdby   = "terraform"
     ## 24-7         : 24x7 monitoring
     ## 8-5          : business hours
     ## not-monitored: not monitored
@@ -22,13 +16,7 @@ locals {
   temporary_tags = {
     type        = "temporary" ## permanent, temporary (can be safely deleted and recreated, to save cost)
     owner_email = var.owner_email
-    ## Personal Identifiable Data
-    data_PII = var.data_pii
-    ## Personal Health Information
-    data_PHI = var.data_phi
-    #    env         = var.environment_name
-    #    criticality = var.environment_crticiality
-    createdby = "terraform"
+    createdby   = "terraform"
     ## 24-7         : 24x7 monitoring
     ## 8-5          : business hours
     ## not-monitored: not monitored

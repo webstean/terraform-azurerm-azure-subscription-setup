@@ -20,13 +20,13 @@ module "search_keyvault" {
   sku_name                        = "standard"
   purge_protection_enabled        = true
   soft_delete_retention_days      = 7
-  public_network_access_enabled   = (tobool(var.data_pii) || tobool(var.data_phi) || tobool(var.deploy_private_endpoints)) ? false : true
+  public_network_access_enabled   = true
   legacy_access_policies_enabled  = false
   enabled_for_deployment          = false ## Whether Azure Virtual Machines are permitted to retrieve certificates
   enabled_for_disk_encryption     = false ## Whether Azure Disk Encryption is permitted to retrieve secrets from the vault
   enabled_for_template_deployment = false ## Whether Azure Resource Manager is permitted to retrieve secrets from the vault
   network_acls = {
-    default_action = (tobool(var.data_pii) || tobool(var.data_phi) || tobool(var.deploy_private_endpoints)) ? "Deny" : "Allow"
+    default_action = "Allow"
     bypass         = "AzureServices"
     #virtual_network_subnet_ids = [for subnets in azurerm_virtual_network.this.subnet : subnets.id if contains(subnets.service_endpoints, "Microsoft.KeyVault")]
   }
@@ -56,9 +56,6 @@ module "search_keyvault" {
     }
   }
 */
-  lock = (tobool(var.data_pii) || tobool(var.data_phi) || tobool(var.deploy_private_endpoints)) ? {
-    kind = "CanNotDelete"
-  } : null
   tags = { for key, value in module.global_resource_group.resource.tags : key => value if lower(key) != "created" }
   #depends_on = [
   #  module.global_user_managed_identity
@@ -77,7 +74,7 @@ module "ai_search_service" {
   sku                          = local.search_sku
   semantic_search_sku          = local.search_sku == "free" ? null : local.search_semantic_sku
   authentication_failure_mode  = "http401WithBearerChallenge"
-  local_authentication_enabled = (tobool(var.data_pii) || tobool(var.data_phi) || tobool(var.deploy_private_endpoints)) ? false : true
+  local_authentication_enabled = false
   network_rule_bypass_option   = "AzureServices"
   replica_count                = 1
   partition_count              = 1
@@ -114,37 +111,34 @@ module "ai_search_service" {
     }
   }
 */
-  lock = (tobool(var.data_pii) || tobool(var.data_phi) || tobool(var.deploy_private_endpoints)) ? {
-    kind = "CanNotDelete"
-  } : null
   tags = { for key, value in module.global_resource_group.resource.tags : key => value if lower(key) != "created" }
 }
 
-output "ai_search_id" {
+output "ai_free_search_id" {
   description = "The ID of the AI search service"
   sensitive   = false
   value       = module.ai_search_service.resource.id
 }
 
-output "ai_search_endpoint" {
+output "ai_free_search_endpoint" {
   description = "The endpoint of the AI search service"
   sensitive   = false
   value       = module.ai_search_service.resource.endpoint
 }
 
-output "ai_search_primary_key" {
+output "ai_free_search_primary_key" {
   description = "The primary key of the AI search service"
   sensitive   = true
   value       = module.ai_search_service.resource.primary_key
 }
 
-output "ai_search_secondary_key" {
+output "ai_free_search_secondary_key" {
   description = "The secondary key of the AI search service"
   sensitive   = true
   value       = module.ai_search_service.resource.secondary_key
 }
 
-output "ai_search_principal_id" {
+output "ai_free_search_principal_id" {
   description = "The principal ID of the AI search service's system-assigned managed identity"
   sensitive   = true
   value       = module.ai_search_service.resource.identity[0].principal_id

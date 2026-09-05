@@ -79,6 +79,7 @@ variable "org_longname" {
 }
 */
 
+/*
 variable "data_pii" {
   type        = bool
   description = <<DESC
@@ -102,6 +103,7 @@ If true, deploys private endpoints for secure access to Azure services. If false
 DESC
   default     = false
 }
+*/
 
 variable "alert_name" {
   type        = string

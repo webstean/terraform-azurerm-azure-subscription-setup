@@ -26,7 +26,7 @@ resource "azurerm_automation_account" "this" {
   location            = module.global_resource_group.location
 
   local_authentication_enabled  = false
-  public_network_access_enabled = (tobool(var.data_pii) || tobool(var.data_phi) || tobool(var.deploy_private_endpoints)) ? false : true
+  public_network_access_enabled = true
 
   identity {
     type = "SystemAssigned"
@@ -36,6 +36,7 @@ resource "azurerm_automation_account" "this" {
   tags = { for key, value in module.global_resource_group.resource.tags : key => value if lower(key) != "created" }
 }
 
+/*
 resource "azurerm_automation_runtime_environment" "pwsh76" {
   name                  = "PowerShell-7.6-custom"
   automation_account_id = azurerm_automation_account.this.id
@@ -49,6 +50,7 @@ resource "azurerm_automation_runtime_environment" "pwsh76" {
     "Azure CLI" = "2.77.0"
   }
 }
+*/
 
 /*
 resource "azurerm_role_assignment" "automation_reader" {
@@ -134,50 +136,44 @@ resource "azurerm_automation_hybrid_runbook_worker" "worker1" {
 }
 */
 
-
 resource "azurerm_automation_credential" "vcenter-create" {
-
   name                    = "VCENTER-CREDENTIAL"
   resource_group_name     = module.global_resource_group.name
   automation_account_name = azurerm_automation_account.this.name
-
-  username    = "example_user"
-  password    = "example_pwd"
-  description = "This is a vCenter credential for managing VMware Virtual Machines"
+  username                = "example_user"
+  password                = "example_pwd"
+  description             = "This is a vCenter credential for managing VMware Virtual Machines"
 }
 
 resource "azurerm_automation_variable_string" "resource-group-id" {
-  name                    = "RESOURCE_GROUP_ID"
+  name                    = "GLOBAL_RESOURCE_GROUP_ID"
   resource_group_name     = module.global_resource_group.name
   automation_account_name = azurerm_automation_account.this.name
-  encrypted               = (var.data_pii == "yes" || var.data_phi == "yes") ? true : false
-
-  value       = module.global_resource_group.resource_id
-  description = "Resource Group ID for this environment"
+  encrypted               = false
+  value                   = module.global_resource_group.resource_id
+  description             = "Resource Group ID for this environment"
 }
 resource "azurerm_automation_variable_string" "resource-group-name" {
-  name                    = "RESOURCE_GROUP_NAME"
+  name                    = "GLOBAL_RESOURCE_GROUP_NAME"
   resource_group_name     = module.global_resource_group.name
   automation_account_name = azurerm_automation_account.this.name
-  encrypted               = (var.data_pii == "yes" || var.data_phi == "yes") ? true : false
-
-  value       = module.global_resource_group.name
-  description = "Resource Group Name for this environment"
+  encrypted               = false
+  value                   = module.global_resource_group.name
+  description             = "Resource Group Name for this environment"
 }
 resource "azurerm_automation_variable_string" "subscription-id" {
   name                    = "AZURE_SUBSCRIPTION_ID"
   resource_group_name     = module.global_resource_group.name
   automation_account_name = azurerm_automation_account.this.name
-  encrypted               = (var.data_pii == "yes" || var.data_phi == "yes") ? true : false
-
-  value       = var.subscription_id
-  description = "Microsoft Azure Subscription ID"
+  encrypted               = false
+  value                   = var.subscription_id
+  description             = "Microsoft Azure Subscription ID"
 }
 resource "azurerm_automation_variable_string" "azure_tenant" {
   name                    = "AZURE_TENANT_ID"
   resource_group_name     = module.global_resource_group.name
   automation_account_name = azurerm_automation_account.this.name
-  encrypted               = (var.data_pii == "yes" || var.data_phi == "yes") ? true : false
+  encrypted               = false
   value                   = data.azurerm_client_config.current.tenant_id
   description             = "Microsoft Azure Tenant ID"
 }
@@ -185,7 +181,7 @@ resource "azurerm_automation_variable_string" "power_tenant" {
   name                    = "POWER_PLATFORM_TENANT_ID"
   resource_group_name     = module.global_resource_group.name
   automation_account_name = azurerm_automation_account.this.name
-  encrypted               = (var.data_pii == "yes" || var.data_phi == "yes") ? true : false
+  encrypted               = false
   value                   = data.azurerm_client_config.current.tenant_id
   description             = "Microsoft Azure Tenant ID"
 }
@@ -193,7 +189,7 @@ resource "azurerm_automation_variable_string" "fabric_tenant" {
   name                    = "FABRIC_TENANT_ID"
   resource_group_name     = module.global_resource_group.name
   automation_account_name = azurerm_automation_account.this.name
-  encrypted               = (var.data_pii == "yes" || var.data_phi == "yes") ? true : false
+  encrypted               = false
   value                   = data.azurerm_client_config.current.tenant_id
   description             = "Microsoft Fabric - Tenant ID"
 }
@@ -212,7 +208,7 @@ resource "azurerm_automation_variable_string" "admin_dns_0" {
   name                    = "USERDNSDOMAIN"
   resource_group_name     = module.global_resource_group.name
   automation_account_name = azurerm_automation_account.this.name
-  encrypted               = (tobool(var.data_pii) == true || tobool(var.data_phi) == true) ? true : false
+  encrypted               = false
 
   value       = "data.local"
   description = "Full DNS Domain Name of the Entra Domain Services deployed in the global/core resource landing zone"
@@ -222,12 +218,13 @@ resource "azurerm_automation_variable_string" "admin_dssc_domain" {
   name                    = "USERDOMAIN"
   resource_group_name     = module.global_resource_group.name
   automation_account_name = azurerm_automation_account.this.name
-  encrypted               = (tobool(var.data_pii) == true || tobool(var.data_phi) == true) ? true : false
+  encrypted               = false
 
   value       = "abc12"
   description = "Active Directory Domain"
 }
 
+/*
 resource "azurerm_automation_variable_bool" "data_pii" {
   name                    = "CONTAINS_PERSONAL_IDENTIFIABLE_INFORMATION"
   resource_group_name     = module.global_resource_group.name
@@ -247,6 +244,7 @@ resource "azurerm_automation_variable_bool" "data_phi" {
   value       = var.data_phi
   description = "Protected Health Information"
 }
+*/
 
 /*
 // Demo Runbooks

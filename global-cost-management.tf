@@ -1,6 +1,6 @@
 resource "azurerm_subscription_cost_management_view" "view1" {
   name            = "TerraformCostView"
-  display_name    = "Azure Cost View - Subscription: ${data.azurerm_subscription.current.display_name}"
+  display_name    = substr("Azure Cost View - Subscription: ${data.azurerm_subscription.current.display_name}", 0, 50)
   subscription_id = format("/%s/%s", "subscriptions", data.azurerm_client_config.current.subscription_id)
 
   chart_type  = "Area"
