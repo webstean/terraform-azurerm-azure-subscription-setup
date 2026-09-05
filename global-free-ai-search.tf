@@ -73,8 +73,8 @@ module "ai_search_service" {
 
   sku                          = local.search_sku
   semantic_search_sku          = local.search_sku == "free" ? null : local.search_semantic_sku
+  local_authentication_enabled = true
   authentication_failure_mode  = "http401WithBearerChallenge"
-  local_authentication_enabled = false
   network_rule_bypass_option   = "AzureServices"
   replica_count                = 1
   partition_count              = 1
