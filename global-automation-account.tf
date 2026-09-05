@@ -425,6 +425,7 @@ resource "azurerm_automation_runtime_environment_package" "az_module" {
 }
 */
 
+/*
 resource "azurerm_automation_runtime_environment_package" "pswindowsupdate" {
   name                              = "PSWindowsUpdate"
   automation_runtime_environment_id = azurerm_automation_runtime_environment.pwsh76.id
@@ -445,7 +446,7 @@ resource "azurerm_automation_runtime_environment_package" "vmware_powercli" {
 
   content_uri = "https://www.powershellgallery.com/api/v2/package/VMware.PowerCLI"
 }
-
+*/
 
 resource "azurerm_automation_schedule" "sunday" {
   name                    = "Every-Sunday-2AM"
