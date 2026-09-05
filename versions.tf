@@ -157,8 +157,3 @@ provider "azapi" {
   use_cli                   = true
   enable_preflight          = true
 }
-
-resource "azurerm_resource_provider_feature_registration" "encryption_at_host" {
-  provider_name = "Microsoft.Compute"
-  name          = "EncryptionAtHost"
-}
