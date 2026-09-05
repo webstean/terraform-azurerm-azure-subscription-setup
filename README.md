@@ -41,7 +41,6 @@ module "azure-subscription-setup" {
 | [azurerm_automation_module.sharepoint](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/automation_module) | resource |
 | [azurerm_automation_module.vmware_powercli](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/automation_module) | resource |
 | [azurerm_automation_runbook.demo_rb2](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/automation_runbook) | resource |
-| [azurerm_automation_runtime_environment.pwsh76](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/automation_runtime_environment) | resource |
 | [azurerm_automation_runtime_environment_package.msgraph](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/automation_runtime_environment_package) | resource |
 | [azurerm_automation_runtime_environment_package.pswindowsupdate](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/automation_runtime_environment_package) | resource |
 | [azurerm_automation_runtime_environment_package.vmware_powercli](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/automation_runtime_environment_package) | resource |
@@ -53,8 +52,6 @@ module "azure-subscription-setup" {
 | [azurerm_automation_schedule.thursday](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/automation_schedule) | resource |
 | [azurerm_automation_schedule.tuesday](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/automation_schedule) | resource |
 | [azurerm_automation_schedule.wednesday](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/automation_schedule) | resource |
-| [azurerm_automation_variable_bool.data_phi](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/automation_variable_bool) | resource |
-| [azurerm_automation_variable_bool.data_pii](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/automation_variable_bool) | resource |
 | [azurerm_automation_variable_string.admin_dns_0](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/automation_variable_string) | resource |
 | [azurerm_automation_variable_string.admin_dssc_domain](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/automation_variable_string) | resource |
 | [azurerm_automation_variable_string.azure_tenant](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/automation_variable_string) | resource |
@@ -74,7 +71,6 @@ module "azure-subscription-setup" {
 | [azurerm_monitor_activity_log_alert.service_health_incidents](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/monitor_activity_log_alert) | resource |
 | [azurerm_monitor_activity_log_alert.service_health_maintenance](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/monitor_activity_log_alert) | resource |
 | [azurerm_monitor_diagnostic_setting.subscription1](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/monitor_diagnostic_setting) | resource |
-| [azurerm_monitor_diagnostic_setting.subscription2](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/monitor_diagnostic_setting) | resource |
 | [azurerm_resource_group.billing](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group) | resource |
 | [azurerm_resource_group.monitoring](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group) | resource |
 | [azurerm_role_assignment.essential_machine_management_administrator](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment) | resource |
@@ -110,9 +106,6 @@ module "azure-subscription-setup" {
 | <a name="input_certificate_postal_code"></a> [certificate\_postal\_code](#input\_certificate\_postal\_code) | The default postal code for any certificate | `string` | `"3000"` | no |
 | <a name="input_certificate_state"></a> [certificate\_state](#input\_certificate\_state) | The default state for any certificate | `string` | `"Victoria"` | no |
 | <a name="input_certificate_street_address"></a> [certificate\_street\_address](#input\_certificate\_street\_address) | The default street address for any certificate | `string` | `null` | no |
-| <a name="input_data_phi"></a> [data\_phi](#input\_data\_phi) | If true, this environment contains PHI (Protected Health Information) so deploy additional security controls. If false, deploys a non-PHI environment. | `bool` | `false` | no |
-| <a name="input_data_pii"></a> [data\_pii](#input\_data\_pii) | If true, this environment contains PII (Personally Identifiable Information) so deploy additional security controls. If false, deploys a non-PII environment. | `bool` | `false` | no |
-| <a name="input_deploy_private_endpoints"></a> [deploy\_private\_endpoints](#input\_deploy\_private\_endpoints) | If true, deploys private endpoints for secure access to Azure services. If false, does not deploy private endpoints. | `bool` | `false` | no |
 | <a name="input_enable_telemetry"></a> [enable\_telemetry](#input\_enable\_telemetry) | This variable controls whether or not the AVM (Azure Verified Modules) telemetry is enabled for the module.<br/>For more information see <https://aka.ms/avm/telemetryinfo>.<br/>If it is set to false, then no telemetry will be collected. | `bool` | `false` | no |
 | <a name="input_location"></a> [location](#input\_location) | The Azure region where resources will be deployed. | `string` | `"australiaeast"` | no |
 | <a name="input_locations_tomonitor"></a> [locations\_tomonitor](#input\_locations\_tomonitor) | The list of locations to monitor | `list(string)` | <pre>[<br/>  "australiaeast",<br/>  "australiasoutheast",<br/>  "australiacentral",<br/>  "australiacentral2"<br/>]</pre> | no |
@@ -127,11 +120,11 @@ module "azure-subscription-setup" {
 | <a name="output_acr_login_server"></a> [acr\_login\_server](#output\_acr\_login\_server) | The login server of the Azure Container Registry. |
 | <a name="output_acr_name"></a> [acr\_name](#output\_acr\_name) | The name of the Azure Container Registry. |
 | <a name="output_acr_url"></a> [acr\_url](#output\_acr\_url) | The URL of the Azure Container Registry. |
-| <a name="output_ai_search_endpoint"></a> [ai\_search\_endpoint](#output\_ai\_search\_endpoint) | The endpoint of the AI search service |
-| <a name="output_ai_search_id"></a> [ai\_search\_id](#output\_ai\_search\_id) | The ID of the AI search service |
-| <a name="output_ai_search_primary_key"></a> [ai\_search\_primary\_key](#output\_ai\_search\_primary\_key) | The primary key of the AI search service |
-| <a name="output_ai_search_principal_id"></a> [ai\_search\_principal\_id](#output\_ai\_search\_principal\_id) | The principal ID of the AI search service's system-assigned managed identity |
-| <a name="output_ai_search_secondary_key"></a> [ai\_search\_secondary\_key](#output\_ai\_search\_secondary\_key) | The secondary key of the AI search service |
+| <a name="output_ai_free_search_endpoint"></a> [ai\_free\_search\_endpoint](#output\_ai\_free\_search\_endpoint) | The endpoint of the AI search service |
+| <a name="output_ai_free_search_id"></a> [ai\_free\_search\_id](#output\_ai\_free\_search\_id) | The ID of the AI search service |
+| <a name="output_ai_free_search_primary_key"></a> [ai\_free\_search\_primary\_key](#output\_ai\_free\_search\_primary\_key) | The primary key of the AI search service |
+| <a name="output_ai_free_search_principal_id"></a> [ai\_free\_search\_principal\_id](#output\_ai\_free\_search\_principal\_id) | The principal ID of the AI search service's system-assigned managed identity |
+| <a name="output_ai_free_search_secondary_key"></a> [ai\_free\_search\_secondary\_key](#output\_ai\_free\_search\_secondary\_key) | The secondary key of the AI search service |
 | <a name="output_amba_deployment_id"></a> [amba\_deployment\_id](#output\_amba\_deployment\_id) | AMBA ARM deployment resource ID. |
 | <a name="output_amba_template_uri"></a> [amba\_template\_uri](#output\_amba\_template\_uri) | Pinned AMBA template used by the deployment. |
 | <a name="output_amba_version"></a> [amba\_version](#output\_amba\_version) | AMBA release deployed. |
@@ -141,9 +134,6 @@ module "azure-subscription-setup" {
 | <a name="output_container_registry_url"></a> [container\_registry\_url](#output\_container\_registry\_url) | The URL of the Azure Container Registry. |
 | <a name="output_cosmos_db_free_account_name"></a> [cosmos\_db\_free\_account\_name](#output\_cosmos\_db\_free\_account\_name) | The name of the Cosmos DB account |
 | <a name="output_cosmos_db_free_account_resource_id"></a> [cosmos\_db\_free\_account\_resource\_id](#output\_cosmos\_db\_free\_account\_resource\_id) | The ID of the Cosmos DB account |
-| <a name="output_data_phi"></a> [data\_phi](#output\_data\_phi) | Whether the data contains protected health information (PHI). |
-| <a name="output_data_pii"></a> [data\_pii](#output\_data\_pii) | Whether the data contains personally identifiable information (PII). |
-| <a name="output_deploy_private_endpoints"></a> [deploy\_private\_endpoints](#output\_deploy\_private\_endpoints) | Whether to deploy private endpoints. |
 | <a name="output_location"></a> [location](#output\_location) | The location of the resources. |
 | <a name="output_owner_email"></a> [owner\_email](#output\_owner\_email) | The email of the resource owner. |
 | <a name="output_owner_entra_display_name"></a> [owner\_entra\_display\_name](#output\_owner\_entra\_display\_name) | The display name of the owner's Entra ID account. |
@@ -157,7 +147,7 @@ module "azure-subscription-setup" {
 |------|--------|---------|
 | <a name="module_ai_search_service"></a> [ai\_search\_service](#module\_ai\_search\_service) | Azure/avm-res-search-searchservice/azurerm | ~>0.0, < 1.0 |
 | <a name="module_containerregistry"></a> [containerregistry](#module\_containerregistry) | Azure/avm-res-containerregistry-registry/azurerm | ~>0.0, < 1.0 |
-| <a name="module_cosmos"></a> [cosmos](#module\_cosmos) | Azure/avm-res-documentdb-databaseaccount/azurerm | ~>0.0, < 1.0 |
+| <a name="module_free_cosmos"></a> [free\_cosmos](#module\_free\_cosmos) | Azure/avm-res-documentdb-databaseaccount/azurerm | ~>0.0, < 1.0 |
 | <a name="module_global_log_analytics_workspace"></a> [global\_log\_analytics\_workspace](#module\_global\_log\_analytics\_workspace) | Azure/avm-res-operationalinsights-workspace/azurerm | ~>0.0, < 1.0 |
 | <a name="module_global_resource_group"></a> [global\_resource\_group](#module\_global\_resource\_group) | Azure/avm-res-resources-resourcegroup/azurerm | ~>0.0, < 1.0 |
 | <a name="module_global_user_managed_identity"></a> [global\_user\_managed\_identity](#module\_global\_user\_managed\_identity) | Azure/avm-res-managedidentity-userassignedidentity/azurerm | ~>0.0, < 1.0 |
