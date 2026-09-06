@@ -23,7 +23,7 @@ resource "azurerm_security_center_setting" "sentinel" {
 resource "azurerm_security_center_contact" "security" {
   name  = "ALERT"
   email = var.alert_email
-  phone = format("%s-%s", startswith(var.alert_sms_country, "+") ? var.alert_sms_country : "+${var.alert_sms_country}", var.alert_sms_number)
+  #phone = format("%s-%s", startswith(var.alert_sms_country, "+") ? var.alert_sms_country : "+${var.alert_sms_country}", var.alert_sms_number)
 
   alert_notifications = true
   alerts_to_admins    = false

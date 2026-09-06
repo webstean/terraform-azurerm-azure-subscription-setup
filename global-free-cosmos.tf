@@ -41,7 +41,7 @@ module "free_cosmos" {
 */
 
   free_tier_enabled                     = true
-  public_network_access_enabled         = true
+  public_network_access_enabled         = false ## Unisys policy
   local_authentication_disabled         = false
   network_acl_bypass_for_azure_services = true
   multiple_write_locations_enabled      = false
