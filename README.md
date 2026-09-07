@@ -23,7 +23,7 @@ module "azure-subscription-setup" {
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.9.0, < 2.0 |
 | <a name="requirement_azapi"></a> [azapi](#requirement\_azapi) | ~>2.0, < 3.0 |
 | <a name="requirement_azuread"></a> [azuread](#requirement\_azuread) | ~>3.0, < 4.0 |
-| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | ~>4.0, < 5.0 |
+| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | ~>5.4, < 5.0 |
 | <a name="requirement_msgraph"></a> [msgraph](#requirement\_msgraph) | ~> 0.0, < 1.0 |
 | <a name="requirement_random"></a> [random](#requirement\_random) | ~>3.0, < 4.0 |
 
