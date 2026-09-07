@@ -32,9 +32,9 @@ output "trusted_signing_account_uri" {
   value       = azurerm_trusted_signing_account.this.account_uri
 }
 
-resource "azapi_resource" "signing_account_certificate_profile" {
+resource "azapi_resource" "signing_account_certificate_profile1" {
   type      = "Microsoft.CodeSigning/codeSigningAccounts/certificateProfiles@2026-05-15-preview"
-  name      = "profile1"
+  name      = "${lower(local.profile_type)} profile"
   parent_id = azurerm_trusted_signing_account.this.id
   body = {
     properties = {

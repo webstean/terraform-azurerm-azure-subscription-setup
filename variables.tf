@@ -155,6 +155,11 @@ variable "virtual_wan_sku" {
   type        = string
   description = "The SKU of the Virtual WAN to be created. Possible values include: Basic and Standard. Defaults to Basic."
   default     = "Basic"
+
+  validation {
+    condition     = contains(["Basic", "Standard"], var.virtual_wan_sku)
+    error_message = "virtual_wan_sku must be either 'Basic' or 'Standard'."
+  }
 }
 
 variable "certificate_country" {
