@@ -19,6 +19,7 @@ resource "azurerm_virtual_wan" "this" {
   tags = { for key, value in module.global_resource_group.resource.tags : key => value if lower(key) != "created" }
 }
 
+//virtual_wan_id
 output "vwan_id" {
   value       = try(azurerm_virtual_wan.this[0].id, var.virtual_wan_id)
   description = "The ID of the global virtual WAN."
