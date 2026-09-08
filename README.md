@@ -137,6 +137,7 @@ module "azure-subscription-setup" {
 | <a name="output_owner_entra_object_id"></a> [owner\_entra\_object\_id](#output\_owner\_entra\_object\_id) | The object ID of the owner's Entra ID account. |
 | <a name="output_subscription_id"></a> [subscription\_id](#output\_subscription\_id) | The subscription ID of the Azure resources. |
 | <a name="output_virtual_wan_id"></a> [virtual\_wan\_id](#output\_virtual\_wan\_id) | The ID of the Azure Virtual WAN. |
+| <a name="output_vwan_id"></a> [vwan\_id](#output\_vwan\_id) | The ID of the global virtual WAN. |
 
 ## Modules
 
