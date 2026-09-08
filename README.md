@@ -31,7 +31,7 @@ module "azure-subscription-setup" {
 
 | Name | Type |
 |------|------|
-| [azapi_resource.amba_subscription](https://registry.terraform.io/providers/azure/azapi/latest/docs/resources/resource) | resource |
+| [azapi_resource.amba_alerting_reployment_for_subscription](https://registry.terraform.io/providers/azure/azapi/latest/docs/resources/resource) | resource |
 | [azurerm_automation_account.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/automation_account) | resource |
 | [azurerm_automation_credential.vcenter-create](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/automation_credential) | resource |
 | [azurerm_automation_module.packagemanagement](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/automation_module) | resource |
