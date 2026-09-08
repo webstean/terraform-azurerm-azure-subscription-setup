@@ -4,7 +4,7 @@ locals {
   amba_template_uri = "${local.amba_base_url}/alzArm4Subs.json"
 }
 
-resource "azapi_resource" "amba_subscription" {
+resource "azapi_resource" "amba_alerting_reployment_for_subscription" {
   type      = "Microsoft.Resources/deployments@2025-04-01"
   name      = "amba-main"
   parent_id = "/subscriptions/${var.subscription_id}"
@@ -29,15 +29,17 @@ resource "azapi_resource" "amba_subscription" {
         ALZMonitorResourceGroupTags = {
           value = module.global_resource_group.resource.tags
         }
+        ALZMonitorActionGroupEmail = {
+          value = var.alert_email
+        }
       }
-
     }
   }
 }
 
 output "amba_deployment_id" {
   description = "AMBA ARM deployment resource ID."
-  value       = azapi_resource.amba_subscription.id
+  value       = azapi_resource.amba_alerting_reployment_for_subscription.id
 }
 
 output "amba_template_uri" {
@@ -49,22 +51,3 @@ output "amba_version" {
   description = "AMBA ARM template release deployed."
   value       = local.amba_version
 }
-
-/*
-
-module "amba_alz" {
-  source  = "Azure/avm-ptn-monitoring-amba-alz/azurerm"
-  version = "0.3.0"
-
-  location = var.location
-
-  resource_group_name = "rg-amba-${var.location}"
-
-  user_assigned_managed_identity_name = "uami-amba"
-
-  action_group_email = var.monitoring_email
-
-  tags = var.tags
-}
-
-*/
