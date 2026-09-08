@@ -23,7 +23,14 @@ resource "azapi_resource" "amba_subscription" {
         topLevelSubscriptionId = {
           value = var.subscription_id
         }
+        ALZMonitorResourceGroupLocation = {
+          value = var.location
+        }
+        ALZMonitorResourceGroupTags = {
+          value = module.global_resource_group.resource.tags
+        }
       }
+
     }
   }
 }
@@ -39,7 +46,7 @@ output "amba_template_uri" {
 }
 
 output "amba_version" {
-  description = "AMBA release deployed."
+  description = "AMBA ARM template release deployed."
   value       = local.amba_version
 }
 
