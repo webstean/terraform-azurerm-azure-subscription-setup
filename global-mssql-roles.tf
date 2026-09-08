@@ -58,3 +58,15 @@ resource "azurerm_role_assignment" "mssql-db-restore" {
   depends_on           = [azurerm_role_definition.mssql-db-restore, azurerm_role_definition.mssql-db-reader]
 }
 */
+
+output "role_mssql-db-reader_id" {
+  description = "Custom Entra ID role for reading SQL Servers (but not modifying or reading SQL Server databases)"
+  sensitive   = false
+  value       = azurerm_role_definition.mssql-db-reader.id
+}
+
+output "role_mssql-db-restore_id" {
+  description = "Custom Entra ID role for restoring SQL Servers databases (but not modifying or reading SQL Server database)"
+  sensitive   = false
+  value       = azurerm_role_definition.mssql-db-restore.id
+}
