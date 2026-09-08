@@ -124,7 +124,7 @@ module "azure-subscription-setup" {
 | <a name="output_ai_free_search_secondary_key"></a> [ai\_free\_search\_secondary\_key](#output\_ai\_free\_search\_secondary\_key) | The secondary key of the AI search service |
 | <a name="output_amba_deployment_id"></a> [amba\_deployment\_id](#output\_amba\_deployment\_id) | AMBA ARM deployment resource ID. |
 | <a name="output_amba_template_uri"></a> [amba\_template\_uri](#output\_amba\_template\_uri) | Pinned AMBA template used by the deployment. |
-| <a name="output_amba_version"></a> [amba\_version](#output\_amba\_version) | AMBA release deployed. |
+| <a name="output_amba_version"></a> [amba\_version](#output\_amba\_version) | AMBA ARM template release deployed. |
 | <a name="output_automation_account_id"></a> [automation\_account\_id](#output\_automation\_account\_id) | The ID of the Azure Automation Account. |
 | <a name="output_automation_account_name"></a> [automation\_account\_name](#output\_automation\_account\_name) | The name of the Azure Automation Account. |
 | <a name="output_container_registry_id"></a> [container\_registry\_id](#output\_container\_registry\_id) | The ID of the Azure Container Registry. |
