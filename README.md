@@ -63,15 +63,14 @@ module "azure-subscription-setup" {
 | [azurerm_container_registry_cache_rule.cache_rule5](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/container_registry_cache_rule) | resource |
 | [azurerm_container_registry_cache_rule.cache_rule8](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/container_registry_cache_rule) | resource |
 | [azurerm_monitor_action_group.alertme](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/monitor_action_group) | resource |
-| [azurerm_monitor_activity_log_alert.service_health](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/monitor_activity_log_alert) | resource |
 | [azurerm_monitor_activity_log_alert.service_health_advisory](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/monitor_activity_log_alert) | resource |
 | [azurerm_monitor_activity_log_alert.service_health_incidents](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/monitor_activity_log_alert) | resource |
 | [azurerm_monitor_activity_log_alert.service_health_maintenance](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/monitor_activity_log_alert) | resource |
 | [azurerm_monitor_diagnostic_setting.subscription1](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/monitor_diagnostic_setting) | resource |
-| [azurerm_resource_group.billing](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group) | resource |
+| [azurerm_resource_group.amba_monitoring](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group) | resource |
 | [azurerm_resource_group.monitoring](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group) | resource |
 | [azurerm_role_assignment.essential_machine_management_administrator](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment) | resource |
-| [azurerm_role_assignment.essential_machine_management_managed_identity_operator](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment) | resource |
+| [azurerm_role_assignment.essential_machine_management_identity_operator](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment) | resource |
 | [azurerm_role_assignment.essential_machine_management_resource_policy_contributor](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment) | resource |
 | [azurerm_subscription_cost_management_view.view1](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/subscription_cost_management_view) | resource |
 | [azurerm_virtual_wan.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_wan) | resource |
@@ -100,6 +99,7 @@ module "azure-subscription-setup" {
 | <a name="input_certificate_postal_code"></a> [certificate\_postal\_code](#input\_certificate\_postal\_code) | The default postal code for any certificate | `string` | `"3000"` | no |
 | <a name="input_certificate_state"></a> [certificate\_state](#input\_certificate\_state) | The default state for any certificate | `string` | `"Victoria"` | no |
 | <a name="input_certificate_street_address"></a> [certificate\_street\_address](#input\_certificate\_street\_address) | The default street address for any certificate | `string` | `null` | no |
+| <a name="input_defender_for_cloud_enabled"></a> [defender\_for\_cloud\_enabled](#input\_defender\_for\_cloud\_enabled) | Indicates whether Microsoft Defender for Cloud is enabled for the subscription. | `bool` | `false` | no |
 | <a name="input_enable_telemetry"></a> [enable\_telemetry](#input\_enable\_telemetry) | This variable controls whether or not the AVM (Azure Verified Modules) telemetry is enabled for the module.<br/>For more information see <https://aka.ms/avm/telemetryinfo>.<br/>If it is set to false, then no telemetry will be collected. | `bool` | `false` | no |
 | <a name="input_location"></a> [location](#input\_location) | The Azure region where resources will be deployed. | `string` | `"australiaeast"` | no |
 | <a name="input_locations_tomonitor"></a> [locations\_tomonitor](#input\_locations\_tomonitor) | The list of locations to monitor | `list(string)` | <pre>[<br/>  "australiaeast",<br/>  "australiasoutheast",<br/>  "australiacentral",<br/>  "australiacentral2"<br/>]</pre> | no |
@@ -143,8 +143,10 @@ module "azure-subscription-setup" {
 | Name | Source | Version |
 |------|--------|---------|
 | <a name="module_ai_search_service"></a> [ai\_search\_service](#module\_ai\_search\_service) | Azure/avm-res-search-searchservice/azurerm | ~>0.0, < 1.0 |
+| <a name="module_billing_resource_group"></a> [billing\_resource\_group](#module\_billing\_resource\_group) | Azure/avm-res-resources-resourcegroup/azurerm | ~>0.0, < 1.0 |
 | <a name="module_containerregistry"></a> [containerregistry](#module\_containerregistry) | Azure/avm-res-containerregistry-registry/azurerm | ~>0.0, < 1.0 |
 | <a name="module_free_cosmos"></a> [free\_cosmos](#module\_free\_cosmos) | Azure/avm-res-documentdb-databaseaccount/azurerm | ~>0.0, < 1.0 |
+| <a name="module_global_essential_machine_management_user_assigned_identity"></a> [global\_essential\_machine\_management\_user\_assigned\_identity](#module\_global\_essential\_machine\_management\_user\_assigned\_identity) | Azure/avm-res-managedidentity-userassignedidentity/azurerm | ~>0.0, < 1.0 |
 | <a name="module_global_log_analytics_workspace"></a> [global\_log\_analytics\_workspace](#module\_global\_log\_analytics\_workspace) | Azure/avm-res-operationalinsights-workspace/azurerm | ~>0.0, < 1.0 |
 | <a name="module_global_resource_group"></a> [global\_resource\_group](#module\_global\_resource\_group) | Azure/avm-res-resources-resourcegroup/azurerm | ~>0.0, < 1.0 |
 | <a name="module_global_user_managed_identity"></a> [global\_user\_managed\_identity](#module\_global\_user\_managed\_identity) | Azure/avm-res-managedidentity-userassignedidentity/azurerm | ~>0.0, < 1.0 |
