@@ -1,7 +1,14 @@
 locals {
-  amba_version      = "2026-03-06"
-  amba_base_url     = "https://raw.githubusercontent.com/Azure/azure-monitor-baseline-alerts/${local.amba_version}/patterns/alz4Subs"
-  amba_template_uri = "${local.amba_base_url}/alzArm4Subs.json"
+  amba_version             = "2026-03-06"
+  amba_base_url            = "https://raw.githubusercontent.com/Azure/azure-monitor-baseline-alerts/${local.amba_version}/patterns/alz4Subs"
+  amba_template_uri        = "${local.amba_base_url}/alzArm4Subs.json"
+  amba_resource_group_name = "rg-amba-monitoring-001"
+}
+
+resource "azurerm_resource_group" "amba_monitoring" {
+  name     = local.amba_resource_group_name
+  location = var.location
+  tags     = module.global_resource_group.resource.tags
 }
 
 resource "azapi_resource" "amba_alerting_reployment_for_subscription" {
@@ -10,6 +17,8 @@ resource "azapi_resource" "amba_alerting_reployment_for_subscription" {
   parent_id = "/subscriptions/${var.subscription_id}"
 
   location = var.location
+
+  depends_on = [azurerm_resource_group.amba_monitoring]
 
   body = {
     properties = {
@@ -20,6 +29,12 @@ resource "azapi_resource" "amba_alerting_reployment_for_subscription" {
       }
 
       parameters = {
+        telemetryOptOut = {
+          value = !var.enable_telemetry
+        }
+        ALZMonitorResourceGroupName = {
+          value = local.amba_resource_group_name
+        }
         topLevelSubscriptionId = {
           value = var.subscription_id
         }

@@ -214,3 +214,8 @@ variable "certificate_postal_code" {
   default     = "3000"
 }
 
+variable "defender_for_cloud_enabled" {
+  type        = bool
+  description = "Indicates whether Microsoft Defender for Cloud is enabled for the subscription."
+  default     = false
+}

@@ -22,3 +22,16 @@ module "global_resource_group" {
     type = "permanent"
   })
 }
+
+module "billing_resource_group" {
+  source           = "Azure/avm-res-resources-resourcegroup/azurerm"
+  version          = "~>0.0, < 1.0"
+  enable_telemetry = var.enable_telemetry
+
+  name     = "rg-billing-${lower(var.location)}"
+  location = var.location
+
+  tags = merge(local.temporary_tags, {
+    type = "permanent"
+  })
+}

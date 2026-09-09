@@ -1,14 +1,4 @@
 
-resource "azurerm_resource_group" "billing" {
-  name     = "rg-billing-${lower(var.location)}"
-  location = var.location
-
-  tags = local.permanent_tags
-  lifecycle {
-    ignore_changes = [tags.created]
-  }
-}
-
 resource "azurerm_resource_group" "monitoring" {
   name     = "rg-monitoring-${lower(var.location)}"
   location = var.location
@@ -46,31 +36,6 @@ resource "azurerm_monitor_action_group" "alertme" {
   tags = { for key, value in module.global_resource_group.resource.tags : key => value if lower(key) != "created" }
 }
 
-locals {
-  service_health_alerts = {
-    incidents = {
-      name        = "alrt-service-health-incidents"
-      description = "Azure Service Health incidents"
-      events      = ["Incident"]
-    }
-
-    maintenance = {
-      name        = "alrt-service-health-maintenance"
-      description = "Azure planned maintenance"
-
-      events = ["Maintenance"]
-    }
-
-    advisory = {
-      name        = "alrt-service-health-advisory"
-      description = "Azure Service Health advisories and action-required events."
-      events      = ["Informational", "ActionRequired"]
-    }
-  }
-
-  service_health_locations = var.locations_tomonitor
-}
-
 resource "azurerm_monitor_activity_log_alert" "service_health_incidents" {
   name                = "alrt-service-health-incidents"
   resource_group_name = module.global_resource_group.name
@@ -102,7 +67,7 @@ resource "azurerm_monitor_activity_log_alert" "service_health_maintenance" {
   resource_group_name = module.global_resource_group.name
   location            = "global"
   scopes              = [data.azurerm_subscription.current.id]
-  description         = "Azure planned maintenance affecting this subscription."
+  description         = "Azure planned maintenance that will affect this subscription."
   enabled             = true
 
   criteria {
@@ -141,31 +106,6 @@ resource "azurerm_monitor_activity_log_alert" "service_health_advisory" {
       ]
 
       locations = var.locations_tomonitor
-    }
-  }
-
-  action {
-    action_group_id = azurerm_monitor_action_group.alertme.id
-  }
-  tags = { for key, value in module.global_resource_group.resource.tags : key => value if lower(key) != "created" }
-}
-
-resource "azurerm_monitor_activity_log_alert" "service_health" {
-  for_each = local.service_health_alerts
-
-  name                = each.value.name
-  resource_group_name = module.global_resource_group.name
-  location            = "global"
-  scopes              = [data.azurerm_subscription.current.id]
-  description         = each.value.description
-  enabled             = true
-
-  criteria {
-    category = "ServiceHealth"
-
-    service_health {
-      events    = each.value.events
-      locations = local.service_health_locations
     }
   }
 
