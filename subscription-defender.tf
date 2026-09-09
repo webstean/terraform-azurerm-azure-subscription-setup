@@ -79,7 +79,7 @@ locals {
 }
 
 resource "azurerm_security_center_subscription_pricing" "this" {
-  for_each = [for k, v in local.security_resource_types : v if v.active]
+  for_each = { for k, v in local.security_resource_types : k => v if v.active }
 
   resource_type = each.value.resource_type
   tier          = var.defender_for_cloud_enabled ? "Standard" : "Free"
