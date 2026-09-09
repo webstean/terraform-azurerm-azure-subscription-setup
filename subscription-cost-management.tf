@@ -1,7 +1,7 @@
-resource "azurerm_subscription_cost_management_view" "view1" {
-  name            = "TerraformCostView"
-  display_name    = substr("Azure Cost View - Subscription: ${data.azurerm_subscription.current.display_name}", 0, 50)
-  subscription_id = format("/%s/%s", "subscriptions", data.azurerm_client_config.current.subscription_id)
+resource "azurerm_subscription_cost_management_view" "sard" {
+  name            = "SARDCostView - Month to date"
+  display_name    = substr("SARD Cost View - Subscription: ${data.azurerm_subscription.current.display_name}", 0, 50)
+  subscription_id = format("/%s/%s", "subscriptions", var.subscription_id)
 
   chart_type  = "Area"
   accumulated = true
@@ -21,8 +21,13 @@ resource "azurerm_subscription_cost_management_view" "view1" {
     #  name  = "department"
     #  type  = "TagKey"
     #}
+    sorting {
+      direction = "Descending"
+      name      = "totalCost"
+    }
   }
 
+  ## upto 3 pivots are allowed
   pivot {
     name = "ServiceName"
     type = "Dimension"
@@ -40,42 +45,43 @@ resource "azurerm_subscription_cost_management_view" "view1" {
 }
 
 /*
-resource "azurerm_cost_management_scheduled_action" "action1" {
-  name         = "${azurerm_subscription_cost_management_view.view1.name}"
+resource "azurerm_cost_management_scheduled_action" "this" {
+  name         = "examplescheduledaction"
+  display_name = "Weekly Report for this Month"
 
-  display_name = "${azurerm_subscription_cost_management_view.view1.display_name}"
+  view_id = azurerm_subscription_cost_management_view.sard.id
 
-  view_id = azurerm_subscription_cost_management_view.view1.id
+  email_address_sender = "sard@azure.com"
+  email_subject        = "Cost Management Report"
+  email_addresses      = var.alert_emails
+  message              = "Hi all, take a look at SARD subscription spending this month!"
 
-  add_action_group_ids = [azurerm_monitor_action_group.techalert1.id]
-
-  frequency  = "Weekly"
-  days_of_week = "Friday"
+  frequency    = "Weekly"
+  days_of_week = ["Friday"]
+  hour_of_day  = 8
+  start_date   = "${formatdate("YYYY-MM-DD", timeadd(timestamp(), "-1m"))}T00:00:00Z"
+  end_date     = "9999-12-31T23:59:59+10:00"
 }
-*/
 
-/*
-resource "azurerm_consumption_budget_management_group" "example" {
-  name                = "example"
-  management_group_id = azurerm_management_group.example.id
+resource "azurerm_consumption_budget_subscription" "this" {
+  name            = "example"
+  subscription_id = format("/%s/%s", "subscriptions", var.subscription_id)
 
-  amount     = 20
-  time_grain = "Daily"
+  amount     = 80
+  time_grain = "Monthly"
 
   time_period {
-    start_date = "2022-06-01T00:00:00Z"
-    end_date   = "2022-07-01T00:00:00Z"
+    start_date = "${formatdate("YYYY-MM-DD", timeadd(timestamp(), "-1m"))}T00:00:00Z"
+    end_date   = "9999-12-31T23:59:59+10:00"
   }
 
   filter {
     dimension {
-      name = "ResourceGroupName"
+      name = "SubscriptionID"
       values = [
-        azurerm_resource_group.example.name,
+        format("/%s/%s", "subscriptions", var.subscription_id)
       ]
     }
-
-    tag = each.value.tags
   }
 
   notification {
@@ -83,21 +89,19 @@ resource "azurerm_consumption_budget_management_group" "example" {
     threshold = 90.0
     operator  = "EqualTo"
 
-    contact_emails = [
-      "foo@example.com",
-      "bar@example.com",
+    contact_groups = [
+      azurerm_monitor_action_group.alertme.id,
     ]
   }
 
   notification {
-    enabled        = false
-    threshold      = 100.0
+    enabled        = true
+    threshold      = 95.0
     operator       = "GreaterThan"
     threshold_type = "Forecasted"
 
-    contact_emails = [
-      "foo@example.com",
-      "bar@example.com",
+    contact_groups = [
+      azurerm_monitor_action_group.alertme.id,
     ]
   }
 }

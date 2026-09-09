@@ -10,17 +10,17 @@ resource "azurerm_resource_group" "monitoring" {
 }
 
 resource "azurerm_monitor_action_group" "alertme" {
-  name                = "azure-health-alert"
+  name                = "azure-alertme"
   resource_group_name = module.global_resource_group.name
   location            = "global"
   short_name          = "AzureAlerts" ## can only be 12 character long
 
   dynamic "email_receiver" {
-    for_each = var.alert_email == null ? [] : [var.alert_email]
+    for_each = coalesce(var.alert_emails, [])
 
     content {
       name                    = var.alert_name
-      email_address           = email_receiver.value
+      email_address           = trimspace(email_receiver.value)
       use_common_alert_schema = true
     }
   }

@@ -45,7 +45,7 @@ resource "azapi_resource" "amba_alerting_reployment_for_subscription" {
           value = module.global_resource_group.resource.tags
         }
         ALZMonitorActionGroupEmail = {
-          value = var.alert_email
+          value = join(",", [for email in coalesce(var.alert_emails, []) : trimspace(email)])
         }
       }
     }

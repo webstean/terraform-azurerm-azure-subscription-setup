@@ -111,14 +111,14 @@ variable "alert_name" {
   default     = "MSDN SubscriptionAlerts"
 }
 
-variable "alert_email" {
-  type        = string
-  description = "The email address for alerts"
-  default     = null
+variable "alert_emails" {
+  type        = list(string)
+  description = "The email addresses for alerts"
+  default     = []
 
   validation {
-    condition     = var.alert_email == null || can(regex("^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$", trimspace(var.alert_email)))
-    error_message = "The variable 'alert_email' must be null or a valid email address."
+    condition     = var.alert_emails == null || alltrue([for email in var.alert_emails : can(regex("^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$", trimspace(email)))])
+    error_message = "The variable 'alert_emails' must contain only valid email addresses."
   }
 }
 

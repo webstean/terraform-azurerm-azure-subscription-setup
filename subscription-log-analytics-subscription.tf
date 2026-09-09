@@ -47,7 +47,8 @@ module "global_log_analytics_workspace" {
   ]
 }
 
-resource "azurerm_monitor_diagnostic_setting" "subscription1" {
+/*
+resource "azurerm_monitor_diagnostic_setting" "this" {
   name                       = "Log-Metrics-${data.azurerm_subscription.current.display_name}-to-Azure-Monitor"
   target_resource_id         = data.azurerm_subscription.current.id
   log_analytics_workspace_id = module.global_log_analytics_workspace.resource_id
@@ -59,3 +60,4 @@ resource "azurerm_monitor_diagnostic_setting" "subscription1" {
     category = "AllMetrics"
   }
 }
+*/
