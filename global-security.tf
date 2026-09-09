@@ -20,6 +20,7 @@ resource "azurerm_security_center_setting" "sentinel" {
 }
 */
 
+/*
 resource "azurerm_security_center_contact" "security" {
   name  = "ALERT"
   email = var.alert_email
@@ -28,6 +29,7 @@ resource "azurerm_security_center_contact" "security" {
   alert_notifications = true
   alerts_to_admins    = false
 }
+*/
 
 
 ## Needs Owner permission on subscription
