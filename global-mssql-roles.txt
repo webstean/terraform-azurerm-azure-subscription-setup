@@ -22,6 +22,13 @@ resource "azurerm_role_definition" "mssql-db-reader" {
     not_data_actions = []
   }
 }
+
+import {
+  for_each = var.mssql_db_reader_import_id == null ? toset([]) : toset([trimspace(var.mssql_db_reader_import_id)])
+  to       = azurerm_role_definition.mssql-db-reader
+  id       = each.value
+}
+
 resource "azurerm_role_definition" "mssql-db-restore" {
   name        = "Database-MSSQL-Server-Restore"
   description = "Just enough SQL Database access to overwrite (restore) a MS SQL Server and any of its Databases configuration (but not its data)"
@@ -47,6 +54,12 @@ resource "azurerm_role_definition" "mssql-db-restore" {
     data_actions     = []
     not_data_actions = []
   }
+}
+
+import {
+  for_each = var.mssql_db_restore_import_id == null ? toset([]) : toset([trimspace(var.mssql_db_restore_import_id)])
+  to       = azurerm_role_definition.mssql-db-restore
+  id       = each.value
 }
 
 /*

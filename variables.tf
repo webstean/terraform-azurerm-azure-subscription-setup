@@ -151,6 +151,28 @@ variable "virtual_wan_id" {
   default     = null
 }
 
+variable "mssql_db_reader_import_id" {
+  type        = string
+  description = "The full resource ID of an existing Database-MSSQL-Server-Reader role definition to import. Leave null to create it."
+  default     = null
+
+  validation {
+    condition     = var.mssql_db_reader_import_id == null || can(regex("^/subscriptions/[0-9a-fA-F-]+/providers/Microsoft.Authorization/roleDefinitions/[0-9a-fA-F-]+$", trimspace(var.mssql_db_reader_import_id)))
+    error_message = "mssql_db_reader_import_id must be null or a full Azure custom role-definition resource ID."
+  }
+}
+
+variable "mssql_db_restore_import_id" {
+  type        = string
+  description = "The full resource ID of an existing Database-MSSQL-Server-Restore role definition to import. Leave null to create it."
+  default     = null
+
+  validation {
+    condition     = var.mssql_db_restore_import_id == null || can(regex("^/subscriptions/[0-9a-fA-F-]+/providers/Microsoft.Authorization/roleDefinitions/[0-9a-fA-F-]+$", trimspace(var.mssql_db_restore_import_id)))
+    error_message = "mssql_db_restore_import_id must be null or a full Azure custom role-definition resource ID."
+  }
+}
+
 variable "virtual_wan_sku" {
   type        = string
   description = "The SKU of the Virtual WAN to be created. Possible values include: Basic and Standard. Defaults to Basic."
