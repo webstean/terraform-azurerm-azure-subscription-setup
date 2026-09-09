@@ -18,6 +18,11 @@ module "global_resource_group" {
     }
   }
 */
+  retry = {
+    error_message_regex  = [".*"]
+    interval_seconds     = 10
+    max_interval_seconds = 180
+  }
   tags = merge(local.temporary_tags, {
     type = "permanent"
   })
@@ -30,7 +35,11 @@ module "billing_resource_group" {
 
   name     = "rg-billing-${lower(var.location)}"
   location = var.location
-
+  retry = {
+    error_message_regex  = [".*"]
+    interval_seconds     = 10
+    max_interval_seconds = 180
+  }
   tags = merge(local.temporary_tags, {
     type = "permanent"
   })
