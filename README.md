@@ -31,7 +31,6 @@ module "azure-subscription-setup" {
 
 | Name | Type |
 |------|------|
-| [azapi_resource.amba_alerting_reployment_for_subscription](https://registry.terraform.io/providers/azure/azapi/latest/docs/resources/resource) | resource |
 | [azurerm_automation_account.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/automation_account) | resource |
 | [azurerm_automation_credential.vcenter-create](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/automation_credential) | resource |
 | [azurerm_automation_module.packagemanagement](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/automation_module) | resource |
@@ -66,13 +65,11 @@ module "azure-subscription-setup" {
 | [azurerm_monitor_activity_log_alert.service_health_advisory](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/monitor_activity_log_alert) | resource |
 | [azurerm_monitor_activity_log_alert.service_health_incidents](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/monitor_activity_log_alert) | resource |
 | [azurerm_monitor_activity_log_alert.service_health_maintenance](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/monitor_activity_log_alert) | resource |
-| [azurerm_monitor_diagnostic_setting.subscription1](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/monitor_diagnostic_setting) | resource |
-| [azurerm_resource_group.amba_monitoring](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group) | resource |
 | [azurerm_resource_group.monitoring](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group) | resource |
 | [azurerm_role_assignment.essential_machine_management_administrator](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment) | resource |
 | [azurerm_role_assignment.essential_machine_management_identity_operator](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment) | resource |
 | [azurerm_role_assignment.essential_machine_management_resource_policy_contributor](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment) | resource |
-| [azurerm_subscription_cost_management_view.view1](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/subscription_cost_management_view) | resource |
+| [azurerm_subscription_cost_management_view.sard](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/subscription_cost_management_view) | resource |
 | [azurerm_virtual_wan.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_wan) | resource |
 | [azapi_client_config.current](https://registry.terraform.io/providers/azure/azapi/latest/docs/data-sources/client_config) | data source |
 | [azuread_application_published_app_ids.well_known](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/data-sources/application_published_app_ids) | data source |
@@ -90,7 +87,7 @@ module "azure-subscription-setup" {
 | <a name="input_owner_entra_display_name"></a> [owner\_entra\_display\_name](#input\_owner\_entra\_display\_name) | Display name of the owner in Entra ID for RBAC role assignment and resource access control. | `string` | n/a | yes |
 | <a name="input_owner_entra_object_id"></a> [owner\_entra\_object\_id](#input\_owner\_entra\_object\_id) | The Entra ID object ID for the owner of this environment | `string` | n/a | yes |
 | <a name="input_subscription_id"></a> [subscription\_id](#input\_subscription\_id) | The Azure subscription ID in which the resources will be deployed. | `string` | n/a | yes |
-| <a name="input_alert_email"></a> [alert\_email](#input\_alert\_email) | The email address for alerts | `string` | `null` | no |
+| <a name="input_alert_emails"></a> [alert\_emails](#input\_alert\_emails) | The email addresses for alerts | `list(string)` | `[]` | no |
 | <a name="input_alert_name"></a> [alert\_name](#input\_alert\_name) | The name for alerts | `string` | `"MSDN SubscriptionAlerts"` | no |
 | <a name="input_alert_sms_country"></a> [alert\_sms\_country](#input\_alert\_sms\_country) | The country code for SMS alerts | `string` | `"+61"` | no |
 | <a name="input_alert_sms_number"></a> [alert\_sms\_number](#input\_alert\_sms\_number) | The phone number for SMS alerts | `string` | `null` | no |
@@ -121,9 +118,6 @@ module "azure-subscription-setup" {
 | <a name="output_ai_free_search_primary_key"></a> [ai\_free\_search\_primary\_key](#output\_ai\_free\_search\_primary\_key) | The primary key of the AI search service |
 | <a name="output_ai_free_search_principal_id"></a> [ai\_free\_search\_principal\_id](#output\_ai\_free\_search\_principal\_id) | The principal ID of the AI search service's system-assigned managed identity |
 | <a name="output_ai_free_search_secondary_key"></a> [ai\_free\_search\_secondary\_key](#output\_ai\_free\_search\_secondary\_key) | The secondary key of the AI search service |
-| <a name="output_amba_deployment_id"></a> [amba\_deployment\_id](#output\_amba\_deployment\_id) | AMBA ARM deployment resource ID. |
-| <a name="output_amba_template_uri"></a> [amba\_template\_uri](#output\_amba\_template\_uri) | Pinned AMBA template used by the deployment. |
-| <a name="output_amba_version"></a> [amba\_version](#output\_amba\_version) | AMBA ARM template release deployed. |
 | <a name="output_automation_account_id"></a> [automation\_account\_id](#output\_automation\_account\_id) | The ID of the Azure Automation Account. |
 | <a name="output_automation_account_name"></a> [automation\_account\_name](#output\_automation\_account\_name) | The name of the Azure Automation Account. |
 | <a name="output_container_registry_id"></a> [container\_registry\_id](#output\_container\_registry\_id) | The ID of the Azure Container Registry. |
