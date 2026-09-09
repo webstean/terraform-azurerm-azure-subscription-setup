@@ -56,11 +56,13 @@ module "azure-subscription-setup" {
 | [azurerm_automation_variable_string.resource-group-id](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/automation_variable_string) | resource |
 | [azurerm_automation_variable_string.resource-group-name](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/automation_variable_string) | resource |
 | [azurerm_automation_variable_string.subscription-id](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/automation_variable_string) | resource |
+| [azurerm_consumption_budget_subscription.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/consumption_budget_subscription) | resource |
 | [azurerm_container_registry_cache_rule.cache_rule2](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/container_registry_cache_rule) | resource |
 | [azurerm_container_registry_cache_rule.cache_rule3](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/container_registry_cache_rule) | resource |
 | [azurerm_container_registry_cache_rule.cache_rule4](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/container_registry_cache_rule) | resource |
 | [azurerm_container_registry_cache_rule.cache_rule5](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/container_registry_cache_rule) | resource |
 | [azurerm_container_registry_cache_rule.cache_rule8](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/container_registry_cache_rule) | resource |
+| [azurerm_cost_management_scheduled_action.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/cost_management_scheduled_action) | resource |
 | [azurerm_monitor_action_group.alertme](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/monitor_action_group) | resource |
 | [azurerm_monitor_activity_log_alert.service_health_advisory](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/monitor_activity_log_alert) | resource |
 | [azurerm_monitor_activity_log_alert.service_health_incidents](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/monitor_activity_log_alert) | resource |
