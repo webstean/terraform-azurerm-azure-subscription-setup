@@ -44,7 +44,6 @@ resource "azurerm_subscription_cost_management_view" "sard" {
   }
 }
 
-/*
 resource "azurerm_cost_management_scheduled_action" "this" {
   name         = "examplescheduledaction"
   display_name = "Weekly Report for this Month"
@@ -105,4 +104,3 @@ resource "azurerm_consumption_budget_subscription" "this" {
     ]
   }
 }
-*/
