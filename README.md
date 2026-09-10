@@ -71,6 +71,8 @@ module "azure-subscription-setup" {
 | [azurerm_role_assignment.essential_machine_management_administrator](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment) | resource |
 | [azurerm_role_assignment.essential_machine_management_identity_operator](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment) | resource |
 | [azurerm_role_assignment.essential_machine_management_resource_policy_contributor](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment) | resource |
+| [azurerm_role_definition.mssql-db-reader](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_definition) | resource |
+| [azurerm_role_definition.mssql-db-restore](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_definition) | resource |
 | [azurerm_security_center_subscription_pricing.cloudposture](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/security_center_subscription_pricing) | resource |
 | [azurerm_security_center_subscription_pricing.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/security_center_subscription_pricing) | resource |
 | [azurerm_subscription_cost_management_view.sard](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/subscription_cost_management_view) | resource |
@@ -132,6 +134,8 @@ module "azure-subscription-setup" {
 | <a name="output_owner_email"></a> [owner\_email](#output\_owner\_email) | The email of the resource owner. |
 | <a name="output_owner_entra_display_name"></a> [owner\_entra\_display\_name](#output\_owner\_entra\_display\_name) | The display name of the owner's Entra ID account. |
 | <a name="output_owner_entra_object_id"></a> [owner\_entra\_object\_id](#output\_owner\_entra\_object\_id) | The object ID of the owner's Entra ID account. |
+| <a name="output_role_mssql-db-reader_id"></a> [role\_mssql-db-reader\_id](#output\_role\_mssql-db-reader\_id) | Custom Entra ID role for reading SQL Servers (but not modifying or reading SQL Server databases) |
+| <a name="output_role_mssql-db-restore_id"></a> [role\_mssql-db-restore\_id](#output\_role\_mssql-db-restore\_id) | Custom Entra ID role for restoring SQL Servers databases (but not modifying or reading SQL Server database) |
 | <a name="output_subscription_id"></a> [subscription\_id](#output\_subscription\_id) | The subscription ID of the Azure resources. |
 | <a name="output_virtual_wan_id"></a> [virtual\_wan\_id](#output\_virtual\_wan\_id) | The ID of the Azure Virtual WAN. |
 | <a name="output_vwan_id"></a> [vwan\_id](#output\_vwan\_id) | The ID of the global virtual WAN. |
