@@ -14,8 +14,8 @@ locals {
   tomorrow    = formatdate("YYYY-MM-DD", timeadd(timestamp(), "48h"))
   now         = formatdate("YYYY-MM-DD", timestamp())
   start_time  = formatdate("YYYY-MM-DD", timeadd(timestamp(), "-1m"))
-  expiry_time = "9999-12-31T23:59:59+10:00" ## infinite
-  finish_time = formatdate("YYYY-MM-DD", timeadd(local.start_time, "+1y"))
+  expiry_time = "9999-12-31T23:59:59+10:00"                             ## infinite
+  finish_time = formatdate("YYYY-MM-DD", timeadd(timestamp(), "8759h")) ## timeadd requires RFC3339 input, not the pre-formatted start_time
 }
 
 ## Automation Account for each region - which are free of charge
