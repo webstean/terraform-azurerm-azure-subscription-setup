@@ -59,7 +59,7 @@ resource "azurerm_cost_management_scheduled_action" "this" {
   days_of_week = ["Friday"]
   hour_of_day  = 8
   start_date   = "${formatdate("YYYY-MM-DD", timeadd(timestamp(), "-1m"))}T00:00:00Z"
-  end_date     = formatdate("YYYY-MM-DD", timeadd(timestamp(), "8759h"))
+  end_date     = "${formatdate("YYYY-MM-DD", timeadd(timestamp(), "8759h"))}T00:00:00Z"
 }
 
 resource "azurerm_consumption_budget_subscription" "this" {
@@ -71,7 +71,7 @@ resource "azurerm_consumption_budget_subscription" "this" {
 
   time_period {
     start_date = "${formatdate("YYYY-MM-01", timestamp())}T00:00:00Z"
-    end_date   = formatdate("YYYY-MM-DD", timeadd(timestamp(), "8759h"))
+    end_date   = "${formatdate("YYYY-MM-DD", timeadd(timestamp(), "8759h"))}T00:00:00Z"
   }
 
   filter {
