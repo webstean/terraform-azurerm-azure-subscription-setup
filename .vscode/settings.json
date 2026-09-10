@@ -10,5 +10,11 @@
     },
     "[terraform]": {
         "editor.defaultFormatter": "hashicorp.terraform"
+    },
+    "chat.tools.terminal.autoApprove": {
+        "/^cd \"c:/workspaces/terraform-azurerm-azure-subscription-setup\"; terraform init -backend=false -input=false; terraform validate -no-color$/": {
+            "approve": true,
+            "matchCommandLine": true
+        }
     }
 }

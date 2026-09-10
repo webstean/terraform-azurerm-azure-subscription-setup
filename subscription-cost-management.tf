@@ -59,7 +59,7 @@ resource "azurerm_cost_management_scheduled_action" "this" {
   days_of_week = ["Friday"]
   hour_of_day  = 8
   start_date   = "${formatdate("YYYY-MM-DD", timeadd(timestamp(), "-1m"))}T00:00:00Z"
-  end_date     = "9999-12-31T23:59:59+10:00"
+  end_date     = "${formatdate("YYYY-MM-DD", timeadd(timestamp(), "+1y"))}T00:00:00Z"
 }
 
 resource "azurerm_consumption_budget_subscription" "this" {
