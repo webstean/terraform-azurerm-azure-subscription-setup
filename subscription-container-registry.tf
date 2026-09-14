@@ -145,27 +145,22 @@ resource "azurerm_container_registry_cache_rule" "cache_rule8" {
   ## credential_set_id     = ""
 }
 
-output "acr_name" {
+output "container_registry_id" {
+  description = "The ID of the Azure Container Registry."
+  sensitive   = false
+  value       = try(module.containerregistry.resource_id, "")
+}
+
+output "container_registry_name" {
   description = "The name of the Azure Container Registry."
   sensitive   = false
   value       = module.containerregistry.name
 }
 
-output "acr_login_server" {
+output "container_registry_login_server" {
   description = "The login server of the Azure Container Registry."
-  sensitive   = false
-  value       = try(module.containerregistry.login_server, "")
-}
-
-output "acr_url" {
-  description = "The URL of the Azure Container Registry."
   sensitive   = false
   value       = try(format("https://%s", module.containerregistry.login_server), "")
 }
 
-output "acr_id" {
-  description = "The ID of the Azure Container Registry."
-  sensitive   = false
-  value       = try(module.containerregistry.resource_id, "")
-}
 

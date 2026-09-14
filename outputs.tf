@@ -30,32 +30,3 @@ output "owner_entra_object_id" {
   value       = var.owner_entra_object_id
 }
 
-output "container_registry_id" {
-  description = "The ID of the Azure Container Registry."
-  sensitive   = false
-  value       = try(module.containerregistry.resource_id, "")
-}
-
-output "container_registry_url" {
-  description = "The URL of the Azure Container Registry."
-  sensitive   = false
-  value       = try(format("https://%s", module.containerregistry.login_server), "")
-}
-
-output "automation_account_id" {
-  description = "The ID of the Azure Automation Account."
-  sensitive   = false
-  value       = try(azurerm_automation_account.this.id, "")
-}
-
-output "automation_account_name" {
-  description = "The name of the Azure Automation Account."
-  sensitive   = false
-  value       = try(azurerm_automation_account.this.name, "")
-}
-
-output "virtual_wan_id" {
-  description = "The ID of the Azure Virtual WAN."
-  sensitive   = false
-  value       = try(azurerm_virtual_wan.this[0].id, var.virtual_wan_id)
-}

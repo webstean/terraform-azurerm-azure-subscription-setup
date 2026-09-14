@@ -591,3 +591,15 @@ resource "azurerm_automation_schedule" "monthly" {
   }
 }
 
+output "automation_account_id" {
+  description = "The ID of the Azure Automation Account."
+  sensitive   = false
+  value       = try(azurerm_automation_account.this.id, "")
+}
+
+output "automation_account_name" {
+  description = "The name of the Azure Automation Account."
+  sensitive   = false
+  value       = try(azurerm_automation_account.this.name, "")
+}
+
