@@ -115,10 +115,6 @@ module "azure-subscription-setup" {
 
 | Name | Description |
 |------|-------------|
-| <a name="output_acr_id"></a> [acr\_id](#output\_acr\_id) | The ID of the Azure Container Registry. |
-| <a name="output_acr_login_server"></a> [acr\_login\_server](#output\_acr\_login\_server) | The login server of the Azure Container Registry. |
-| <a name="output_acr_name"></a> [acr\_name](#output\_acr\_name) | The name of the Azure Container Registry. |
-| <a name="output_acr_url"></a> [acr\_url](#output\_acr\_url) | The URL of the Azure Container Registry. |
 | <a name="output_ai_free_search_endpoint"></a> [ai\_free\_search\_endpoint](#output\_ai\_free\_search\_endpoint) | The endpoint of the AI search service |
 | <a name="output_ai_free_search_id"></a> [ai\_free\_search\_id](#output\_ai\_free\_search\_id) | The ID of the AI search service |
 | <a name="output_ai_free_search_primary_key"></a> [ai\_free\_search\_primary\_key](#output\_ai\_free\_search\_primary\_key) | The primary key of the AI search service |
@@ -127,7 +123,8 @@ module "azure-subscription-setup" {
 | <a name="output_automation_account_id"></a> [automation\_account\_id](#output\_automation\_account\_id) | The ID of the Azure Automation Account. |
 | <a name="output_automation_account_name"></a> [automation\_account\_name](#output\_automation\_account\_name) | The name of the Azure Automation Account. |
 | <a name="output_container_registry_id"></a> [container\_registry\_id](#output\_container\_registry\_id) | The ID of the Azure Container Registry. |
-| <a name="output_container_registry_url"></a> [container\_registry\_url](#output\_container\_registry\_url) | The URL of the Azure Container Registry. |
+| <a name="output_container_registry_login_server"></a> [container\_registry\_login\_server](#output\_container\_registry\_login\_server) | The login server of the Azure Container Registry. |
+| <a name="output_container_registry_name"></a> [container\_registry\_name](#output\_container\_registry\_name) | The name of the Azure Container Registry. |
 | <a name="output_cosmos_db_free_account_name"></a> [cosmos\_db\_free\_account\_name](#output\_cosmos\_db\_free\_account\_name) | The name of the Cosmos DB account |
 | <a name="output_cosmos_db_free_account_resource_id"></a> [cosmos\_db\_free\_account\_resource\_id](#output\_cosmos\_db\_free\_account\_resource\_id) | The ID of the Cosmos DB account |
 | <a name="output_location"></a> [location](#output\_location) | The location of the resources. |
@@ -138,7 +135,6 @@ module "azure-subscription-setup" {
 | <a name="output_role_mssql-db-restore_id"></a> [role\_mssql-db-restore\_id](#output\_role\_mssql-db-restore\_id) | Custom Entra ID role for restoring SQL Servers databases (but not modifying or reading SQL Server database) |
 | <a name="output_subscription_id"></a> [subscription\_id](#output\_subscription\_id) | The subscription ID of the Azure resources. |
 | <a name="output_virtual_wan_id"></a> [virtual\_wan\_id](#output\_virtual\_wan\_id) | The ID of the Azure Virtual WAN. |
-| <a name="output_vwan_id"></a> [vwan\_id](#output\_vwan\_id) | The ID of the global virtual WAN. |
 
 ## Modules
 
