@@ -21,6 +21,9 @@ resource "azurerm_role_definition" "mssql-db-reader" {
     data_actions     = []
     not_data_actions = []
   }
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 import {
@@ -53,6 +56,9 @@ resource "azurerm_role_definition" "mssql-db-restore" {
     not_actions      = []
     data_actions     = []
     not_data_actions = []
+  }
+  lifecycle {
+    create_before_destroy = true
   }
 }
 
