@@ -11,9 +11,29 @@ module "global_essential_machine_management_user_assigned_identity" {
   resource_group_name = module.global_resource_group.resource.name
   location            = module.global_resource_group.resource.location
   isolation_scope     = "Regional"
-  tags                = { for key, value in module.global_resource_group.resource.tags : key => value if lower(key) != "created" }
+
+  role_assignments = {
+    essential_machine_management_administrator = {
+      scope                      = "/subscriptions/${var.subscription_id}"
+      role_definition_id_or_name = "Essential Machine Management Administrator"
+      description                = local.iac_message
+    }
+    essential_machine_management_identity_operator = {
+      scope                      = "/subscriptions/${var.subscription_id}"
+      role_definition_id_or_name = "Managed Identity Operator"
+      description                = local.iac_message
+    }
+    essential_machine_management_resource_policy_contributor = {
+      scope                      = "/subscriptions/${var.subscription_id}"
+      role_definition_id_or_name = "Resource Policy Contributor"
+      description                = local.iac_message
+    }
+  }
+
+  tags = { for key, value in module.global_resource_group.resource.tags : key => value if lower(key) != "created" }
 }
 
+/*
 resource "azurerm_role_assignment" "essential_machine_management_administrator" {
   scope                = "/subscriptions/${var.subscription_id}"
   role_definition_name = "Essential Machine Management Administrator"
@@ -34,6 +54,7 @@ resource "azurerm_role_assignment" "essential_machine_management_resource_policy
   principal_id         = module.global_essential_machine_management_user_assigned_identity.principal_id
   description          = local.iac_message
 }
+*/
 
 ## During public preview, the Azure portal is the only supported method for enabling machine management.
 
