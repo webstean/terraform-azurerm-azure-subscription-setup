@@ -46,7 +46,7 @@ resource "azurerm_subscription_cost_management_view" "sard" {
 
 resource "azurerm_cost_management_scheduled_action" "this" {
   name         = "examplescheduledaction"
-  display_name = "Weekly Report for this Month"
+  display_name = "Azure Consumption - Weekly Report"
 
   view_id = azurerm_subscription_cost_management_view.sard.id
 
@@ -57,7 +57,7 @@ resource "azurerm_cost_management_scheduled_action" "this" {
 
   frequency    = "Weekly"
   days_of_week = ["Friday"]
-  hour_of_day  = 8
+  hour_of_day  = 1
   start_date   = "${formatdate("YYYY-MM-DD", timeadd(timestamp(), "-1m"))}T00:00:00Z"
   end_date     = "${formatdate("YYYY-MM-DD", timeadd(timestamp(), "8759h"))}T00:00:00Z"
 }
