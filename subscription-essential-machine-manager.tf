@@ -32,29 +32,3 @@ module "global_essential_machine_management_user_assigned_identity" {
 
   tags = { for key, value in module.global_resource_group.resource.tags : key => value if lower(key) != "created" }
 }
-
-/*
-resource "azurerm_role_assignment" "essential_machine_management_administrator" {
-  scope                = "/subscriptions/${var.subscription_id}"
-  role_definition_name = "Essential Machine Management Administrator"
-  principal_id         = module.global_essential_machine_management_user_assigned_identity.principal_id
-  description          = local.iac_message
-}
-
-resource "azurerm_role_assignment" "essential_machine_management_identity_operator" {
-  scope                = "/subscriptions/${var.subscription_id}"
-  role_definition_name = "Managed Identity Operator"
-  principal_id         = module.global_essential_machine_management_user_assigned_identity.principal_id
-  description          = local.iac_message
-}
-
-resource "azurerm_role_assignment" "essential_machine_management_resource_policy_contributor" {
-  scope                = "/subscriptions/${var.subscription_id}"
-  role_definition_name = "Resource Policy Contributor"
-  principal_id         = module.global_essential_machine_management_user_assigned_identity.principal_id
-  description          = local.iac_message
-}
-*/
-
-## During public preview, the Azure portal is the only supported method for enabling machine management.
-
