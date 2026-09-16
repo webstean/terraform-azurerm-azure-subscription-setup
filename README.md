@@ -31,7 +31,6 @@ module "azure-subscription-setup" {
 
 | Name | Type |
 |------|------|
-| [azurerm_advisor_suppression.automation_account_variables_should_be_encrypted](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/advisor_suppression) | resource |
 | [azurerm_automation_account.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/automation_account) | resource |
 | [azurerm_automation_credential.vcenter-create](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/automation_credential) | resource |
 | [azurerm_automation_module.packagemanagement](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/automation_module) | resource |
@@ -77,7 +76,6 @@ module "azure-subscription-setup" {
 | [azuread_application_published_app_ids.well_known](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/data-sources/application_published_app_ids) | data source |
 | [azuread_client_config.current](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/data-sources/client_config) | data source |
 | [azurerm_advisor_recommendations.all](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/advisor_recommendations) | data source |
-| [azurerm_advisor_recommendations.automation_account](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/advisor_recommendations) | data source |
 | [azurerm_client_config.current](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/client_config) | data source |
 | [azurerm_subscription.current](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/subscription) | data source |
 | [azurerm_subscriptions.available](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/subscriptions) | data source |
@@ -113,7 +111,6 @@ module "azure-subscription-setup" {
 
 | Name | Description |
 |------|-------------|
-| <a name="output_advisor_suppression_candidates"></a> [advisor\_suppression\_candidates](#output\_advisor\_suppression\_candidates) | Advisor recommendations across the subscription that can be used as suppression candidates. |
 | <a name="output_ai_free_search_endpoint"></a> [ai\_free\_search\_endpoint](#output\_ai\_free\_search\_endpoint) | The endpoint of the AI search service |
 | <a name="output_ai_free_search_id"></a> [ai\_free\_search\_id](#output\_ai\_free\_search\_id) | The ID of the AI search service |
 | <a name="output_ai_free_search_primary_key"></a> [ai\_free\_search\_primary\_key](#output\_ai\_free\_search\_primary\_key) | The primary key of the AI search service |
@@ -121,6 +118,7 @@ module "azure-subscription-setup" {
 | <a name="output_ai_free_search_secondary_key"></a> [ai\_free\_search\_secondary\_key](#output\_ai\_free\_search\_secondary\_key) | The secondary key of the AI search service |
 | <a name="output_automation_account_id"></a> [automation\_account\_id](#output\_automation\_account\_id) | The ID of the Azure Automation Account. |
 | <a name="output_automation_account_name"></a> [automation\_account\_name](#output\_automation\_account\_name) | The name of the Azure Automation Account. |
+| <a name="output_azure_advisor_suppression_candidates"></a> [azure\_advisor\_suppression\_candidates](#output\_azure\_advisor\_suppression\_candidates) | Advisor recommendations across the subscription that can be used as suppression candidates. |
 | <a name="output_container_registry_id"></a> [container\_registry\_id](#output\_container\_registry\_id) | The ID of the Azure Container Registry. |
 | <a name="output_container_registry_login_server"></a> [container\_registry\_login\_server](#output\_container\_registry\_login\_server) | The login server of the Azure Container Registry. |
 | <a name="output_container_registry_name"></a> [container\_registry\_name](#output\_container\_registry\_name) | The name of the Azure Container Registry. |
