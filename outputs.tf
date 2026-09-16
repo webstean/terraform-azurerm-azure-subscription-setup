@@ -30,3 +30,4 @@ output "owner_entra_object_id" {
   value       = var.owner_entra_object_id
 }
 
+
