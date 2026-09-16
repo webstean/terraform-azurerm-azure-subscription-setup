@@ -32,3 +32,5 @@ module "global_essential_machine_management_user_assigned_identity" {
 
   tags = { for key, value in module.global_resource_group.resource.tags : key => value if lower(key) != "created" }
 }
+
+## https://learn.microsoft.com/en-us/azure/virtual-machine-scale-sets/standby-pools-configure-permissions
