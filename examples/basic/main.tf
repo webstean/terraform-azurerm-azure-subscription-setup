@@ -9,9 +9,9 @@ module "azure_msdn_subscription_setup" {
 
   ## Change these to match your Unisys MSDN account
   subscription_id          = "3fdbf472-cbf2-43ca-9f61-3c34bdc1397c"
-  owner_email              = "email@org.com"                          ## needs to match your organisation account exactly 
-  owner_entra_display_name = "Firstname, Lastname"                    ## needs to match your organisation account exactly
-  owner_entra_object_id    = "11111111-2222-3333-4444-555555555555"   ## needs to match your organisation account exactly
+  owner_email              = "email@org.com"                        ## needs to match your organisation account exactly 
+  owner_entra_display_name = "Firstname, Lastname"                  ## needs to match your organisation account exactly
+  owner_entra_object_id    = "11111111-2222-3333-4444-555555555555" ## needs to match your organisation account exactly
 
   ## Alerting - suggest you use a non-orgamisation account
   alert_emails      = ["gmail@gmail.com"]
