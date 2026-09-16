@@ -2,26 +2,31 @@ locals {
   ## A maximum of 15 tags are allowed with keys no longer than 512 and
   ## values no longer than 256 characters.
   permanent_tags = {
-    type        = "permanent" ## permanent, temporary (can be safely deleted and recreated, to save cost)
-    owner_email = var.owner_email
-    createdby   = "terraform"
+    type         = "permanent" ## permanent, temporary (can be safely deleted and recreated, to save cost)
+    contactName  = var.owner_email
+    contactEmail = var.owner_email
+    owner_email  = var.owner_email
+    createdby    = "terraform"
     ## 24-7         : 24x7 monitoring
     ## 8-5          : business hours
     ## not-monitored: not monitored
-    monitoring = "not monitored"
-    created    = formatdate("DD/MM/YYYY", timestamp())
+    monitoring  = "not monitored"
+    multiTenant = "No"
+    created     = formatdate("DD/MM/YYYY", timestamp())
     //    terraform_version = data.local_file.terraform_version.content
   }
 
   temporary_tags = {
     type        = "temporary" ## permanent, temporary (can be safely deleted and recreated, to save cost)
+    contactName = var.owner_email
     owner_email = var.owner_email
     createdby   = "terraform"
     ## 24-7         : 24x7 monitoring
     ## 8-5          : business hours
     ## not-monitored: not monitored
-    monitoring = "not monitored"
-    created    = formatdate("DD/MM/YYYY", timestamp())
+    monitoring  = "not monitored"
+    multiTenant = "No"
+    created     = formatdate("DD/MM/YYYY", timestamp())
     //    terraform_version = data.local_file.terraform_version.content
   }
 }

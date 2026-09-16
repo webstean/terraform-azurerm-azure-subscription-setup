@@ -18,6 +18,8 @@ locals {
 }
 
 resource "azurerm_advisor_suppression" "automation_account_variables_should_be_encrypted" {
+  ## count is 0 when Advisor has not yet surfaced the recommendation (e.g. brand new automation account)
+  count             = length(local.automation_account_variable_encryption_recommendations) > 0 ? 1 : 0
   name              = "automation-account-variables-should-be-encrypted"
   recommendation_id = local.automation_account_variable_encryption_recommendations[0].recommendation_name
   resource_id       = azurerm_automation_account.this.id
