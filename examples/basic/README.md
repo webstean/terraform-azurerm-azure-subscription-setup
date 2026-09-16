@@ -31,7 +31,13 @@ module "azure_msdn_subscription_setup" {
 }
 ```
 
-This will result in the creation of around XX resources in your subscription
+This will result in the creation of around 16 low-cost resources in your subscription, all within a single Azure resource group.
+
+> [!Note]
+> The total cost over a month, should be < $15 USD. If the resources just sit there doing nothing. Of course, if you use them, then there will be more charges.
+
+Here is a examples of the resources that will be created.
+
 - An Azure Container Registry 
 - An Azure Automation Account
 - An Azure Action Group (with the specified email (and phone number (if specified) as the destination for alerts)
