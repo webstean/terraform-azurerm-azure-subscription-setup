@@ -12,7 +12,9 @@ module "global_log_analytics_workspace" {
 
   log_analytics_workspace_identity = {
     type = "SystemAssigned"
-    #identity_ids = [module.global_user_managed_identity.resource_id]
+    user_assigned_resource_ids = [
+      module.global_user_managed_identity.resource_id
+    ]
   }
 
   /*

@@ -16,9 +16,9 @@ module "free_cosmos" {
 
   managed_identities = {
     system_assigned = true
-    #    user_assigned_resource_ids = [
-    #      module.global_user_managed_identity.resource_id
-    #    ]
+    user_assigned_resource_ids = [
+      module.global_user_managed_identity.resource_id
+    ]
   }
   access_key_metadata_writes_enabled = true
   automatic_failover_enabled         = false

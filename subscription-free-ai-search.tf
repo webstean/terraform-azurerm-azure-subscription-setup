@@ -81,9 +81,9 @@ module "ai_search_service" {
 
   managed_identities = {
     system_assigned = true
-    #    user_assigned_resource_ids = [
-    #      module.global_user_managed_identity.resource_id
-    #    ]
+    user_assigned_resource_ids = [
+      module.global_user_managed_identity.resource_id
+    ]
   }
 
   role_assignments = {

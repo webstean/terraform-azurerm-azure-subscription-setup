@@ -15,7 +15,7 @@ module "containerregistry" {
   resource_group_name           = module.global_resource_group.name
   location                      = module.global_resource_group.location
   sku                           = local.acr_sku
-  admin_enabled                 = false
+  admin_enabled                 = true ## must be enabled for certain scenarios. See: https://learn.microsoft.com/en-us/azure/container-registry/container-registry-authentication?WT.mc_id=Portal-fx&tabs=azure-cli#admin-account
   public_network_access_enabled = true
   quarantine_policy_enabled     = local.acr_sku == "Premium" ? true : false
   retention_policy_in_days      = local.acr_sku == "Premium" ? 7 : null
@@ -24,6 +24,9 @@ module "containerregistry" {
 
   managed_identities = {
     system_assigned = true
+    user_assigned_resource_ids = [
+      module.global_user_managed_identity.resource_id
+    ]
   }
 
   /*
