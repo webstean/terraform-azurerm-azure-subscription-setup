@@ -53,17 +53,17 @@ resource "azurerm_cost_management_scheduled_action" "this" {
   email_address_sender = "sard@azure.com"
   email_subject        = "Cost Management Report"
   email_addresses      = var.alert_emails
-  message              = "Hi all, take a look at SARD subscription spending this month!"
+  message              = "Hi all, take a look at SARD subscription spending for the last week!"
 
   frequency    = "Weekly"
-  days_of_week = ["Friday"]
-  hour_of_day  = 1
+  days_of_week = ["Thursday"]
+  hour_of_day  = 10 ## UTC timezone
   start_date   = "${formatdate("YYYY-MM-DD", timeadd(timestamp(), "-1m"))}T00:00:00Z"
   end_date     = "${formatdate("YYYY-MM-DD", timeadd(timestamp(), "8759h"))}T00:00:00Z"
 }
 
 resource "azurerm_consumption_budget_subscription" "this" {
-  name            = "example"
+  name            = "msdn_professional"
   subscription_id = format("/%s/%s", "subscriptions", var.subscription_id)
 
   amount     = 80
