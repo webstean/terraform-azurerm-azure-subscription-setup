@@ -166,4 +166,3 @@ output "container_registry_login_server" {
   value       = try(format("https://%s", module.containerregistry.login_server), "")
 }
 
-
