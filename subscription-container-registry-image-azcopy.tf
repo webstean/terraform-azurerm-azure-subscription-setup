@@ -42,10 +42,10 @@ DOCKERFILE
     version = "v1.1.0"
     steps = [
       {
-        cmd = "printf '%s' '${base64encode(trimspace(local.azcopy_entrypoint_script))}' | base64 --decode > entrypoint.sh"
+        cmd = "bash bash -c \"printf '%s' '${base64encode(trimspace(local.azcopy_entrypoint_script))}' | base64 --decode > entrypoint.sh\""
       },
       {
-        cmd = "printf '%s' '${base64encode(trimspace(local.azcopy_dockerfile))}' | base64 --decode > Dockerfile"
+        cmd = "bash bash -c \"printf '%s' '${base64encode(trimspace(local.azcopy_dockerfile))}' | base64 --decode > Dockerfile\""
       },
       {
         build = "-t azcopy-runner:{{.Run.ID}} -t azcopy-runner:latest -f Dockerfile ."
