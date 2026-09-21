@@ -49,6 +49,9 @@ DOCKERFILE
       },
       {
         build = "-t azcopy-runner:{{.Run.ID}} -t azcopy-runner:latest -f Dockerfile ."
+      },
+      {
+        push = ["azcopy-runner:{{.Run.ID}}", "azcopy-runner:latest"]
       }
     ]
   })
