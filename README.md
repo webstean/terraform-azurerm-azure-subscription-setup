@@ -57,11 +57,6 @@ module "azure-subscription-setup" {
 | [azurerm_automation_variable_string.resource-group-name](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/automation_variable_string) | resource |
 | [azurerm_automation_variable_string.subscription-id](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/automation_variable_string) | resource |
 | [azurerm_consumption_budget_subscription.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/consumption_budget_subscription) | resource |
-| [azurerm_container_registry_cache_rule.cache_rule2](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/container_registry_cache_rule) | resource |
-| [azurerm_container_registry_cache_rule.cache_rule3](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/container_registry_cache_rule) | resource |
-| [azurerm_container_registry_cache_rule.cache_rule4](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/container_registry_cache_rule) | resource |
-| [azurerm_container_registry_cache_rule.cache_rule5](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/container_registry_cache_rule) | resource |
-| [azurerm_container_registry_cache_rule.cache_rule8](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/container_registry_cache_rule) | resource |
 | [azurerm_container_registry_task.azcopy_build](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/container_registry_task) | resource |
 | [azurerm_container_registry_task_schedule_run_now.azcopy_build_now](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/container_registry_task_schedule_run_now) | resource |
 | [azurerm_cost_management_scheduled_action.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/cost_management_scheduled_action) | resource |
@@ -123,7 +118,7 @@ module "azure-subscription-setup" {
 | <a name="output_automation_account_name"></a> [automation\_account\_name](#output\_automation\_account\_name) | The name of the Azure Automation Account. |
 | <a name="output_azure_advisor_suppression_candidates"></a> [azure\_advisor\_suppression\_candidates](#output\_azure\_advisor\_suppression\_candidates) | Advisor recommendations across the subscription that can be used as suppression candidates. |
 | <a name="output_container_registry_id"></a> [container\_registry\_id](#output\_container\_registry\_id) | The ID of the Azure Container Registry. |
-| <a name="output_container_registry_login_server"></a> [container\_registry\_login\_server](#output\_container\_registry\_login\_server) | The login server of the Azure Container Registry. |
+| <a name="output_container_registry_login_server"></a> [container\_registry\_login\_server](#output\_container\_registry\_login\_server) | The global URL of the login server of the Azure Container Registry. |
 | <a name="output_container_registry_name"></a> [container\_registry\_name](#output\_container\_registry\_name) | The name of the Azure Container Registry. |
 | <a name="output_cosmos_db_free_account_name"></a> [cosmos\_db\_free\_account\_name](#output\_cosmos\_db\_free\_account\_name) | The name of the Cosmos DB account |
 | <a name="output_cosmos_db_free_account_resource_id"></a> [cosmos\_db\_free\_account\_resource\_id](#output\_cosmos\_db\_free\_account\_resource\_id) | The ID of the Cosmos DB account |
