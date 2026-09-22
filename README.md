@@ -117,6 +117,7 @@ module "azure-subscription-setup" {
 | <a name="output_automation_account_id"></a> [automation\_account\_id](#output\_automation\_account\_id) | The ID of the Azure Automation Account. |
 | <a name="output_automation_account_name"></a> [automation\_account\_name](#output\_automation\_account\_name) | The name of the Azure Automation Account. |
 | <a name="output_azure_advisor_suppression_candidates"></a> [azure\_advisor\_suppression\_candidates](#output\_azure\_advisor\_suppression\_candidates) | Advisor recommendations across the subscription that can be used as suppression candidates. |
+| <a name="output_container_registry_azcopy_image"></a> [container\_registry\_azcopy\_image](#output\_container\_registry\_azcopy\_image) | The AzCopy image reference for Docker or Podman.<br/>Run the AzCopy image using Podman<br/>podman run "$(terraform output -raw container\_registry\_azcopy\_image)" |
 | <a name="output_container_registry_data_endpoint_host_names"></a> [container\_registry\_data\_endpoint\_host\_names](#output\_container\_registry\_data\_endpoint\_host\_names) | The host names of the data endpoints for the Azure Container Registry. |
 | <a name="output_container_registry_id"></a> [container\_registry\_id](#output\_container\_registry\_id) | The ID of the Azure Container Registry. |
 | <a name="output_container_registry_login_server"></a> [container\_registry\_login\_server](#output\_container\_registry\_login\_server) | The global URL of the login server of the Azure Container Registry. |
