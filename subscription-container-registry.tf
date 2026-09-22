@@ -147,3 +147,8 @@ output "container_registry_login_server" {
   value       = try(format("https://%s", module.containerregistry.login_server), "")
 }
 
+output "container_registry_data_endpoint_host_names" {
+  description = "The host names of the data endpoints for the Azure Container Registry."
+  sensitive   = false
+  value       = try(module.containerregistry.data_endpoint_host_names, [])
+}
