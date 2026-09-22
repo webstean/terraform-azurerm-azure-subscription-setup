@@ -18,7 +18,7 @@ module "containerregistry" {
   admin_enabled                 = true ## must be enabled for certain scenarios. See: https://learn.microsoft.com/en-us/azure/container-registry/container-registry-authentication?WT.mc_id=Portal-fx&tabs=azure-cli#admin-account
   public_network_access_enabled = true
   quarantine_policy_enabled     = local.acr_sku == "Premium" ? true : false
-  retention_policy_in_days      = local.acr_sku == "Premium" ? 7 : null
+  retention_policy_in_days      = local.acr_sku == "Premium" ? 14 : null
   anonymous_pull_enabled        = local.acr_sku == "Basic" ? false : true
   zone_redundancy_enabled       = local.acr_sku == "Premium" ? true : false
   data_endpoint_enabled         = local.acr_sku == "Premium" ? true : false
@@ -48,6 +48,11 @@ module "containerregistry" {
       name              = "dotnet-cache"
       source_repository = "mcr.microsoft.com/dotnet/*"
       target_repository = "dotnet/*"
+    }
+    sql = {
+      name              = "sql-cache"
+      source_repository = "mcr.microsoft.com/azure-databases/*"
+      target_repository = "sql/*"
     }
   }
 

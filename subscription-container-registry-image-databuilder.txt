@@ -1,0 +1,9 @@
+# Create a Dockerfile that embeds dab-config.json
+cat <<'EOF' > Dockerfile
+FROM mcr.microsoft.com/azure-databases/data-api-builder:latest
+COPY dab-config.json /App/dab-config.json
+EOF
+
+# Build and push the image
+az acr build --registry "<registry-name>" --image "dab:1" .
+--environment-variables "DATABASE_CONNECTION_STRING=<database-connection-string>" \
