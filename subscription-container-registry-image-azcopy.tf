@@ -101,3 +101,13 @@ resource "azurerm_container_registry_task_schedule_run_now" "azcopy_build_now" {
   }
 }
 
+output "container_registry_azcopy_image" {
+  description = <<DESC
+The AzCopy image reference for Docker or Podman.
+Run the AzCopy image using Podman
+podman run "$(terraform output -raw container_registry_azcopy_image)"
+DESC
+  sensitive   = false
+  value       = "${local.azcopy_image_repository}:latest"
+}
+
