@@ -5,6 +5,17 @@ module "global_user_managed_identity" {
 
   name = "id-global"
 
+  role_assignments = {
+    "AcrPush" = {
+      scope                            = module.containerregistry.resource_id
+      role_definition_id_or_name       = "AcrPush"
+      skip_service_principal_aad_check = true
+      principal_type                   = "ServicePrincipal"
+      description                      = local.iac_message
+
+    }
+  }
+
   resource_group_name = module.global_resource_group.resource.name
   location            = module.global_resource_group.resource.location
   isolation_scope     = "Regional"

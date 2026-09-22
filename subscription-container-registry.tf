@@ -100,6 +100,13 @@ module "containerregistry" {
       principal_type                   = "ServicePrincipal"
       description                      = local.iac_message
     }
+    role_assignment_3 = {
+      role_definition_id_or_name       = "AcrPush"
+      principal_id                     = data.azurerm_client_config.current.object_id
+      skip_service_principal_aad_check = true
+      principal_type                   = "ServicePrincipal"
+      description                      = local.iac_message
+    }
   }
   tags = { for key, value in module.global_resource_group.resource.tags : key => value if lower(key) != "created" }
   #lock = (tobool(var.data_pii) || tobool(var.data_phi)) ? {
