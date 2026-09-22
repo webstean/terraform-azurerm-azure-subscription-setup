@@ -23,6 +23,7 @@ module "containerregistry" {
   zone_redundancy_enabled       = local.acr_sku == "Premium" ? true : false
   data_endpoint_enabled         = local.acr_sku == "Premium" ? true : false
 
+  /*
   cache_rules = {
     github = {
       name              = "github-cache"
@@ -55,6 +56,7 @@ module "containerregistry" {
       target_repository = "sql/*"
     }
   }
+*/
 
   managed_identities = {
     system_assigned = true
