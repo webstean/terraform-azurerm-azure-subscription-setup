@@ -59,6 +59,7 @@ resource "azurerm_container_registry_task" "azcopy_build" {
   name                  = "build-azcopy-runner"
   container_registry_id = module.containerregistry.resource_id
 
+  enabled = true
   platform {
     os = "Linux"
   }
@@ -67,11 +68,28 @@ resource "azurerm_container_registry_task" "azcopy_build" {
     task_content = base64encode(local.azcopy_task_yaml)
   }
 
+  # Rebuild weekly on Sunday at 00:00 UTC to pick up base-image and package updates.
+  timer_trigger {
+    name     = "weekly-azcopy-runner-build"
+    schedule = "0 0 * * 0"
+    enabled  = true
+  }
+
   timeout_in_seconds = 900
+  tags               = { for key, value in module.global_resource_group.resource.tags : key => value if lower(key) != "created" }
 }
-# Triggers a build when the task content changes. Re-run manually with:
-# `terraform apply -replace=azurerm_container_registry_task_schedule_run_now.azcopy_build_now`
+
+# Changes on every plan so the immediate-run resource is recreated on every apply.
+resource "terraform_data" "azcopy_build_apply_trigger" {
+  triggers_replace = [timestamp()]
+}
+
+# Triggers a build on every Terraform apply.
 resource "azurerm_container_registry_task_schedule_run_now" "azcopy_build_now" {
   container_registry_task_id = azurerm_container_registry_task.azcopy_build.id
+
+  lifecycle {
+    replace_triggered_by = [terraform_data.azcopy_build_apply_trigger]
+  }
 }
 
