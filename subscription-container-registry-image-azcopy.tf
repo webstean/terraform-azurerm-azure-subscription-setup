@@ -9,19 +9,18 @@ locals {
 #!/usr/bin/env bash
 set -euo pipefail
 echo "Copying files with AzCopy..."
-if [ -z "$${AZCOPY_MSI_CLIENT_ID + x}" ]; then
+if [ -z "$${AZCOPY_MSI_CLIENT_ID:-}" ]; then
   echo "Environment variable: AZCOPY_MSI_CLIENT_ID is not set"
   exit 1
 fi
-if [ -z "$${SOURCE_URL + x}" ]; then
+if [ -z "$${SOURCE_URL:-}" ]; then
   echo "Environment variable: SOURCE_URL is not set"
   exit 1
 fi
-if [ -z "$${DESTINATION_URL + x}" ]; then
+if [ -z "$${DESTINATION_URL:-}" ]; then
   echo "Environment variable: DESTINATION_URL is not set"
   exit 1
 fi
-echo "Copying files with AzCopy..."
 echo "Source URL          : $${SOURCE_URL}"
 echo "Destination URL     : $${DESTINATION_URL}"
 echo "with MSI Client ID  : $${AZCOPY_MSI_CLIENT_ID}"
@@ -42,10 +41,10 @@ DOCKERFILE
     version = "v1.1.0"
     steps = [
       {
-        cmd = "bash bash -c \"printf '%s' '${base64encode(trimspace(local.azcopy_entrypoint_script))}' | base64 --decode > entrypoint.sh\""
+        cmd = "bash -c \"printf '%s' '${base64encode(trimspace(local.azcopy_entrypoint_script))}' | base64 --decode > entrypoint.sh\""
       },
       {
-        cmd = "bash bash -c \"printf '%s' '${base64encode(trimspace(local.azcopy_dockerfile))}' | base64 --decode > Dockerfile\""
+        cmd = "bash -c \"printf '%s' '${base64encode(trimspace(local.azcopy_dockerfile))}' | base64 --decode > Dockerfile\""
       },
       {
         build = "-t azcopy-runner:{{.Run.ID}} -t azcopy-runner:latest -f Dockerfile ."
