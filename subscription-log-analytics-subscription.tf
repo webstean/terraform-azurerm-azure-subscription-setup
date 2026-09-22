@@ -17,25 +17,37 @@ module "global_log_analytics_workspace" {
     ]
   }
 
-  /*
   role_assignments = {
     role_assignment_1 = {
-      role_definition_id_or_name = "Monitoring Metrics Publisher"
-      principal_id               = module.global_user_managed_identity.principal_id
-      description                = local.iac_message
+      role_definition_id_or_name       = "Owner"
+      principal_id                     = data.azurerm_client_config.current.object_id
+      skip_service_principal_aad_check = true
+      principal_type                   = "ServicePrincipal"
+      description                      = local.iac_message
     }
     role_assignment_2 = {
-      role_definition_id_or_name = "Log Analytics Reader"
-      principal_id               = module.global_user_managed_identity.principal_id
-      description                = local.iac_message
+      role_definition_id_or_name       = "Monitoring Metrics Publisher"
+      principal_id                     = module.global_user_managed_identity.principal_id
+      skip_service_principal_aad_check = true
+      principal_type                   = "ServicePrincipal"
+      description                      = local.iac_message
     }
     role_assignment_3 = {
-      role_definition_id_or_name = "Log Analytics Contributor"
-      principal_id               = module.global_user_managed_identity.principal_id
-      description                = local.iac_message
+      role_definition_id_or_name       = "Log Analytics Reader"
+      principal_id                     = module.global_user_managed_identity.principal_id
+      skip_service_principal_aad_check = true
+      principal_type                   = "ServicePrincipal"
+      description                      = local.iac_message
+    }
+    role_assignment_4 = {
+      role_definition_id_or_name       = "Log Analytics Contributor"
+      principal_id                     = module.global_user_managed_identity.principal_id
+      skip_service_principal_aad_check = true
+      principal_type                   = "ServicePrincipal"
+      description                      = local.iac_message
     }
   }
-*/
+
   #log_analytics_workspace_tables_update = {
   #  for name in local.law_basic_table_names : name => {
   #    name = name
