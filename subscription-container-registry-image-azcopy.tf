@@ -1,6 +1,8 @@
 # Builds an AzCopy runner entirely within ACR. The Dockerfile and task YAML
 # are Terraform locals so no external Git context or access token is required.
 locals {
+  azcopy_image_repository = "${module.containerregistry.login_server}/azcopy-runner"
+
   ## Environment variables:
   ##   AZCOPY_MSI_CLIENT_ID must be defined
   ##   SOURCE_URL must be defined, can be Blob or Azure Files
@@ -47,10 +49,10 @@ DOCKERFILE
         cmd = "bash -c \"printf '%s' '${base64encode(trimspace(local.azcopy_dockerfile))}' | base64 --decode > Dockerfile\""
       },
       {
-        build = "-t azcopy-runner:{{.Run.ID}} -t azcopy-runner:latest -f Dockerfile ."
+        build = "-t ${local.azcopy_image_repository}:{{.Run.ID}} -t ${local.azcopy_image_repository}:latest -f Dockerfile ."
       },
       {
-        push = ["azcopy-runner:{{.Run.ID}}", "azcopy-runner:latest"]
+        push = ["${local.azcopy_image_repository}:{{.Run.ID}}", "${local.azcopy_image_repository}:latest"]
       }
     ]
   })
