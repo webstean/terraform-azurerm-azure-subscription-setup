@@ -86,13 +86,6 @@ resource "azurerm_container_registry_task" "azcopy_build" {
   tags               = { for key, value in module.global_resource_group.resource.tags : key => value if lower(key) != "created" }
 }
 
-resource "azurerm_role_assignment" "azcopy_build_acr_push" {
-  scope                = module.containerregistry.resource_id
-  role_definition_name = "AcrPush"
-  principal_id         = azurerm_container_registry_task.azcopy_build.identity[0].principal_id
-  principal_type       = "ServicePrincipal"
-}
-
 # Changes on every plan so the immediate-run resource is recreated on every apply.
 resource "terraform_data" "azcopy_build_apply_trigger" {
   triggers_replace = [timestamp()]
@@ -101,9 +94,6 @@ resource "terraform_data" "azcopy_build_apply_trigger" {
 # Triggers a build on every Terraform apply.
 resource "azurerm_container_registry_task_schedule_run_now" "azcopy_build_now" {
   container_registry_task_id = azurerm_container_registry_task.azcopy_build.id
-
-  depends_on = [azurerm_role_assignment.azcopy_build_acr_push]
-
   lifecycle {
     replace_triggered_by = [terraform_data.azcopy_build_apply_trigger]
   }
