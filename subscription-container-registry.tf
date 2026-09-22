@@ -151,7 +151,7 @@ output "container_registry_name" {
 output "container_registry_login_server" {
   description = "The global URL of the login server of the Azure Container Registry."
   sensitive   = false
-  value       = try(format("https://%s", module.containerregistry.login_server), "")
+  value       = try(module.containerregistry.login_server, "")
 }
 
 output "container_registry_data_endpoint_host_names" {
