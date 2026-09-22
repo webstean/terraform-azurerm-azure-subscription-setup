@@ -12,15 +12,15 @@ locals {
 set -euo pipefail
 echo "Copying files with AzCopy..."
 if [ -z "$${AZCOPY_MSI_CLIENT_ID:-}" ]; then
-  echo "Environment variable: AZCOPY_MSI_CLIENT_ID is not set"
+  echo "FAILED:Environment variable: AZCOPY_MSI_CLIENT_ID is not set"
   exit 1
 fi
 if [ -z "$${SOURCE_URL:-}" ]; then
-  echo "Environment variable: SOURCE_URL is not set"
+  echo "FAILED:Environment variable: SOURCE_URL is not set"
   exit 1
 fi
 if [ -z "$${DESTINATION_URL:-}" ]; then
-  echo "Environment variable: DESTINATION_URL is not set"
+  echo "FAILED:Environment variable: DESTINATION_URL is not set"
   exit 1
 fi
 echo "Source URL          : $${SOURCE_URL}"
