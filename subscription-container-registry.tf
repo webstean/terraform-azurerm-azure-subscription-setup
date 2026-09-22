@@ -21,6 +21,35 @@ module "containerregistry" {
   retention_policy_in_days      = local.acr_sku == "Premium" ? 7 : null
   anonymous_pull_enabled        = local.acr_sku == "Basic" ? false : true
   zone_redundancy_enabled       = local.acr_sku == "Premium" ? true : false
+  data_endpoint_enabled         = local.acr_sku == "Premium" ? true : false
+
+  cache_rules = {
+    github = {
+      name              = "github-cache"
+      source_repository = "ghcr.io/*"
+      target_repository = "ghcr/*"
+    }
+    azureml = {
+      name              = "azureml-cache"
+      source_repository = "mcr.microsoft.com/azureml/*"
+      target_repository = "azureml/*"
+    }
+    mmlspark = {
+      name              = "mmlspark-cache"
+      source_repository = "mcr.microsoft.com/mmlspark/*"
+      target_repository = "mmlspark/*"
+    }
+    deployment_environments = {
+      name              = "azure-deployment-environments-cache"
+      source_repository = "mcr.microsoft.com/deployment-environments/*"
+      target_repository = "deployment-environments/*"
+    }
+    dotnet = {
+      name              = "dotnet-cache"
+      source_repository = "mcr.microsoft.com/dotnet/*"
+      target_repository = "dotnet/*"
+    }
+  }
 
   managed_identities = {
     system_assigned = true
@@ -28,6 +57,14 @@ module "containerregistry" {
       module.global_user_managed_identity.resource_id
     ]
   }
+
+  georeplications = contains(["premium"], local.acr_sku) ? [
+    {
+      location                = local.regions[module.global_resource_group.location].default_rep_location
+      zone_redundancy_enabled = true
+    }
+  ] : []
+
 
   /*
   diagnostic_settings = {
@@ -58,6 +95,9 @@ module "containerregistry" {
     }
   }
   tags = { for key, value in module.global_resource_group.resource.tags : key => value if lower(key) != "created" }
+  #lock = (tobool(var.data_pii) || tobool(var.data_phi)) ? {
+  #  kind = "CanNotDelete"
+  #} : null
   depends_on = [
     module.global_log_analytics_workspace
   ]
@@ -82,72 +122,6 @@ module "containerregistry" {
 ## registry.access.redhat.com.
 ## *.pkg.dev,
 
-//resource "azurerm_container_registry_cache_rule" "cache_rule1" {
-//  ## YOU must generate credential set to source content from Docker hub.
-//  name                  = "docker-ubuntu-cache-rule"
-//  container_registry_id = azurerm_container_registry.this.id
-//  source_repo           = "hub.docker.com/_/ubuntu:latest"
-//  target_repo           = "ubuntu"
-//  credential_set_id     = ""
-// }
-
-resource "azurerm_container_registry_cache_rule" "cache_rule2" {
-  name                  = "rule2-github-cache"
-  container_registry_id = module.containerregistry.resource_id
-  source_repo           = "ghcr.io/*"
-  target_repo           = "ghcr/*"
-  ## credential_set_id     = ""
-}
-
-resource "azurerm_container_registry_cache_rule" "cache_rule3" {
-  name                  = "rule3-azureml-cache"
-  container_registry_id = module.containerregistry.resource_id
-  source_repo           = "mcr.microsoft.com/azureml/*"
-  target_repo           = "azureml/*"
-  ## credential_set_id     = ""
-}
-
-resource "azurerm_container_registry_cache_rule" "cache_rule4" {
-  name                  = "rule4-mmlspark-cache"
-  container_registry_id = module.containerregistry.resource_id
-  source_repo           = "mcr.microsoft.com/mmlspark/*"
-  target_repo           = "mmlspark/*"
-  ## credential_set_id     = ""
-}
-
-resource "azurerm_container_registry_cache_rule" "cache_rule5" {
-  name                  = "rule5-deployment-environments-cache"
-  container_registry_id = module.containerregistry.resource_id
-  source_repo           = "mcr.microsoft.com/deployment-environments/*"
-  target_repo           = "deployment-environments/*"
-  ## credential_set_id     = ""
-}
-
-/*
-resource "azurerm_container_registry_cache_rule" "cache_rule6" {
-  name                  = "rule6-azure-databases-cache"
-  container_registry_id = module.containerregistry.resource_id
-  source_repo           = "mcr.microsoft.com/azure-databases/*"
-  target_repo           = "azure-databases/*"
-  ## credential_set_id     = ""
-}
-resource "azurerm_container_registry_cache_rule" "cache_rule7" {
-  name                  = "rule7-azure-databases-cache"
-  container_registry_id = module.containerregistry.resource_id
-  source_repo           = "mcr.microsoft.com/azure-databases/data-api-builder"
-  target_repo           = "azure-databases/*"
-  ## credential_set_id     = ""
-}
-*/
-
-resource "azurerm_container_registry_cache_rule" "cache_rule8" {
-  name                  = "rule8-dotnet-cache"
-  container_registry_id = module.containerregistry.resource_id
-  source_repo           = "mcr.microsoft.com/dotnet/*"
-  target_repo           = "dotnet/*"
-  ## credential_set_id     = ""
-}
-
 output "container_registry_id" {
   description = "The ID of the Azure Container Registry."
   sensitive   = false
@@ -161,7 +135,7 @@ output "container_registry_name" {
 }
 
 output "container_registry_login_server" {
-  description = "The login server of the Azure Container Registry."
+  description = "The global URL of the login server of the Azure Container Registry."
   sensitive   = false
   value       = try(format("https://%s", module.containerregistry.login_server), "")
 }
