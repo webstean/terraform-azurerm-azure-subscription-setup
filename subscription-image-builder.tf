@@ -79,8 +79,9 @@ resource "azapi_resource" "vnet" {
 }
 
 locals {
-  aci_subnet_id   = "${azapi_resource.vnet.id}/subnets/subnet-aci"
-  build_subnet_id = "${azapi_resource.vnet.id}/subnets/subnet-build"
+  aci_subnet_id                          = "${azapi_resource.vnet.id}/subnets/subnet-aci"
+  build_subnet_id                        = "${azapi_resource.vnet.id}/subnets/subnet-build"
+  aib_image_builder_identity_resource_id = "/subscriptions/${trimspace(var.subscription_id)}/resourceGroups/rg-global-${lower(var.location)}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id-global"
 }
 
 # --- Image builder pattern module ---
@@ -93,6 +94,8 @@ module "windows-image-builder" {
   image_template_name = local.image_template_name
   location            = module.imagebuilder_resource_group.resource.location
   parent_id           = module.imagebuilder_resource_group.resource_id
+
+  image_builder_identity_resource_id = local.aib_image_builder_identity_resource_id
 
   compute_gallery_image_definition_name = "windows-2025-devops"
   compute_gallery_image_definitions = {
@@ -129,6 +132,8 @@ module "windows-image-builder" {
   }
   optimize_vm_boot = true
   tags             = { for key, value in module.global_resource_group.resource.tags : key => value if lower(key) != "created" }
+
+  depends_on = [module.global_user_managed_identity]
 }
 
 output "image_builder_id" {
