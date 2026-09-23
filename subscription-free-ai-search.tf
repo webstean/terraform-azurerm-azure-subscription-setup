@@ -65,7 +65,7 @@ module "search_keyvault" {
 module "ai_search_service" {
   source           = "Azure/avm-res-search-searchservice/azurerm"
   version          = "~>0.0, < 1.0"
-  enable_telemetry = var.enable_telemetry ## see variables.tf
+  enable_telemetry = var.enable_telemetry
 
   name                = local.search_name_location
   resource_group_name = module.global_resource_group.name

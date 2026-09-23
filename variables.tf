@@ -63,6 +63,12 @@ DESC
   default     = false
 }
 
+variable "deploy_private_endpoints" {
+  type        = bool
+  description = "If true, deploys private endpoints for secure access to Azure services."
+  default     = false
+}
+
 variable "deploy_azure_image_builder" {
   type        = bool
   description = <<DESC

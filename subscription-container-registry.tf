@@ -1,27 +1,39 @@
 locals {
-  acr_name          = "acr-global"
-  acr_name_location = lower("${local.acr_name}-${lower(var.location)}")
-  acr_random_suffix = substr(md5(local.acr_name_location), 0, 6)
-  acr_name_hostname = lower(substr(replace("c${local.acr_random_suffix}${local.acr_name_location}", "-", ""), 0, 24))
-  acr_sku           = "Basic" ## Basic ($0.17 per day, $5.1 per month), Standard ($0.67 cents per day, $20 per month), Premium ($1.7 dollars per day, $51 per month)
+  acr_name                     = "acr-global"
+  acr_name_location            = lower("${local.acr_name}-${lower(var.location)}")
+  acr_random_suffix            = substr(md5(local.acr_name_location), 0, 6)
+  acr_name_hostname            = lower(substr(replace("c${local.acr_random_suffix}${local.acr_name_location}", "-", ""), 0, 24))
+  acr_sku                      = "Basic" ## Basic ($0.17 per day, $5.1 per month), Standard ($0.67 cents per day, $20 per month), Premium ($1.7 dollars per day, $51 per month)
+  acr_default_retentation_days = 14
 }
 
 module "containerregistry" {
   source           = "Azure/avm-res-containerregistry-registry/azurerm"
   version          = "~>0.0, < 1.0"
-  enable_telemetry = var.enable_telemetry ## see variables.tf
+  enable_telemetry = var.enable_telemetry
 
-  name                          = local.acr_name_hostname
-  resource_group_name           = module.global_resource_group.name
-  location                      = module.global_resource_group.location
-  sku                           = local.acr_sku
-  admin_enabled                 = true ## must be enabled for certain scenarios. See: https://learn.microsoft.com/en-us/azure/container-registry/container-registry-authentication?WT.mc_id=Portal-fx&tabs=azure-cli#admin-account
-  public_network_access_enabled = true
-  quarantine_policy_enabled     = local.acr_sku == "Premium" ? true : false
-  retention_policy_in_days      = local.acr_sku == "Premium" ? 14 : null
-  anonymous_pull_enabled        = local.acr_sku == "Basic" ? false : true
-  zone_redundancy_enabled       = local.acr_sku == "Premium" ? true : false
-  data_endpoint_enabled         = local.acr_sku == "Premium" ? true : false
+  name                                  = local.acr_name_hostname
+  resource_group_name                   = module.global_resource_group.name
+  location                              = module.global_resource_group.location
+  sku                                   = local.acr_sku ## default is Premium
+  admin_enabled                         = true          ## must be enabled for certain scenarios. See: https://learn.microsoft.com/en-us/azure/container-registry/container-registry-authentication?WT.mc_id=Portal-fx&tabs=azure-cli#admin-account
+  public_network_access_enabled         = true
+  quarantine_policy_enabled             = local.acr_sku == "Premium" ? true : false
+  retention_policy_in_days              = local.acr_sku == "Premium" ? local.acr_default_retentation_days : null
+  anonymous_pull_enabled                = local.acr_sku == "Basic" ? false : true
+  zone_redundancy_enabled               = local.acr_sku == "Premium" ? true : false
+  data_endpoint_enabled                 = local.acr_sku == "Premium" ? true : false
+  network_rule_bypass_option            = "AzureServices"
+  network_rule_bypass_for_tasks_enabled = true
+
+  network_rule_set = local.acr_sku == "Premium" ? {
+    default_action = tobool(var.deploy_private_endpoints) ? "Deny" : "Allow"
+    ip_rule = tobool(var.deploy_private_endpoints) ? [] : [
+      {
+        ip_range = "0.0.0.0/0"
+      }
+    ]
+  } : null
 
   /*
   cache_rules = {
