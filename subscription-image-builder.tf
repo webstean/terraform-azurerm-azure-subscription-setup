@@ -97,8 +97,11 @@ module "image-builder" {
   compute_gallery_image_definition_name = "windows-2025-devops"
   compute_gallery_image_definitions = {
     windows = {
-      name    = "windows-2025-devops"
-      os_type = "Windows"
+      name               = "windows-2025-devops"
+      os_type            = "Windows"
+      os_state           = "Generalized"
+      hyper_v_generation = "V2"
+      architecture       = "x64"
       identifier = {
         publisher = "devops"
         offer     = "devops_windows"
@@ -107,12 +110,15 @@ module "image-builder" {
     }
   }
   image_template_image_source = local.aib_image_template_image_source
-  build                       = { enabled = true }
-  build_timeout_in_minutes    = local.aib_build_timeout_in_minutes
+  build = {
+    enabled                                  = true
+    cleanup_gallery_image_version_on_destroy = true
+  }
+  build_timeout_in_minutes = local.aib_build_timeout_in_minutes
   # Pre-create the staging RG so the image builder identity is granted Contributor
   # before the build starts; avoids "Unauthorized" errors on the auto-created
   # staging storage account (vhds container) under restrictive subscription policies.
-  staging_resource_group_name        = "rg-${local.aib_name_location}-staging"
+  staging_resource_group_resource_id = module.global_resource_group.resource.id
   image_template_customization_steps = local.aib_image_template_customization_steps
   vm_profile = {
     vm_size = local.aib_vm_size
@@ -121,7 +127,11 @@ module "image-builder" {
       container_instance_subnet_id = local.aci_subnet_id
     }
   }
-  tags = { for key, value in module.global_resource_group.resource.tags : key => value if lower(key) != "created" }
+  image_template_distribute = {
+
+  }
+  optimize_vm_boot = true
+  tags             = { for key, value in module.global_resource_group.resource.tags : key => value if lower(key) != "created" }
 }
 
 output "image_builder_id" {
@@ -144,10 +154,17 @@ output "image_builder_compute_gallery_id" {
   value     = module.image-builder.compute_gallery_id
 }
 
-output "image_builder_image_builder_identity_principal_id" {
+output "image_builder_managed_identity_principal_id" {
   sensitive = false
   value     = module.image-builder.image_builder_identity_principal_id
 }
 
+output "image_builder_image_template_id" {
+  sensitive = false
+  value     = module.image-builder.image_template_id
+}
 
-
+output "image_builder_image_template_name" {
+  sensitive = false
+  value     = module.image-builder.image_template_name
+}
