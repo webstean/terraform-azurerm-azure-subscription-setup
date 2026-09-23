@@ -3,7 +3,7 @@ locals {
   aib_name_location = lower("${local.aib_name}-${lower(var.location)}")
   aib_random_suffix = substr(md5(local.aib_name_location), 0, 6)
   aib_name_hostname = lower(substr(replace("cc${local.aib_random_suffix}${local.aib_name_location}", "-", ""), 0, 24))
-  aib_enabled       = false
+  aib_enabled       = var.deploy_azure_image_builder
 
   # Azure Image Builder does not support updating an existing image template (PUT on an
   # existing template returns 409 Conflict). Suffix the template name with a hash of the

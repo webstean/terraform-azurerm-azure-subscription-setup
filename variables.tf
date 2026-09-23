@@ -63,6 +63,14 @@ DESC
   default     = false
 }
 
+variable "deploy_azure_image_builder" {
+  type        = bool
+  description = <<DESC
+If true, deploys the Azure Image Builder service for creating custom images. If false, does not deploy Azure Image Builder.
+DESC
+  default     = false
+}
+
 /*
 variable "org_shortname" {
   type        = string
