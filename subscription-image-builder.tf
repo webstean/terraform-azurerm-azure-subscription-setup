@@ -82,9 +82,8 @@ resource "azapi_resource" "vnet" {
 }
 
 locals {
-  aci_subnet_id                          = "${azapi_resource.vnet[0].id}/subnets/subnet-aci"
-  build_subnet_id                        = "${azapi_resource.vnet[0].id}/subnets/subnet-build"
-  aib_image_builder_identity_resource_id = "/subscriptions/${trimspace(var.subscription_id)}/resourceGroups/rg-global-${lower(var.location)}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id-global"
+  aci_subnet_id   = try("${azapi_resource.vnet[0].id}/subnets/subnet-aci", "")
+  build_subnet_id = try("${azapi_resource.vnet[0].id}/subnets/subnet-build", "")
 }
 
 # --- Image builder pattern module ---
@@ -100,7 +99,7 @@ module "windows-image-builder" {
   location            = module.imagebuilder_resource_group.resource.location
   parent_id           = module.imagebuilder_resource_group.resource_id
 
-  image_builder_identity_resource_id = local.aib_image_builder_identity_resource_id
+  image_builder_identity_resource_id = module.global_user_managed_identity.resource_id
 
   compute_gallery_image_definition_name = "windows-2025-devops"
   compute_gallery_image_definitions = {
