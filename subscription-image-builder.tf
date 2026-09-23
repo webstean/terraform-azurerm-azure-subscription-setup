@@ -3,6 +3,7 @@ locals {
   aib_name_location = lower("${local.aib_name}-${lower(var.location)}")
   aib_random_suffix = substr(md5(local.aib_name_location), 0, 6)
   aib_name_hostname = lower(substr(replace("cc${local.aib_random_suffix}${local.aib_name_location}", "-", ""), 0, 24))
+  aib_enabled       = false
 
   # Azure Image Builder does not support updating an existing image template (PUT on an
   # existing template returns 409 Conflict). Suffix the template name with a hash of the
@@ -44,6 +45,8 @@ locals {
 }
 
 resource "azapi_resource" "vnet" {
+  count = local.aib_enabled ? 1 : 0
+
   name      = "vnet-${local.aib_name_location}"
   parent_id = module.imagebuilder_resource_group.resource_id
   location  = module.imagebuilder_resource_group.resource.location
@@ -79,13 +82,15 @@ resource "azapi_resource" "vnet" {
 }
 
 locals {
-  aci_subnet_id                          = "${azapi_resource.vnet.id}/subnets/subnet-aci"
-  build_subnet_id                        = "${azapi_resource.vnet.id}/subnets/subnet-build"
+  aci_subnet_id                          = "${azapi_resource.vnet[0].id}/subnets/subnet-aci"
+  build_subnet_id                        = "${azapi_resource.vnet[0].id}/subnets/subnet-build"
   aib_image_builder_identity_resource_id = "/subscriptions/${trimspace(var.subscription_id)}/resourceGroups/rg-global-${lower(var.location)}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id-global"
 }
 
 # --- Image builder pattern module ---
 module "windows-image-builder" {
+  count = local.aib_enabled ? 1 : 0
+
   source           = "Azure/avm-ptn-azureimagebuilder/azurerm"
   version          = "~>0.0, < 1.0"
   enable_telemetry = var.enable_telemetry
@@ -138,35 +143,35 @@ module "windows-image-builder" {
 
 output "image_builder_id" {
   sensitive = false
-  value     = module.windows-image-builder.resource_id
+  value     = try(module.windows-image-builder[0].resource_id, null)
 }
 
 output "image_builder_name" {
   sensitive = false
-  value     = module.windows-image-builder.name
+  value     = try(module.windows-image-builder[0].name, null)
 }
 
 output "image_builder_location" {
   sensitive = false
-  value     = module.windows-image-builder.resource.location
+  value     = try(module.windows-image-builder[0].resource.location, null)
 }
 
 output "image_builder_compute_gallery_id" {
   sensitive = false
-  value     = module.windows-image-builder.compute_gallery_id
+  value     = try(module.windows-image-builder[0].compute_gallery_id, null)
 }
 
 output "image_builder_managed_identity_principal_id" {
   sensitive = false
-  value     = module.windows-image-builder.image_builder_identity_principal_id
+  value     = try(module.windows-image-builder[0].image_builder_identity_principal_id, null)
 }
 
 output "image_builder_windows_image_template_id" {
   sensitive = false
-  value     = module.windows-image-builder.image_template_id
+  value     = try(module.windows-image-builder[0].image_template_id, null)
 }
 
 output "image_builder_windows_image_template_name" {
   sensitive = false
-  value     = module.windows-image-builder.image_template_name
+  value     = module.windows-image-builder[0].image_template_name
 }
