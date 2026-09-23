@@ -89,6 +89,7 @@ module "azure-subscription-setup" {
 | <a name="input_owner_entra_display_name"></a> [owner\_entra\_display\_name](#input\_owner\_entra\_display\_name) | Display name of the owner in Entra ID for RBAC role assignment and resource access control. | `string` | n/a | yes |
 | <a name="input_owner_entra_object_id"></a> [owner\_entra\_object\_id](#input\_owner\_entra\_object\_id) | The Entra ID object ID for the owner of this environment | `string` | n/a | yes |
 | <a name="input_subscription_id"></a> [subscription\_id](#input\_subscription\_id) | The Azure subscription ID in which the resources will be deployed. | `string` | n/a | yes |
+| <a name="input_acr_sku"></a> [acr\_sku](#input\_acr\_sku) | The SKU for the Azure Container Registry | `string` | `"Basic"` | no |
 | <a name="input_alert_emails"></a> [alert\_emails](#input\_alert\_emails) | The email addresses for alerts | `list(string)` | `[]` | no |
 | <a name="input_alert_name"></a> [alert\_name](#input\_alert\_name) | The name for alerts | `string` | `"MSDN SubscriptionAlerts"` | no |
 | <a name="input_alert_sms_country"></a> [alert\_sms\_country](#input\_alert\_sms\_country) | The country code for SMS alerts | `string` | `"+61"` | no |
