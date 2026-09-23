@@ -3,7 +3,7 @@ locals {
   acr_name_location            = lower("${local.acr_name}-${lower(var.location)}")
   acr_random_suffix            = substr(md5(local.acr_name_location), 0, 6)
   acr_name_hostname            = lower(substr(replace("c${local.acr_random_suffix}${local.acr_name_location}", "-", ""), 0, 24))
-  acr_sku                      = "Basic" ## Basic ($0.17 per day, $5.1 per month), Standard ($0.67 cents per day, $20 per month), Premium ($1.7 dollars per day, $51 per month)
+  acr_sku                      = var.acr_sku
   acr_default_retentation_days = 14
 }
 

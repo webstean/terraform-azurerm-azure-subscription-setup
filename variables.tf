@@ -119,6 +119,17 @@ DESC
 }
 */
 
+variable "acr_sku" {
+  type        = string
+  description = "The SKU for the Azure Container Registry"
+  default     = "Basic"
+
+  validation {
+    condition     = contains(["basic", "standard", "premium"], lower(trimspace(var.acr_sku)))
+    error_message = "acr_sku must be one of: Basic, Standard, or Premium."
+  }
+}
+
 variable "alert_name" {
   type        = string
   description = "The name for alerts"
