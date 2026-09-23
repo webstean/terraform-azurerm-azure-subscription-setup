@@ -129,8 +129,10 @@ module "azure-subscription-setup" {
 | <a name="output_cosmos_db_free_account_resource_id"></a> [cosmos\_db\_free\_account\_resource\_id](#output\_cosmos\_db\_free\_account\_resource\_id) | The ID of the Cosmos DB account |
 | <a name="output_image_builder_compute_gallery_id"></a> [image\_builder\_compute\_gallery\_id](#output\_image\_builder\_compute\_gallery\_id) | n/a |
 | <a name="output_image_builder_id"></a> [image\_builder\_id](#output\_image\_builder\_id) | n/a |
-| <a name="output_image_builder_image_builder_identity_principal_id"></a> [image\_builder\_image\_builder\_identity\_principal\_id](#output\_image\_builder\_image\_builder\_identity\_principal\_id) | n/a |
+| <a name="output_image_builder_image_template_id"></a> [image\_builder\_image\_template\_id](#output\_image\_builder\_image\_template\_id) | n/a |
+| <a name="output_image_builder_image_template_name"></a> [image\_builder\_image\_template\_name](#output\_image\_builder\_image\_template\_name) | n/a |
 | <a name="output_image_builder_location"></a> [image\_builder\_location](#output\_image\_builder\_location) | n/a |
+| <a name="output_image_builder_managed_identity_principal_id"></a> [image\_builder\_managed\_identity\_principal\_id](#output\_image\_builder\_managed\_identity\_principal\_id) | n/a |
 | <a name="output_image_builder_name"></a> [image\_builder\_name](#output\_image\_builder\_name) | n/a |
 | <a name="output_location"></a> [location](#output\_location) | The location of the resources. |
 | <a name="output_owner_email"></a> [owner\_email](#output\_owner\_email) | The email of the resource owner. |
