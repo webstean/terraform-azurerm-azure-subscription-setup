@@ -37,6 +37,7 @@ resource "azapi_resource" "vnet" {
     }
   }
   response_export_values = ["properties.subnets"]
+  tags                   = { for key, value in module.global_resource_group.resource.tags : key => value if lower(key) != "created" }
 }
 
 locals {
@@ -75,6 +76,10 @@ module "image-builder" {
   }
   build                    = { enabled = true }
   build_timeout_in_minutes = 360
+  # Pre-create the staging RG so the image builder identity is granted Contributor
+  # before the build starts; avoids "Unauthorized" errors on the auto-created
+  # staging storage account (vhds container) under restrictive subscription policies.
+  staging_resource_group_name = "rg-${local.aib_name_location}-staging"
   image_template_customization_steps = [
     {
       type = "PowerShell"
@@ -98,6 +103,7 @@ module "image-builder" {
       container_instance_subnet_id = local.aci_subnet_id
     }
   }
+  tags = { for key, value in module.global_resource_group.resource.tags : key => value if lower(key) != "created" }
 }
 
 output "image_builder_id" {
