@@ -31,6 +31,7 @@ module "azure-subscription-setup" {
 
 | Name | Type |
 |------|------|
+| [azapi_resource.vnet](https://registry.terraform.io/providers/azure/azapi/latest/docs/resources/resource) | resource |
 | [azurerm_automation_account.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/automation_account) | resource |
 | [azurerm_automation_credential.vcenter-create](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/automation_credential) | resource |
 | [azurerm_automation_module.packagemanagement](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/automation_module) | resource |
@@ -124,6 +125,11 @@ module "azure-subscription-setup" {
 | <a name="output_container_registry_name"></a> [container\_registry\_name](#output\_container\_registry\_name) | The name of the Azure Container Registry. |
 | <a name="output_cosmos_db_free_account_name"></a> [cosmos\_db\_free\_account\_name](#output\_cosmos\_db\_free\_account\_name) | The name of the Cosmos DB account |
 | <a name="output_cosmos_db_free_account_resource_id"></a> [cosmos\_db\_free\_account\_resource\_id](#output\_cosmos\_db\_free\_account\_resource\_id) | The ID of the Cosmos DB account |
+| <a name="output_image_builder_compute_gallery_id"></a> [image\_builder\_compute\_gallery\_id](#output\_image\_builder\_compute\_gallery\_id) | n/a |
+| <a name="output_image_builder_id"></a> [image\_builder\_id](#output\_image\_builder\_id) | n/a |
+| <a name="output_image_builder_image_builder_identity_principal_id"></a> [image\_builder\_image\_builder\_identity\_principal\_id](#output\_image\_builder\_image\_builder\_identity\_principal\_id) | n/a |
+| <a name="output_image_builder_location"></a> [image\_builder\_location](#output\_image\_builder\_location) | n/a |
+| <a name="output_image_builder_name"></a> [image\_builder\_name](#output\_image\_builder\_name) | n/a |
 | <a name="output_location"></a> [location](#output\_location) | The location of the resources. |
 | <a name="output_owner_email"></a> [owner\_email](#output\_owner\_email) | The email of the resource owner. |
 | <a name="output_owner_entra_display_name"></a> [owner\_entra\_display\_name](#output\_owner\_entra\_display\_name) | The display name of the owner's Entra ID account. |
@@ -143,6 +149,8 @@ module "azure-subscription-setup" {
 | <a name="module_global_log_analytics_workspace"></a> [global\_log\_analytics\_workspace](#module\_global\_log\_analytics\_workspace) | Azure/avm-res-operationalinsights-workspace/azurerm | ~>0.0, < 1.0 |
 | <a name="module_global_resource_group"></a> [global\_resource\_group](#module\_global\_resource\_group) | Azure/avm-res-resources-resourcegroup/azurerm | ~>0.0, < 1.0 |
 | <a name="module_global_user_managed_identity"></a> [global\_user\_managed\_identity](#module\_global\_user\_managed\_identity) | Azure/avm-res-managedidentity-userassignedidentity/azurerm | ~>0.0, < 1.0 |
+| <a name="module_image-builder"></a> [image-builder](#module\_image-builder) | Azure/avm-ptn-azureimagebuilder/azurerm | ~>0.0, < 1.0 |
+| <a name="module_imagebuilder_resource_group"></a> [imagebuilder\_resource\_group](#module\_imagebuilder\_resource\_group) | Azure/avm-res-resources-resourcegroup/azurerm | ~>0.0, < 1.0 |
 | <a name="module_search_keyvault"></a> [search\_keyvault](#module\_search\_keyvault) | Azure/avm-res-keyvault-vault/azurerm | ~>0.7, < 1.0 |
 
 - (c) Andrew Webster <webstean@gmail.com>
