@@ -127,9 +127,6 @@ module "image-builder" {
       container_instance_subnet_id = local.aci_subnet_id
     }
   }
-  image_template_distribute = {
-
-  }
   optimize_vm_boot = true
   tags             = { for key, value in module.global_resource_group.resource.tags : key => value if lower(key) != "created" }
 }
