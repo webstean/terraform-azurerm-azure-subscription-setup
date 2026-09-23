@@ -121,7 +121,7 @@ module "windows-image-builder" {
   # Pre-create the staging RG so the image builder identity is granted Contributor
   # before the build starts; avoids "Unauthorized" errors on the auto-created
   # staging storage account (vhds container) under restrictive subscription policies.
-  staging_resource_group_resource_id = module.global_resource_group.resource.id
+  staging_resource_group_resource_id = module.imagebuilder_staging_resource_group.resource.id
   image_template_customization_steps = local.aib_image_template_customization_steps
   vm_profile = {
     vm_size = local.aib_vm_size
