@@ -154,6 +154,7 @@ module "azure-subscription-setup" {
 | <a name="module_global_resource_group"></a> [global\_resource\_group](#module\_global\_resource\_group) | Azure/avm-res-resources-resourcegroup/azurerm | ~>0.0, < 1.0 |
 | <a name="module_global_user_managed_identity"></a> [global\_user\_managed\_identity](#module\_global\_user\_managed\_identity) | Azure/avm-res-managedidentity-userassignedidentity/azurerm | ~>0.0, < 1.0 |
 | <a name="module_imagebuilder_resource_group"></a> [imagebuilder\_resource\_group](#module\_imagebuilder\_resource\_group) | Azure/avm-res-resources-resourcegroup/azurerm | ~>0.0, < 1.0 |
+| <a name="module_imagebuilder_staging_resource_group"></a> [imagebuilder\_staging\_resource\_group](#module\_imagebuilder\_staging\_resource\_group) | Azure/avm-res-resources-resourcegroup/azurerm | ~>0.0, < 1.0 |
 | <a name="module_search_keyvault"></a> [search\_keyvault](#module\_search\_keyvault) | Azure/avm-res-keyvault-vault/azurerm | ~>0.7, < 1.0 |
 | <a name="module_windows-image-builder"></a> [windows-image-builder](#module\_windows-image-builder) | Azure/avm-ptn-azureimagebuilder/azurerm | ~>0.0, < 1.0 |
 
