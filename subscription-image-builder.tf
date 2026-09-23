@@ -5,7 +5,6 @@ locals {
   aib_name_hostname = lower(substr(replace("cc${local.aib_random_suffix}${local.aib_name_location}", "-", ""), 0, 24))
 }
 
-
 resource "azapi_resource" "vnet" {
   name      = "vnet-${local.aib_name_location}"
   parent_id = module.imagebuilder_resource_group.resource_id
