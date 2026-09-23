@@ -3,6 +3,44 @@ locals {
   aib_name_location = lower("${local.aib_name}-${lower(var.location)}")
   aib_random_suffix = substr(md5(local.aib_name_location), 0, 6)
   aib_name_hostname = lower(substr(replace("cc${local.aib_random_suffix}${local.aib_name_location}", "-", ""), 0, 24))
+
+  # Azure Image Builder does not support updating an existing image template (PUT on an
+  # existing template returns 409 Conflict). Suffix the template name with a hash of the
+  # inputs that define its content so any change forces Terraform to create a new template
+  # (and delete the old one) instead of attempting an in-place update.
+  image_template_content_hash = substr(md5(jsonencode({
+    image_source          = local.aib_image_template_image_source
+    customization_steps   = local.aib_image_template_customization_steps
+    vm_size               = local.aib_vm_size
+    build_timeout_minutes = local.aib_build_timeout_in_minutes
+  })), 0, 8)
+  image_template_name = "it-${local.aib_name_location}-${local.image_template_content_hash}"
+
+  aib_image_template_image_source = {
+    type      = "PlatformImage"
+    publisher = "MicrosoftWindowsServer"
+    offer     = "WindowsServer"
+    sku       = "2025-datacenter-azure-edition"
+    version   = "latest"
+  }
+  aib_build_timeout_in_minutes = 360
+  aib_vm_size                  = "Standard_D2s_v5"
+  aib_image_template_customization_steps = [
+    {
+      type = "PowerShell"
+      name = "Marker file"
+      inline = [
+        "Set-Content -Path 'C:\\aib-marker.txt' -Value \"Built by Azure Image Builder at $(Get-Date -Format o)\"",
+        "Get-Content -Path 'C:\\aib-marker.txt'",
+      ]
+      runElevated = true
+      runAsSystem = true
+    },
+    {
+      type           = "WindowsRestart"
+      restartTimeout = "5m"
+    }
+  ]
 }
 
 resource "azapi_resource" "vnet" {
@@ -51,9 +89,10 @@ module "image-builder" {
   version          = "~>0.0, < 1.0"
   enable_telemetry = var.enable_telemetry
 
-  name      = local.aib_name_location
-  location  = module.imagebuilder_resource_group.resource.location
-  parent_id = module.imagebuilder_resource_group.resource_id
+  name                = local.aib_name_location
+  image_template_name = local.image_template_name
+  location            = module.imagebuilder_resource_group.resource.location
+  parent_id           = module.imagebuilder_resource_group.resource_id
 
   compute_gallery_image_definition_name = "windows-2025-devops"
   compute_gallery_image_definitions = {
@@ -67,37 +106,16 @@ module "image-builder" {
       }
     }
   }
-  image_template_image_source = {
-    type      = "PlatformImage"
-    publisher = "MicrosoftWindowsServer"
-    offer     = "WindowsServer"
-    sku       = "2025-datacenter-azure-edition"
-    version   = "latest"
-  }
-  build                    = { enabled = true }
-  build_timeout_in_minutes = 360
+  image_template_image_source = local.aib_image_template_image_source
+  build                       = { enabled = true }
+  build_timeout_in_minutes    = local.aib_build_timeout_in_minutes
   # Pre-create the staging RG so the image builder identity is granted Contributor
   # before the build starts; avoids "Unauthorized" errors on the auto-created
   # staging storage account (vhds container) under restrictive subscription policies.
-  staging_resource_group_name = "rg-${local.aib_name_location}-staging"
-  image_template_customization_steps = [
-    {
-      type = "PowerShell"
-      name = "Marker file"
-      inline = [
-        "Set-Content -Path 'C:\\aib-marker.txt' -Value \"Built by Azure Image Builder at $(Get-Date -Format o)\"",
-        "Get-Content -Path 'C:\\aib-marker.txt'",
-      ]
-      runElevated = true
-      runAsSystem = true
-    },
-    {
-      type           = "WindowsRestart"
-      restartTimeout = "5m"
-    }
-  ]
+  staging_resource_group_name        = "rg-${local.aib_name_location}-staging"
+  image_template_customization_steps = local.aib_image_template_customization_steps
   vm_profile = {
-    vm_size = "Standard_D2s_v5"
+    vm_size = local.aib_vm_size
     vnet_config = {
       subnet_id                    = local.build_subnet_id
       container_instance_subnet_id = local.aci_subnet_id
