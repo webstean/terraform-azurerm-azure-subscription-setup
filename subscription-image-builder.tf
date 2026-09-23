@@ -44,6 +44,33 @@ locals {
   ]
 }
 
+/*
+resource "azurerm_role_definition" "image_builder" {
+  name        = var.role_name
+  description = var.role_description
+  scope       = data.azurerm_subscription.current.id
+ 
+  permissions {
+    actions = [
+      "Microsoft.Compute/images/write",
+      "Microsoft.Compute/images/read",
+      "Microsoft.Compute/images/delete",
+      "Microsoft.Compute/galleries/read",
+      "Microsoft.Compute/galleries/images/read",
+      "Microsoft.Compute/galleries/images/versions/read",
+      "Microsoft.Compute/galleries/images/versions/write",
+      "Microsoft.Network/virtualNetworks/read",
+      "Microsoft.Network/virtualNetworks/subnets/join/action",
+    ]
+    not_actions = []
+  }
+ 
+  # Falls back to the whole subscription if you don't pass explicit scopes —
+  # narrow this to the image/gallery and VNet resource groups in production.
+  assignable_scopes = length(var.assignable_scopes) > 0 ? var.assignable_scopes : [data.azurerm_subscription.current.id]
+}
+*/
+
 resource "azapi_resource" "vnet" {
   count = local.aib_enabled ? 1 : 0
 
