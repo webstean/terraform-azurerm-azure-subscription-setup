@@ -172,5 +172,5 @@ output "image_builder_windows_image_template_id" {
 
 output "image_builder_windows_image_template_name" {
   sensitive = false
-  value     = module.windows-image-builder[0].image_template_name
+  value     = try(module.windows-image-builder[0].image_template_name, null)
 }
