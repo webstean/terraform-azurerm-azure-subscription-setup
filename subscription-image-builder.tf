@@ -84,7 +84,7 @@ locals {
 }
 
 # --- Image builder pattern module ---
-module "image-builder" {
+module "windows-image-builder" {
   source           = "Azure/avm-ptn-azureimagebuilder/azurerm"
   version          = "~>0.0, < 1.0"
   enable_telemetry = var.enable_telemetry
@@ -133,35 +133,35 @@ module "image-builder" {
 
 output "image_builder_id" {
   sensitive = false
-  value     = module.image-builder.resource_id
+  value     = module.windows-image-builder.resource_id
 }
 
 output "image_builder_name" {
   sensitive = false
-  value     = module.image-builder.name
+  value     = module.windows-image-builder.name
 }
 
 output "image_builder_location" {
   sensitive = false
-  value     = module.imagebuilder_resource_group.resource.location
+  value     = module.windows-image-builder.resource.location
 }
 
 output "image_builder_compute_gallery_id" {
   sensitive = false
-  value     = module.image-builder.compute_gallery_id
+  value     = module.windows-image-builder.compute_gallery_id
 }
 
 output "image_builder_managed_identity_principal_id" {
   sensitive = false
-  value     = module.image-builder.image_builder_identity_principal_id
+  value     = module.windows-image-builder.image_builder_identity_principal_id
 }
 
-output "image_builder_image_template_id" {
+output "image_builder_windows_image_template_id" {
   sensitive = false
-  value     = module.image-builder.image_template_id
+  value     = module.windows-image-builder.image_template_id
 }
 
-output "image_builder_image_template_name" {
+output "image_builder_windows_image_template_name" {
   sensitive = false
-  value     = module.image-builder.image_template_name
+  value     = module.windows-image-builder.image_template_name
 }
