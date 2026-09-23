@@ -76,6 +76,7 @@ module "azure-subscription-setup" {
 | [azuread_client_config.current](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/data-sources/client_config) | data source |
 | [azurerm_advisor_recommendations.all](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/advisor_recommendations) | data source |
 | [azurerm_client_config.current](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/client_config) | data source |
+| [azurerm_location.current](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/location) | data source |
 | [azurerm_subscription.current](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/subscription) | data source |
 | [azurerm_subscriptions.available](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/subscriptions) | data source |
 
@@ -118,6 +119,7 @@ module "azure-subscription-setup" {
 | <a name="output_automation_account_id"></a> [automation\_account\_id](#output\_automation\_account\_id) | The ID of the Azure Automation Account. |
 | <a name="output_automation_account_name"></a> [automation\_account\_name](#output\_automation\_account\_name) | The name of the Azure Automation Account. |
 | <a name="output_azure_advisor_suppression_candidates"></a> [azure\_advisor\_suppression\_candidates](#output\_azure\_advisor\_suppression\_candidates) | Advisor recommendations across the subscription that can be used as suppression candidates. |
+| <a name="output_azure_location_details"></a> [azure\_location\_details](#output\_azure\_location\_details) | Details of the location being used with this subscription. |
 | <a name="output_container_registry_azcopy_image"></a> [container\_registry\_azcopy\_image](#output\_container\_registry\_azcopy\_image) | The AzCopy image reference for Docker or Podman.<br/>Run the AzCopy image using Podman<br/>podman run "$(terraform output -raw container\_registry\_azcopy\_image)" |
 | <a name="output_container_registry_data_endpoint_host_names"></a> [container\_registry\_data\_endpoint\_host\_names](#output\_container\_registry\_data\_endpoint\_host\_names) | The host names of the data endpoints for the Azure Container Registry. |
 | <a name="output_container_registry_id"></a> [container\_registry\_id](#output\_container\_registry\_id) | The ID of the Azure Container Registry. |
