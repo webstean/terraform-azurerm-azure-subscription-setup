@@ -44,3 +44,20 @@ module "billing_resource_group" {
     type = "permanent"
   })
 }
+
+module "imagebuilder_resource_group" {
+  source           = "Azure/avm-res-resources-resourcegroup/azurerm"
+  version          = "~>0.0, < 1.0"
+  enable_telemetry = var.enable_telemetry
+
+  name     = "rg-imagebuilder-${lower(var.location)}"
+  location = var.location
+  retry = {
+    error_message_regex  = [".*"]
+    interval_seconds     = 10
+    max_interval_seconds = 180
+  }
+  tags = merge(local.temporary_tags, {
+    type = "permanent"
+  })
+}
