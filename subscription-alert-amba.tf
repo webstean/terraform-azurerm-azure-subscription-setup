@@ -27,9 +27,13 @@ module "amba_resource_group" {
   })
 }
 
+resource "random_id" "amba_deployment" {
+  byte_length = 8
+}
+
 resource "azapi_resource" "amba_alerting_reployment_for_subscription" {
   type      = "Microsoft.Resources/deployments@2025-04-01"
-  name      = "amba-main"
+  name      = "amba-main-${random_id.amba_deployment.hex}"
   parent_id = "/subscriptions/${var.subscription_id}"
 
   location = var.location
