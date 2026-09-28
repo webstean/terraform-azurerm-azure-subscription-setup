@@ -31,6 +31,7 @@ module "azure-subscription-setup" {
 
 | Name | Type |
 |------|------|
+| [azapi_resource.amba_alerting_reployment_for_subscription](https://registry.terraform.io/providers/azure/azapi/latest/docs/resources/resource) | resource |
 | [azapi_resource.vnet](https://registry.terraform.io/providers/azure/azapi/latest/docs/resources/resource) | resource |
 | [azurerm_automation_account.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/automation_account) | resource |
 | [azurerm_automation_credential.vcenter-create](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/automation_credential) | resource |
@@ -94,6 +95,7 @@ module "azure-subscription-setup" {
 | <a name="input_alert_name"></a> [alert\_name](#input\_alert\_name) | The name for alerts | `string` | `"MSDN SubscriptionAlerts"` | no |
 | <a name="input_alert_sms_country"></a> [alert\_sms\_country](#input\_alert\_sms\_country) | The country code for SMS alerts | `string` | `"+61"` | no |
 | <a name="input_alert_sms_number"></a> [alert\_sms\_number](#input\_alert\_sms\_number) | The phone number for SMS alerts | `string` | `null` | no |
+| <a name="input_assignable_scopes"></a> [assignable\_scopes](#input\_assignable\_scopes) | The list of assignable scopes for the role definitions. If Null, the subscription itself will be used as the assignable scope. | `list(string)` | `[]` | no |
 | <a name="input_certificate_city"></a> [certificate\_city](#input\_certificate\_city) | The default city for any certificate | `string` | `"Melbourne"` | no |
 | <a name="input_certificate_country"></a> [certificate\_country](#input\_certificate\_country) | The default country for any certificate | `string` | `"Australia"` | no |
 | <a name="input_certificate_postal_code"></a> [certificate\_postal\_code](#input\_certificate\_postal\_code) | The default postal code for any certificate | `string` | `"3000"` | no |
@@ -119,6 +121,9 @@ module "azure-subscription-setup" {
 | <a name="output_ai_free_search_primary_key"></a> [ai\_free\_search\_primary\_key](#output\_ai\_free\_search\_primary\_key) | The primary key of the AI search service |
 | <a name="output_ai_free_search_principal_id"></a> [ai\_free\_search\_principal\_id](#output\_ai\_free\_search\_principal\_id) | The principal ID of the AI search service's system-assigned managed identity |
 | <a name="output_ai_free_search_secondary_key"></a> [ai\_free\_search\_secondary\_key](#output\_ai\_free\_search\_secondary\_key) | The secondary key of the AI search service |
+| <a name="output_amba_deployment_id"></a> [amba\_deployment\_id](#output\_amba\_deployment\_id) | AMBA ARM deployment resource ID. |
+| <a name="output_amba_template_uri"></a> [amba\_template\_uri](#output\_amba\_template\_uri) | Pinned AMBA template used by the deployment. |
+| <a name="output_amba_version"></a> [amba\_version](#output\_amba\_version) | AMBA ARM template release deployed. |
 | <a name="output_automation_account_id"></a> [automation\_account\_id](#output\_automation\_account\_id) | The ID of the Azure Automation Account. |
 | <a name="output_automation_account_name"></a> [automation\_account\_name](#output\_automation\_account\_name) | The name of the Azure Automation Account. |
 | <a name="output_azure_advisor_suppression_candidates"></a> [azure\_advisor\_suppression\_candidates](#output\_azure\_advisor\_suppression\_candidates) | Advisor recommendations across the subscription that can be used as suppression candidates. |
@@ -149,6 +154,7 @@ module "azure-subscription-setup" {
 | Name | Source | Version |
 |------|--------|---------|
 | <a name="module_ai_search_service"></a> [ai\_search\_service](#module\_ai\_search\_service) | Azure/avm-res-search-searchservice/azurerm | ~>0.0, < 1.0 |
+| <a name="module_amba_resource_group"></a> [amba\_resource\_group](#module\_amba\_resource\_group) | Azure/avm-res-resources-resourcegroup/azurerm | ~>0.0, < 1.0 |
 | <a name="module_billing_resource_group"></a> [billing\_resource\_group](#module\_billing\_resource\_group) | Azure/avm-res-resources-resourcegroup/azurerm | ~>0.0, < 1.0 |
 | <a name="module_containerregistry"></a> [containerregistry](#module\_containerregistry) | Azure/avm-res-containerregistry-registry/azurerm | ~>0.0, < 1.0 |
 | <a name="module_free_cosmos"></a> [free\_cosmos](#module\_free\_cosmos) | Azure/avm-res-documentdb-databaseaccount/azurerm | ~>0.0, < 1.0 |
