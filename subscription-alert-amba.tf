@@ -5,6 +5,11 @@ locals {
   amba_resource_group_name = "rg-amba-monitoring-001"
 }
 
+import {
+  to = module.amba_resource_group.azapi_resource.this
+  id = "/subscriptions/${var.subscription_id}/resourceGroups/${local.amba_resource_group_name}"
+}
+
 module "amba_resource_group" {
   source           = "Azure/avm-res-resources-resourcegroup/azurerm"
   version          = "~>0.0, < 1.0"
