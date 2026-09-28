@@ -5,10 +5,21 @@ locals {
   amba_resource_group_name = "rg-amba-monitoring-001"
 }
 
-resource "azurerm_resource_group" "amba_monitoring" {
+module "amba_resource_group" {
+  source           = "Azure/avm-res-resources-resourcegroup/azurerm"
+  version          = "~>0.0, < 1.0"
+  enable_telemetry = var.enable_telemetry
+
   name     = local.amba_resource_group_name
   location = var.location
-  tags     = module.global_resource_group.resource.tags
+  retry = {
+    error_message_regex  = [".*"]
+    interval_seconds     = 10
+    max_interval_seconds = 180
+  }
+  tags = merge(local.temporary_tags, {
+    type = "permanent"
+  })
 }
 
 resource "azapi_resource" "amba_alerting_reployment_for_subscription" {
@@ -18,7 +29,7 @@ resource "azapi_resource" "amba_alerting_reployment_for_subscription" {
 
   location = var.location
 
-  depends_on = [azurerm_resource_group.amba_monitoring]
+  depends_on = [module.amba_resource_group]
 
   body = {
     properties = {
@@ -30,7 +41,7 @@ resource "azapi_resource" "amba_alerting_reployment_for_subscription" {
 
       parameters = {
         telemetryOptOut = {
-          value = !var.enable_telemetry
+          value = var.enable_telemetry ? "No" : "Yes"
         }
         ALZMonitorResourceGroupName = {
           value = local.amba_resource_group_name
@@ -42,10 +53,10 @@ resource "azapi_resource" "amba_alerting_reployment_for_subscription" {
           value = var.location
         }
         ALZMonitorResourceGroupTags = {
-          value = module.global_resource_group.resource.tags
+          value = module.amba_resource_group.resource.tags
         }
         ALZMonitorActionGroupEmail = {
-          value = try(trimspace(var.alert_emails[0]), "")
+          value = [for email in coalesce(var.alert_emails, []) : trimspace(email)]
         }
       }
     }

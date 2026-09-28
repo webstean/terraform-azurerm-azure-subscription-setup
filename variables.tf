@@ -198,6 +198,14 @@ variable "mssql_db_restore_import_id" {
   }
 }
 
+variable "assignable_scopes" {
+  type        = list(string)
+  description = <<DESC
+The list of assignable scopes for the role definitions. If Null, the subscription itself will be used as the assignable scope.
+  DESC
+  default     = []
+}
+
 variable "virtual_wan_sku" {
   type        = string
   description = "The SKU of the Virtual WAN to be created. Possible values include: Basic and Standard. Defaults to Basic."
@@ -205,7 +213,7 @@ variable "virtual_wan_sku" {
 
   validation {
     condition     = contains(["Basic", "Standard"], var.virtual_wan_sku)
-    error_message = "virtual_wan_sku must be either 'Basic' or 'Standard'."
+    error_message = "virtual_wan_sku must be either 'Basic' (Free) or 'Standard' ($$)."
   }
 }
 
