@@ -74,7 +74,7 @@ resource "azapi_resource" "amba_alerting_reployment_for_subscription" {
 
 output "amba_deployment_id" {
   description = "AMBA ARM deployment resource ID."
-  value       = azapi_resource.amba_alerting_reployment_for_subscription.id
+  value       = try(azapi_resource.amba_alerting_reployment_for_subscription.id, null)
 }
 
 output "amba_template_uri" {
