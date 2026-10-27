@@ -6,7 +6,7 @@ resource "random_string" "global" {
   #number  = false
   lower = true
   keepers = {
-    base_name = var.prefix
+    base_name = "global"
   }
 }
 
