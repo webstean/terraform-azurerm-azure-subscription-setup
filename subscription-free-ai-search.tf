@@ -2,7 +2,7 @@ locals {
   search_friendly_name      = "Azure AI Search"
   search_name               = "aisearch-free"
   search_name_location      = lower("${local.search_name}-${lower(var.location)}")
-  search_name_random_suffix = substr(md5(local.search_name_location), 0, 6)
+  search_name_random_suffix = substr(random_string.global.result, 0, 6)
   search_name_hostname      = lower(substr(replace("f${local.search_name_random_suffix}${local.search_name_location}", "-", ""), 0, 24))
   search_sku                = "free"
   search_semantic_sku       = "free"

@@ -1,3 +1,14 @@
+resource "random_string" "global" {
+  length  = 6
+  special = false
+  upper   = false
+  numeric = false
+  #number  = false
+  lower = true
+  keepers = {
+    base_name = var.prefix
+  }
+}
 
 module "global_resource_group" {
   source           = "Azure/avm-res-resources-resourcegroup/azurerm"
