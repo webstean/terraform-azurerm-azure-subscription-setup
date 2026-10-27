@@ -1,6 +1,6 @@
 locals {
   databox_friendly_name      = "Azure DataBox Gateway"
-  databox_name               = "databox-${var.prefix}"
+  databox_name               = "databox-global"
   databox_name_location      = "${local.databox_name}-${lower(var.location)}"
   databox_name_random_suffix = substr(md5(local.databox_name_location), 0, 6)
   databox_name_hostname      = lower(substr(replace("d${local.databox_name_random_suffix}${local.databox_name_location}", "-", ""), 0, 24))
@@ -8,12 +8,12 @@ locals {
 
 resource "azurerm_databox_edge_device" "gateway" {
   name                = local.databox_name_hostname
-  resource_group_name = module.environment_resource_group.resource.name
+  resource_group_name = module.global_resource_group.name
   ## Supported locations are 'eastus','westeurope','southeastasia'
   location = "southeastasia"
 
   sku_name = "Gateway-Standard"
-  tags     = { for key, value in module.environment_resource_group.resource.tags : key => value if lower(key) != "created" }
+  tags     = { for key, value in module.global_resource_group.resource.tags : key => value if lower(key) != "created" }
 }
 
 output "databox_gateway_id" {
