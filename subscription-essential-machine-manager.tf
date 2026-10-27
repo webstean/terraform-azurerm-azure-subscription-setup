@@ -14,22 +14,21 @@ module "global_essential_machine_management_user_assigned_identity" {
 
   role_assignments = {
     essential_machine_management_administrator = {
-      scope                      = "/subscriptions/${var.subscription_id}"
+      scope                      = data.azurerm_subscription.current.id
       role_definition_id_or_name = "Essential Machine Management Administrator"
       description                = local.iac_message
     }
     essential_machine_management_identity_operator = {
-      scope                      = "/subscriptions/${var.subscription_id}"
+      scope                      = data.azurerm_subscription.current.id
       role_definition_id_or_name = "Managed Identity Operator"
       description                = local.iac_message
     }
     essential_machine_management_resource_policy_contributor = {
-      scope                      = "/subscriptions/${var.subscription_id}"
+      scope                      = data.azurerm_subscription.current.id
       role_definition_id_or_name = "Resource Policy Contributor"
       description                = local.iac_message
     }
   }
-
   tags = { for key, value in module.global_resource_group.resource.tags : key => value if lower(key) != "created" }
 }
 
