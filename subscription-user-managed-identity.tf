@@ -5,7 +5,7 @@ module "global_user_managed_identity" {
 
   name = "id-global"
 
-  role_assignments = {
+  outbound_role_assignments = {
     "AcrPush" = {
       scope                            = module.containerregistry.resource_id
       role_definition_id_or_name       = "AcrPush"

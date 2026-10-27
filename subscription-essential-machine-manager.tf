@@ -12,7 +12,7 @@ module "global_essential_machine_management_user_assigned_identity" {
   location            = module.global_resource_group.resource.location
   isolation_scope     = "Regional"
 
-  role_assignments = {
+  outbound_role_assignments = {
     essential_machine_management_administrator = {
       scope                      = data.azurerm_subscription.current.id
       role_definition_id_or_name = "Essential Machine Management Administrator"
