@@ -59,6 +59,7 @@ module "azure-subscription-setup" {
 | [azurerm_automation_variable_string.subscription-id](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/automation_variable_string) | resource |
 | [azurerm_container_registry_task.azcopy_build](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/container_registry_task) | resource |
 | [azurerm_container_registry_task_schedule_run_now.azcopy_build_now](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/container_registry_task_schedule_run_now) | resource |
+| [azurerm_databox_edge_device.gateway](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/databox_edge_device) | resource |
 | [azurerm_monitor_action_group.alertme](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/monitor_action_group) | resource |
 | [azurerm_monitor_activity_log_alert.service_health_advisory](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/monitor_activity_log_alert) | resource |
 | [azurerm_monitor_activity_log_alert.service_health_incidents](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/monitor_activity_log_alert) | resource |
@@ -128,6 +129,8 @@ module "azure-subscription-setup" {
 | <a name="output_container_registry_name"></a> [container\_registry\_name](#output\_container\_registry\_name) | The name of the Azure Container Registry. |
 | <a name="output_cosmos_db_free_account_name"></a> [cosmos\_db\_free\_account\_name](#output\_cosmos\_db\_free\_account\_name) | The name of the Cosmos DB account |
 | <a name="output_cosmos_db_free_account_resource_id"></a> [cosmos\_db\_free\_account\_resource\_id](#output\_cosmos\_db\_free\_account\_resource\_id) | The ID of the Cosmos DB account |
+| <a name="output_databox_gateway_id"></a> [databox\_gateway\_id](#output\_databox\_gateway\_id) | The ID of the Databox Edge Gateway device. |
+| <a name="output_databox_gateway_properties"></a> [databox\_gateway\_properties](#output\_databox\_gateway\_properties) | The properties of the Databox Edge Gateway device. |
 | <a name="output_image_builder_compute_gallery_id"></a> [image\_builder\_compute\_gallery\_id](#output\_image\_builder\_compute\_gallery\_id) | n/a |
 | <a name="output_image_builder_id"></a> [image\_builder\_id](#output\_image\_builder\_id) | n/a |
 | <a name="output_image_builder_location"></a> [image\_builder\_location](#output\_image\_builder\_location) | n/a |
