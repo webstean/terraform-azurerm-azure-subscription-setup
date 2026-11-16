@@ -14,7 +14,8 @@ module "search_keyvault" {
   enable_telemetry = var.enable_telemetry
 
   name                            = local.search_name_hostname
-  resource_group_name             = module.global_resource_group.name
+  #resource_group_name             = module.global_resource_group.name
+  parent_id                       = module.global_resource_group.id
   location                        = module.global_resource_group.location
   tenant_id                       = data.azurerm_client_config.current.tenant_id
   sku_name                        = "standard"
@@ -68,7 +69,8 @@ module "ai_search_service" {
   enable_telemetry = var.enable_telemetry
 
   name                = local.search_name_location
-  resource_group_name = module.global_resource_group.name
+  parent_id                       = module.global_resource_group.id
+  #resource_group_name = module.global_resource_group.name
   location            = module.global_resource_group.location
 
   sku                          = local.search_sku
