@@ -4,7 +4,7 @@ module "global_log_analytics_workspace" {
   enable_telemetry = var.enable_telemetry
 
   name                                      = "law-global"
-  resource_group_name                       = module.global_resource_group.name
+  parent_id                                 = module.global_resource_group.resource.id
   location                                  = module.global_resource_group.location
   log_analytics_workspace_sku               = "PerGB2018"
   log_analytics_workspace_daily_quota_gb    = 5

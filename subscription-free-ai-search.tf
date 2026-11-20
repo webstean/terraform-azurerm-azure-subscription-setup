@@ -13,9 +13,9 @@ module "search_keyvault" {
   version          = "~>0.7, < 1.0"
   enable_telemetry = var.enable_telemetry
 
-  name                            = local.search_name_hostname
+  name = local.search_name_hostname
   #resource_group_name             = module.global_resource_group.name
-  parent_id                       = module.global_resource_group.id
+  parent_id                       = module.global_resource_group.resource.id
   location                        = module.global_resource_group.location
   tenant_id                       = data.azurerm_client_config.current.tenant_id
   sku_name                        = "standard"
@@ -68,9 +68,9 @@ module "ai_search_service" {
   version          = "~>0.0, < 1.0"
   enable_telemetry = var.enable_telemetry
 
-  name                = local.search_name_location
-  parent_id                       = module.global_resource_group.id
-  #resource_group_name = module.global_resource_group.name
+  name = local.search_name_location
+  # parent_id = module.global_resource_group.id
+  resource_group_name = module.global_resource_group.resource.name
   location            = module.global_resource_group.location
 
   sku                          = local.search_sku
