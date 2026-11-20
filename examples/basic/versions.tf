@@ -5,7 +5,7 @@ terraform {
     azurerm = {
       ## Azure resource manager
       source  = "hashicorp/azurerm"
-      version = "~>4.0, < 5.0"
+      version = "~>5.6, < 5.0"
     }
   }
 }
